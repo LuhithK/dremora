@@ -32,8 +32,6 @@ const Newsletter = () => {
           viewport={{ once: true }}
           className="bg-gradient-to-r from-blue-600 to-purple-600 rounded-3xl p-12 md:p-16 text-center text-white relative overflow-hidden"
         >
-          {/* Change gradient colors */}
-          <div className="bg-gradient-to-r from-orange-600 to-red-600 rounded-3xl p-12 md:p-16 text-center text-white relative overflow-hidden absolute inset-0"></div>
           {/* Background Pattern */}
           <div className="absolute inset-0 opacity-10">
             <div className="absolute top-0 left-0 w-40 h-40 bg-white rounded-full -translate-x-20 -translate-y-20"></div>

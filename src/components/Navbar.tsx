@@ -58,7 +58,7 @@ const Navbar = () => {
               <span className={`font-bold text-xl ${
                 isScrolled ? 'text-gray-900' : 'text-white'
               }`}>
-                Dremora Tours
+                Olanka Travels
               </span>
             </Link>
 

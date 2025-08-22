@@ -88,7 +88,7 @@ const Footer = () => {
               </div>
               <div className="flex items-center space-x-3">
                 <EnvelopeIcon className="h-5 w-5 text-primary-400 flex-shrink-0" />
-                <p className="text-gray-300 text-sm">info@dremoratours.com</p>
+                <p className="text-gray-300 text-sm">info@olankatravels.com</p>
               </div>
               <div className="flex items-center space-x-3">
                 <ClockIcon className="h-5 w-5 text-primary-400 flex-shrink-0" />

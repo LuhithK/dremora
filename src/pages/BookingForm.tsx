@@ -40,19 +40,19 @@ const BookingForm = () => {
   const packageData = {
     1: {
       title: "Cultural Triangle Adventure",
-      price: 850,
+      price: 950,
       duration: "7 Days",
       image: "https://images.pexels.com/photos/2166559/pexels-photo-2166559.jpeg?auto=compress&cs=tinysrgb&w=400"
     },
     2: {
       title: "Hill Country Escape",
-      price: 650,
+      price: 750,
       duration: "5 Days",
       image: "https://images.pexels.com/photos/1450353/pexels-photo-1450353.jpeg?auto=compress&cs=tinysrgb&w=400"
     },
     3: {
       title: "Coastal Paradise",
-      price: 750,
+      price: 550,
       duration: "6 Days",
       image: "https://images.pexels.com/photos/1450361/pexels-photo-1450361.jpeg?auto=compress&cs=tinysrgb&w=400"
     }
