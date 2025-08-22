@@ -97,7 +97,7 @@ const About = () => {
               </h2>
               <div className="space-y-4 text-gray-600 leading-relaxed">
                 <p>
-                  Founded in 2016, Dremora Tours began as a dream to share the incredible 
+                  Founded in 2016, Olanka Travels began as a dream to share the incredible 
                   beauty and rich culture of Sri Lanka with travelers from around the world. 
                   What started as a small family business has grown into one of the most 
                   trusted travel companies in Sri Lanka.
@@ -219,7 +219,6 @@ const About = () => {
       </section>
 
       {/* Achievements */}
-      <section className="py-20 bg-gradient-to-r from-blue-600 to-purple-600 text-white">
       <section className="py-20 bg-gradient-to-r from-orange-600 to-red-600 text-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div
@@ -248,7 +247,7 @@ const About = () => {
                 className="text-center"
               >
                 <div className="text-4xl md:text-5xl font-bold mb-2">{achievement.number}</div>
-                <div className="text-blue-100">{achievement.label}</div>
+                <div className="text-orange-100">{achievement.label}</div>
               </motion.div>
             ))}
           </div>
@@ -278,7 +277,7 @@ const About = () => {
               viewport={{ once: true }}
             >
               <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6">
-                Why Choose Olanka Travels?
+                Why Choose Dremora Tours?
               </h2>
               <div className="space-y-4">
                 {[
