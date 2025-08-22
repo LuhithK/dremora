@@ -14,43 +14,43 @@ const FeaturedPackages = () => {
   const packages = [
     {
       id: 1,
-      title: "Cultural Triangle Adventure",
-      description: "Explore ancient kingdoms, magnificent temples, and rich heritage sites including Sigiriya, Polonnaruwa, and Anuradhapura.",
+      title: "Ancient Kingdoms Explorer",
+      description: "Journey through Sri Lanka's cultural triangle visiting the magnificent Sigiriya Rock Fortress, ancient Polonnaruwa ruins, and sacred Anuradhapura.",
       image: "https://images.pexels.com/photos/2166559/pexels-photo-2166559.jpeg?auto=compress&cs=tinysrgb&w=800",
-      duration: "7 Days",
+      duration: "6 Days",
       location: "Sigiriya, Polonnaruwa",
-      price: 850,
-      originalPrice: 1200,
+      price: 750,
+      originalPrice: 950,
       rating: 4.8,
-      reviews: 124,
+      reviews: 156,
       maxGuests: 8,
       highlights: ["Ancient Sigiriya Rock", "Temple of the Tooth", "Elephant Safari"]
     },
     {
       id: 2,
-      title: "Hill Country Escape",
-      description: "Journey through misty mountains, tea plantations, and charming colonial towns in Sri Lanka's beautiful hill country.",
+      title: "Misty Mountains & Tea Trails",
+      description: "Discover the breathtaking hill country with its emerald tea plantations, colonial charm of Nuwara Eliya, and scenic train journeys through Ella.",
       image: "https://images.pexels.com/photos/1450353/pexels-photo-1450353.jpeg?auto=compress&cs=tinysrgb&w=800",
       duration: "5 Days",
       location: "Kandy, Ella, Nuwara Eliya",
-      price: 650,
-      originalPrice: 900,
+      price: 580,
+      originalPrice: 750,
       rating: 4.9,
-      reviews: 89,
+      reviews: 142,
       maxGuests: 6,
       highlights: ["Nine Arch Bridge", "Tea Factory Visit", "Little Adam's Peak"]
     },
     {
       id: 3,
-      title: "Coastal Paradise",
-      description: "Relax on pristine beaches, explore historic Galle Fort, and enjoy water sports along Sri Lanka's stunning coastline.",
+      title: "Golden Coast Adventure",
+      description: "Experience the pristine beaches of the south coast, explore the historic Galle Fort, and enjoy whale watching in Mirissa's crystal-clear waters.",
       image: "https://images.pexels.com/photos/1450361/pexels-photo-1450361.jpeg?auto=compress&cs=tinysrgb&w=800",
-      duration: "6 Days",
+      duration: "7 Days",
       location: "Galle, Mirissa, Unawatuna",
-      price: 750,
-      originalPrice: 1000,
+      price: 680,
+      originalPrice: 850,
       rating: 4.7,
-      reviews: 156,
+      reviews: 198,
       maxGuests: 10,
       highlights: ["Whale Watching", "Galle Fort", "Beach Activities"]
     }
@@ -202,7 +202,7 @@ const FeaturedPackages = () => {
                   </div>
                   <Link
                     to={`/booking/${pkg.id}`}
-                    className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white font-semibold py-2 px-4 rounded-lg transition-all duration-300 transform hover:scale-105 text-sm"
+                    className="bg-gradient-to-r from-orange-600 to-red-600 hover:from-orange-700 hover:to-red-700 text-white font-semibold py-2 px-4 rounded-lg transition-all duration-300 transform hover:scale-105 text-sm"
                   >
                     Book Now
                   </Link>
@@ -222,7 +222,7 @@ const FeaturedPackages = () => {
         >
           <Link
             to="/packages"
-            className="inline-flex items-center space-x-2 bg-white text-blue-600 border-2 border-blue-600 hover:bg-blue-600 hover:text-white font-semibold py-3 px-8 rounded-lg transition-all duration-300 transform hover:scale-105"
+            className="inline-flex items-center space-x-2 bg-white text-orange-600 border-2 border-orange-600 hover:bg-orange-600 hover:text-white font-semibold py-3 px-8 rounded-lg transition-all duration-300 transform hover:scale-105"
           >
             <span>View All Packages</span>
             <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">

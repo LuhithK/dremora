@@ -16,12 +16,12 @@ const Footer = () => {
           <div className="space-y-4">
             <div className="flex items-center space-x-2">
               <div className="w-10 h-10 bg-gradient-to-r from-primary-600 to-secondary-600 rounded-lg flex items-center justify-center">
-                <span className="text-white font-bold text-xl">O</span>
+                <span className="text-white font-bold text-xl">D</span>
               </div>
-              <span className="font-bold text-xl">Olanka Travels</span>
+              <span className="font-bold text-xl">Dremora Tours</span>
             </div>
             <p className="text-gray-300 text-sm leading-relaxed">
-              Your trusted partner for unforgettable travel experiences in Sri Lanka. 
+              Discover the pearl of the Indian Ocean with Dremora Tours. 
               We create memories that last a lifetime with our expertly crafted tour packages.
             </p>
             <div className="flex space-x-4">
@@ -77,18 +77,18 @@ const Footer = () => {
                 <MapPinIcon className="h-5 w-5 text-primary-400 mt-1 flex-shrink-0" />
                 <div>
                   <p className="text-gray-300 text-sm">
-                    123 Galle Road, Colombo 03,<br />
+                    No. 45, Galle Road, Colombo 04,<br />
                     Sri Lanka
                   </p>
                 </div>
               </div>
               <div className="flex items-center space-x-3">
                 <PhoneIcon className="h-5 w-5 text-primary-400 flex-shrink-0" />
-                <p className="text-gray-300 text-sm">+94 77 123 4567</p>
+                <p className="text-gray-300 text-sm">+94 11 234 5678</p>
               </div>
               <div className="flex items-center space-x-3">
                 <EnvelopeIcon className="h-5 w-5 text-primary-400 flex-shrink-0" />
-                <p className="text-gray-300 text-sm">info@olankatravels.com</p>
+                <p className="text-gray-300 text-sm">info@dremoratours.com</p>
               </div>
               <div className="flex items-center space-x-3">
                 <ClockIcon className="h-5 w-5 text-primary-400 flex-shrink-0" />
@@ -105,7 +105,7 @@ const Footer = () => {
         <div className="border-t border-gray-800 mt-8 pt-8">
           <div className="flex flex-col md:flex-row justify-between items-center">
             <p className="text-gray-400 text-sm">
-              © 2024 Olanka Travels. All rights reserved.
+              © 2024 Dremora Tours. All rights reserved.
             </p>
             <div className="flex space-x-6 mt-4 md:mt-0">
               <a href="#" className="text-gray-400 hover:text-white text-sm transition-colors">Privacy Policy</a>

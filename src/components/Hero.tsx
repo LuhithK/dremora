@@ -21,10 +21,10 @@ const Hero = () => {
       <div 
         className="absolute inset-0 bg-cover bg-center bg-no-repeat"
         style={{
-          backgroundImage: 'url("https://images.pexels.com/photos/1450360/pexels-photo-1450360.jpeg?auto=compress&cs=tinysrgb&w=1920&h=1080&fit=crop")'
+          backgroundImage: 'url("https://images.pexels.com/photos/2166559/pexels-photo-2166559.jpeg?auto=compress&cs=tinysrgb&w=1920&h=1080&fit=crop")'
         }}
       >
-        <div className="absolute inset-0 bg-gradient-to-r from-black/60 via-black/40 to-black/60"></div>
+        <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/50 to-black/70"></div>
       </div>
 
       {/* Content */}
@@ -41,10 +41,10 @@ const Hero = () => {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.2 }}
-              className="text-4xl md:text-6xl lg:text-7xl font-bold text-white leading-tight"
+              className="text-4xl md:text-5xl lg:text-6xl font-bold text-white leading-tight"
             >
-              Discover the Beauty of
-              <span className="block text-gradient bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
+              Experience the Magic of
+              <span className="block text-gradient bg-gradient-to-r from-yellow-400 to-orange-400 bg-clip-text text-transparent">
                 Sri Lanka
               </span>
             </motion.h1>
@@ -52,10 +52,11 @@ const Hero = () => {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.4 }}
-              className="text-xl md:text-2xl text-gray-200 max-w-3xl mx-auto leading-relaxed"
+              className="text-lg md:text-xl text-gray-200 max-w-3xl mx-auto leading-relaxed"
             >
-              Experience unforgettable adventures with our expertly crafted tour packages. 
-              From pristine beaches to ancient temples, create memories that last a lifetime.
+              Embark on extraordinary journeys through the pearl of the Indian Ocean. 
+              From ancient kingdoms to pristine beaches, wildlife safaris to cultural wonders - 
+              discover Sri Lanka with Dremora Tours.
             </motion.p>
           </div>
 
@@ -76,7 +77,7 @@ const Hero = () => {
                     <select
                       value={searchData.destination}
                       onChange={(e) => setSearchData({...searchData, destination: e.target.value})}
-                      className="w-full pl-10 pr-4 py-3 bg-white/20 border border-white/30 rounded-lg text-white placeholder-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                      className="w-full pl-10 pr-4 py-3 bg-white/90 border border-gray-300 rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent"
                     >
                       <option value="">Select destination</option>
                       <option value="kandy">Kandy</option>
@@ -84,6 +85,9 @@ const Hero = () => {
                       <option value="ella">Ella</option>
                       <option value="sigiriya">Sigiriya</option>
                       <option value="nuwara-eliya">Nuwara Eliya</option>
+                      <option value="anuradhapura">Anuradhapura</option>
+                      <option value="polonnaruwa">Polonnaruwa</option>
+                      <option value="yala">Yala National Park</option>
                     </select>
                   </div>
                 </div>
@@ -97,7 +101,7 @@ const Hero = () => {
                       type="date"
                       value={searchData.checkIn}
                       onChange={(e) => setSearchData({...searchData, checkIn: e.target.value})}
-                      className="w-full pl-10 pr-4 py-3 bg-white/20 border border-white/30 rounded-lg text-white placeholder-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                      className="w-full pl-10 pr-4 py-3 bg-white/90 border border-gray-300 rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent"
                     />
                   </div>
                 </div>
@@ -111,7 +115,7 @@ const Hero = () => {
                       type="date"
                       value={searchData.checkOut}
                       onChange={(e) => setSearchData({...searchData, checkOut: e.target.value})}
-                      className="w-full pl-10 pr-4 py-3 bg-white/20 border border-white/30 rounded-lg text-white placeholder-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                      className="w-full pl-10 pr-4 py-3 bg-white/90 border border-gray-300 rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent"
                     />
                   </div>
                 </div>
@@ -124,13 +128,14 @@ const Hero = () => {
                     <select
                       value={searchData.guests}
                       onChange={(e) => setSearchData({...searchData, guests: e.target.value})}
-                      className="w-full pl-10 pr-4 py-3 bg-white/20 border border-white/30 rounded-lg text-white placeholder-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                      className="w-full pl-10 pr-4 py-3 bg-white/90 border border-gray-300 rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent"
                     >
                       <option value="1">1 Guest</option>
                       <option value="2">2 Guests</option>
                       <option value="3">3 Guests</option>
                       <option value="4">4 Guests</option>
                       <option value="5+">5+ Guests</option>
+                      <option value="10+">Group (10+)</option>
                     </select>
                   </div>
                 </div>
@@ -140,10 +145,10 @@ const Hero = () => {
               <div className="mt-6">
                 <button
                   type="submit"
-                  className="w-full md:w-auto bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white font-semibold py-4 px-8 rounded-lg transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl flex items-center justify-center space-x-2"
+                  className="w-full md:w-auto bg-gradient-to-r from-orange-600 to-red-600 hover:from-orange-700 hover:to-red-700 text-white font-semibold py-4 px-8 rounded-lg transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl flex items-center justify-center space-x-2"
                 >
                   <MagnifyingGlassIcon className="h-5 w-5" />
-                  <span>Search Tours</span>
+                  <span>Find Your Adventure</span>
                 </button>
               </div>
             </form>
@@ -157,19 +162,19 @@ const Hero = () => {
             className="grid grid-cols-2 md:grid-cols-4 gap-8 max-w-3xl mx-auto"
           >
             <div className="text-center">
-              <div className="text-3xl md:text-4xl font-bold text-white">500+</div>
+              <div className="text-3xl md:text-4xl font-bold text-white">1000+</div>
               <div className="text-gray-300 text-sm">Happy Customers</div>
             </div>
             <div className="text-center">
-              <div className="text-3xl md:text-4xl font-bold text-white">50+</div>
+              <div className="text-3xl md:text-4xl font-bold text-white">75+</div>
               <div className="text-gray-300 text-sm">Tour Packages</div>
             </div>
             <div className="text-center">
-              <div className="text-3xl md:text-4xl font-bold text-white">15+</div>
+              <div className="text-3xl md:text-4xl font-bold text-white">25+</div>
               <div className="text-gray-300 text-sm">Destinations</div>
             </div>
             <div className="text-center">
-              <div className="text-3xl md:text-4xl font-bold text-white">5</div>
+              <div className="text-3xl md:text-4xl font-bold text-white">8+</div>
               <div className="text-gray-300 text-sm">Years Experience</div>
             </div>
           </motion.div>

@@ -6,34 +6,34 @@ const Testimonials = () => {
   const testimonials = [
     {
       id: 1,
-      name: "Sarah Johnson",
-      location: "New York, USA",
+      name: "Emily Watson",
+      location: "London, UK",
       rating: 5,
-      text: "Absolutely incredible experience! The cultural triangle tour exceeded all expectations. Our guide was knowledgeable and the accommodations were perfect.",
+      text: "Dremora Tours provided an absolutely magical experience! The ancient kingdoms tour was perfectly organized, and our guide's knowledge of Sri Lankan history was exceptional.",
       image: "https://images.pexels.com/photos/774909/pexels-photo-774909.jpeg?auto=compress&cs=tinysrgb&w=150&h=150&fit=crop&crop=face"
     },
     {
       id: 2,
-      name: "Michael Chen",
-      location: "Sydney, Australia",
+      name: "James Rodriguez",
+      location: "Toronto, Canada",
       rating: 5,
-      text: "The hill country escape was magical! From the tea plantations to the Nine Arch Bridge, every moment was picture-perfect. Highly recommend Olanka Travels!",
+      text: "The hill country tour was breathtaking! Every detail was perfectly planned, from the scenic train rides to the tea plantation visits. Highly recommend Dremora Tours!",
       image: "https://images.pexels.com/photos/1222271/pexels-photo-1222271.jpeg?auto=compress&cs=tinysrgb&w=150&h=150&fit=crop&crop=face"
     },
     {
       id: 3,
-      name: "Emma Thompson",
-      location: "London, UK",
+      name: "Sarah Mitchell",
+      location: "Melbourne, Australia",
       rating: 5,
-      text: "Professional service from start to finish. The coastal paradise package was exactly what we needed for our honeymoon. Thank you for the memories!",
+      text: "Our coastal adventure was absolutely perfect! The whale watching in Mirissa and exploring Galle Fort were unforgettable. Professional service throughout!",
       image: "https://images.pexels.com/photos/1239291/pexels-photo-1239291.jpeg?auto=compress&cs=tinysrgb&w=150&h=150&fit=crop&crop=face"
     },
     {
       id: 4,
-      name: "David Rodriguez",
-      location: "Madrid, Spain",
+      name: "Michael Thompson",
+      location: "New York, USA",
       rating: 5,
-      text: "Outstanding organization and attention to detail. The wildlife safari was the highlight of our trip. We saw elephants, leopards, and so much more!",
+      text: "Exceptional service and attention to detail! The wildlife safari exceeded all expectations. We spotted leopards, elephants, and countless exotic birds. Amazing!",
       image: "https://images.pexels.com/photos/1043471/pexels-photo-1043471.jpeg?auto=compress&cs=tinysrgb&w=150&h=150&fit=crop&crop=face"
     }
   ];
@@ -129,10 +129,10 @@ const Testimonials = () => {
           viewport={{ once: true }}
           className="mt-20"
         >
-          <div className="bg-gradient-to-r from-blue-600 to-purple-600 rounded-3xl p-12 text-white">
+          <div className="bg-gradient-to-r from-orange-600 to-red-600 rounded-3xl p-12 text-white">
             <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
               <div>
-                <div className="text-4xl md:text-5xl font-bold mb-2">500+</div>
+                <div className="text-4xl md:text-5xl font-bold mb-2">1000+</div>
                 <div className="text-blue-100">Happy Customers</div>
               </div>
               <div>
@@ -140,11 +140,11 @@ const Testimonials = () => {
                 <div className="text-blue-100">Average Rating</div>
               </div>
               <div>
-                <div className="text-4xl md:text-5xl font-bold mb-2">50+</div>
+                <div className="text-4xl md:text-5xl font-bold mb-2">75+</div>
                 <div className="text-blue-100">Tour Packages</div>
               </div>
               <div>
-                <div className="text-4xl md:text-5xl font-bold mb-2">15+</div>
+                <div className="text-4xl md:text-5xl font-bold mb-2">25+</div>
                 <div className="text-blue-100">Destinations</div>
               </div>
             </div>

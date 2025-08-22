@@ -34,30 +34,30 @@ const About = () => {
 
   const team = [
     {
-      name: "Rajesh Perera",
+      name: "Samantha Fernando",
       role: "Founder & CEO",
       image: "https://images.pexels.com/photos/1222271/pexels-photo-1222271.jpeg?auto=compress&cs=tinysrgb&w=300&h=300&fit=crop&crop=face",
-      description: "With over 15 years in the tourism industry, Rajesh founded Olanka Travels to share his love for Sri Lanka with the world."
+      description: "With over 12 years in the tourism industry, Samantha founded Dremora Tours to showcase the authentic beauty of Sri Lanka to the world."
     },
     {
-      name: "Priya Fernando",
+      name: "Arjun Silva",
       role: "Head of Operations",
-      image: "https://images.pexels.com/photos/774909/pexels-photo-774909.jpeg?auto=compress&cs=tinysrgb&w=300&h=300&fit=crop&crop=face",
-      description: "Priya ensures every tour runs smoothly with her exceptional organizational skills and attention to detail."
+      image: "https://images.pexels.com/photos/1043471/pexels-photo-1043471.jpeg?auto=compress&cs=tinysrgb&w=300&h=300&fit=crop&crop=face",
+      description: "Arjun ensures every tour runs smoothly with his exceptional organizational skills and passion for customer satisfaction."
     },
     {
-      name: "Kumar Silva",
+      name: "Nisha Perera",
       role: "Senior Tour Guide",
-      image: "https://images.pexels.com/photos/1043471/pexels-photo-1043471.jpeg?auto=compress&cs=tinysrgb&w=300&h=300&fit=crop&crop=face",
-      description: "Kumar's extensive knowledge of Sri Lankan history and culture makes every tour an educational adventure."
+      image: "https://images.pexels.com/photos/774909/pexels-photo-774909.jpeg?auto=compress&cs=tinysrgb&w=300&h=300&fit=crop&crop=face",
+      description: "Nisha's extensive knowledge of Sri Lankan history, culture, and wildlife makes every tour an unforgettable educational journey."
     }
   ];
 
   const achievements = [
-    { number: "500+", label: "Happy Customers" },
-    { number: "50+", label: "Tour Packages" },
-    { number: "15+", label: "Destinations" },
-    { number: "5", label: "Years Experience" }
+    { number: "1000+", label: "Happy Customers" },
+    { number: "75+", label: "Tour Packages" },
+    { number: "25+", label: "Destinations" },
+    { number: "8+", label: "Years Experience" }
   ];
 
   return (
@@ -72,7 +72,7 @@ const About = () => {
             className="text-center"
           >
             <h1 className="text-4xl md:text-6xl font-bold mb-6">
-              About Olanka Travels
+              About Dremora Tours
             </h1>
             <p className="text-xl md:text-2xl max-w-3xl mx-auto leading-relaxed">
               Your trusted partner for unforgettable Sri Lankan adventures. 
@@ -97,13 +97,13 @@ const About = () => {
               </h2>
               <div className="space-y-4 text-gray-600 leading-relaxed">
                 <p>
-                  Founded in 2019, Olanka Travels began as a dream to share the incredible 
+                  Founded in 2016, Dremora Tours began as a dream to share the incredible 
                   beauty and rich culture of Sri Lanka with travelers from around the world. 
                   What started as a small family business has grown into one of the most 
                   trusted travel companies in Sri Lanka.
                 </p>
                 <p>
-                  Our founder, Rajesh Perera, grew up exploring every corner of this beautiful 
+                  Our founder, Samantha Fernando, grew up exploring every corner of this beautiful 
                   island nation. His passion for travel and deep love for Sri Lankan culture 
                   inspired him to create authentic experiences that go beyond typical tourist attractions.
                 </p>
@@ -128,7 +128,7 @@ const About = () => {
               />
               <div className="absolute -bottom-6 -left-6 bg-white p-6 rounded-xl shadow-lg">
                 <div className="text-center">
-                  <div className="text-3xl font-bold text-blue-600">5+</div>
+                  <div className="text-3xl font-bold text-orange-600">8+</div>
                   <div className="text-gray-600 text-sm">Years of Excellence</div>
                 </div>
               </div>
@@ -165,7 +165,7 @@ const About = () => {
                 viewport={{ once: true }}
                 className="text-center p-6 bg-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2"
               >
-                <div className="w-16 h-16 bg-gradient-to-r from-blue-600 to-purple-600 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                <div className="w-16 h-16 bg-gradient-to-r from-orange-600 to-red-600 rounded-2xl flex items-center justify-center mx-auto mb-4">
                   <value.icon className="h-8 w-8 text-white" />
                 </div>
                 <h3 className="text-xl font-bold text-gray-900 mb-2">{value.title}</h3>
@@ -220,6 +220,7 @@ const About = () => {
 
       {/* Achievements */}
       <section className="py-20 bg-gradient-to-r from-blue-600 to-purple-600 text-white">
+      <section className="py-20 bg-gradient-to-r from-orange-600 to-red-600 text-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -277,7 +278,7 @@ const About = () => {
               viewport={{ once: true }}
             >
               <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6">
-                Why Choose Olanka Travels?
+                Why Choose Dremora Tours?
               </h2>
               <div className="space-y-4">
                 {[

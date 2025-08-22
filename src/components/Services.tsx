@@ -76,7 +76,7 @@ const Services = () => {
           className="text-center mb-16"
         >
           <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
-            Why Choose Olanka Travels?
+            Why Choose Dremora Tours?
           </h2>
           <p className="text-xl text-gray-600 max-w-3xl mx-auto">
             We provide comprehensive travel services to ensure your Sri Lankan adventure 
@@ -100,13 +100,13 @@ const Services = () => {
             >
               <div className="flex flex-col items-center text-center space-y-4">
                 {/* Icon */}
-                <div className="w-16 h-16 bg-gradient-to-r from-blue-600 to-purple-600 rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+                <div className="w-16 h-16 bg-gradient-to-r from-orange-600 to-red-600 rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
                   <service.icon className="h-8 w-8 text-white" />
                 </div>
 
                 {/* Content */}
                 <div className="space-y-2">
-                  <h3 className="text-xl font-bold text-gray-900 group-hover:text-blue-600 transition-colors duration-300">
+                  <h3 className="text-xl font-bold text-gray-900 group-hover:text-orange-600 transition-colors duration-300">
                     {service.title}
                   </h3>
                   <p className="text-gray-600 leading-relaxed">
@@ -126,7 +126,7 @@ const Services = () => {
           viewport={{ once: true }}
           className="mt-20 text-center"
         >
-          <div className="bg-gradient-to-r from-blue-600 to-purple-600 rounded-3xl p-12 text-white">
+          <div className="bg-gradient-to-r from-orange-600 to-red-600 rounded-3xl p-12 text-white">
             <h3 className="text-3xl md:text-4xl font-bold mb-4">
               Ready to Start Your Adventure?
             </h3>
@@ -135,10 +135,10 @@ const Services = () => {
               budget, and travel style for an unforgettable Sri Lankan experience.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <button className="bg-white text-blue-600 hover:bg-gray-100 font-semibold py-3 px-8 rounded-lg transition-all duration-300 transform hover:scale-105">
+              <button className="bg-white text-orange-600 hover:bg-gray-100 font-semibold py-3 px-8 rounded-lg transition-all duration-300 transform hover:scale-105">
                 Plan My Trip
               </button>
-              <button className="border-2 border-white text-white hover:bg-white hover:text-blue-600 font-semibold py-3 px-8 rounded-lg transition-all duration-300 transform hover:scale-105">
+              <button className="border-2 border-white text-white hover:bg-white hover:text-orange-600 font-semibold py-3 px-8 rounded-lg transition-all duration-300 transform hover:scale-105">
                 Contact Us
               </button>
             </div>

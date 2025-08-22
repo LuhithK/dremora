@@ -31,11 +31,11 @@ const Navbar = () => {
           <div className="flex items-center space-x-6">
             <div className="flex items-center space-x-2">
               <PhoneIcon className="h-4 w-4" />
-              <span>+94 77 123 4567</span>
+              <span>+94 11 234 5678</span>
             </div>
             <div className="flex items-center space-x-2">
               <EnvelopeIcon className="h-4 w-4" />
-              <span>info@olankatravels.com</span>
+              <span>info@dremoratours.com</span>
             </div>
           </div>
           <div className="hidden md:block">
@@ -53,12 +53,12 @@ const Navbar = () => {
             {/* Logo */}
             <Link to="/" className="flex items-center space-x-2">
               <div className="w-10 h-10 bg-gradient-to-r from-primary-600 to-secondary-600 rounded-lg flex items-center justify-center">
-                <span className="text-white font-bold text-xl">O</span>
+                <span className="text-white font-bold text-xl">D</span>
               </div>
               <span className={`font-bold text-xl ${
                 isScrolled ? 'text-gray-900' : 'text-white'
               }`}>
-                Olanka Travels
+                Dremora Tours
               </span>
             </Link>
 
