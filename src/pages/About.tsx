@@ -72,7 +72,7 @@ const About = () => {
             className="text-center"
           >
             <h1 className="text-4xl md:text-6xl font-bold mb-6">
-              About Dremora Tours
+              About Olanka Travels
             </h1>
             <p className="text-xl md:text-2xl max-w-3xl mx-auto leading-relaxed">
               Your trusted partner for unforgettable Sri Lankan adventures. 
@@ -97,7 +97,7 @@ const About = () => {
               </h2>
               <div className="space-y-4 text-gray-600 leading-relaxed">
                 <p>
-                  Founded in 2016, Olanka Travels began as a dream to share the incredible 
+                  Founded in 2016, Dremora Tours began as a dream to share the incredible 
                   beauty and rich culture of Sri Lanka with travelers from around the world. 
                   What started as a small family business has grown into one of the most 
                   trusted travel companies in Sri Lanka.
