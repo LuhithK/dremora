@@ -21,10 +21,10 @@ const Hero = () => {
       <div 
         className="absolute inset-0 bg-cover bg-center bg-no-repeat"
         style={{
-          backgroundImage: 'url("https://images.pexels.com/photos/2166559/pexels-photo-2166559.jpeg?auto=compress&cs=tinysrgb&w=1920&h=1080&fit=crop")'
+          backgroundImage: 'url("https://images.pexels.com/photos/1450360/pexels-photo-1450360.jpeg?auto=compress&cs=tinysrgb&w=1920&h=1080&fit=crop")'
         }}
       >
-        <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/50 to-black/70"></div>
+        <div className="absolute inset-0 bg-gradient-to-r from-black/60 via-black/40 to-black/60"></div>
       </div>
 
       {/* Content */}
@@ -43,9 +43,9 @@ const Hero = () => {
               transition={{ duration: 0.8, delay: 0.2 }}
               className="text-4xl md:text-5xl lg:text-6xl font-bold text-white leading-tight"
             >
-              Experience the Magic of
+              Discover Sri Lanka with
               <span className="block text-gradient bg-gradient-to-r from-yellow-400 to-orange-400 bg-clip-text text-transparent">
-                Sri Lanka
+                Olanka Travels
               </span>
             </motion.h1>
             <motion.p 
@@ -54,9 +54,9 @@ const Hero = () => {
               transition={{ duration: 0.8, delay: 0.4 }}
               className="text-lg md:text-xl text-gray-200 max-w-3xl mx-auto leading-relaxed"
             >
-              Embark on extraordinary journeys through the pearl of the Indian Ocean. 
-              From ancient kingdoms to pristine beaches, wildlife safaris to cultural wonders - 
-              discover Sri Lanka with Dremora Tours.
+              Your gateway to unforgettable Sri Lankan adventures. Experience the island's rich culture, 
+              stunning landscapes, and warm hospitality with our expertly crafted tour packages and 
+              personalized service.
             </motion.p>
           </div>
 
@@ -71,7 +71,7 @@ const Hero = () => {
               <div className="grid grid-cols-1 md:grid-cols-4 gap-4 md:gap-6">
                 {/* Destination */}
                 <div className="space-y-2">
-                  <label className="block text-white text-sm font-medium">Destination</label>
+                  <label className="block text-white text-sm font-medium">Where to?</label>
                   <div className="relative">
                     <MapPinIcon className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400" />
                     <select
@@ -148,34 +148,30 @@ const Hero = () => {
                   className="w-full md:w-auto bg-gradient-to-r from-orange-600 to-red-600 hover:from-orange-700 hover:to-red-700 text-white font-semibold py-4 px-8 rounded-lg transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl flex items-center justify-center space-x-2"
                 >
                   <MagnifyingGlassIcon className="h-5 w-5" />
-                  <span>Find Your Adventure</span>
+                  <span>Search Tours</span>
                 </button>
               </div>
             </form>
           </motion.div>
 
-          {/* Stats */}
+          {/* Quick Info Cards */}
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.8 }}
-            className="grid grid-cols-2 md:grid-cols-4 gap-8 max-w-3xl mx-auto"
+            className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-4xl mx-auto"
           >
-            <div className="text-center">
-              <div className="text-3xl md:text-4xl font-bold text-white">1000+</div>
-              <div className="text-gray-300 text-sm">Happy Customers</div>
+            <div className="bg-white/10 backdrop-blur-md rounded-xl p-6 text-center border border-white/20">
+              <div className="text-2xl font-bold text-white mb-2">Best Price Guarantee</div>
+              <div className="text-gray-300 text-sm">We match any competitor's price</div>
             </div>
-            <div className="text-center">
-              <div className="text-3xl md:text-4xl font-bold text-white">75+</div>
-              <div className="text-gray-300 text-sm">Tour Packages</div>
+            <div className="bg-white/10 backdrop-blur-md rounded-xl p-6 text-center border border-white/20">
+              <div className="text-2xl font-bold text-white mb-2">24/7 Support</div>
+              <div className="text-gray-300 text-sm">Round the clock assistance</div>
             </div>
-            <div className="text-center">
-              <div className="text-3xl md:text-4xl font-bold text-white">25+</div>
-              <div className="text-gray-300 text-sm">Destinations</div>
-            </div>
-            <div className="text-center">
-              <div className="text-3xl md:text-4xl font-bold text-white">8+</div>
-              <div className="text-gray-300 text-sm">Years Experience</div>
+            <div className="bg-white/10 backdrop-blur-md rounded-xl p-6 text-center border border-white/20">
+              <div className="text-2xl font-bold text-white mb-2">Expert Guides</div>
+              <div className="text-gray-300 text-sm">Local knowledge & expertise</div>
             </div>
           </motion.div>
         </motion.div>

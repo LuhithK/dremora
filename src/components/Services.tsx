@@ -13,23 +13,23 @@ const Services = () => {
   const services = [
     {
       icon: MapIcon,
-      title: "Expert Tour Guides",
-      description: "Professional local guides with deep knowledge of Sri Lankan culture, history, and hidden gems."
+      title: "Customized Tours",
+      description: "Tailor-made itineraries designed to match your interests, budget, and travel preferences."
     },
     {
       icon: TruckIcon,
-      title: "Comfortable Transportation",
-      description: "Air-conditioned vehicles with experienced drivers for safe and comfortable journeys."
+      title: "Transportation",
+      description: "Comfortable, air-conditioned vehicles with experienced drivers for safe journeys."
     },
     {
       icon: HomeIcon,
-      title: "Premium Accommodations",
-      description: "Carefully selected hotels and resorts that offer comfort, quality, and authentic experiences."
+      title: "Accommodation",
+      description: "Carefully selected hotels and resorts offering comfort, quality, and authentic experiences."
     },
     {
       icon: CameraIcon,
-      title: "Photography Tours",
-      description: "Specialized photography tours to capture the most scenic and culturally rich locations."
+      title: "Guided Tours",
+      description: "Expert local guides with deep knowledge of Sri Lankan culture, history, and attractions."
     },
     {
       icon: ShieldCheckIcon,
@@ -39,7 +39,7 @@ const Services = () => {
     {
       icon: ClockIcon,
       title: "24/7 Support",
-      description: "Round-the-clock customer support to assist you throughout your journey in Sri Lanka."
+      description: "Round-the-clock customer support to assist you throughout your Sri Lankan journey."
     }
   ];
 
@@ -75,8 +75,8 @@ const Services = () => {
           viewport={{ once: true }}
           className="text-center mb-16"
         >
-          <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
-            Why Choose Dremora Tours?
+          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+            Our Services
           </h2>
           <p className="text-xl text-gray-600 max-w-3xl mx-auto">
             We provide comprehensive travel services to ensure your Sri Lankan adventure 
@@ -128,7 +128,7 @@ const Services = () => {
         >
           <div className="bg-gradient-to-r from-orange-600 to-red-600 rounded-3xl p-12 text-white">
             <h3 className="text-3xl md:text-4xl font-bold mb-4">
-              Ready to Start Your Adventure?
+              Ready to Explore Sri Lanka?
             </h3>
             <p className="text-xl mb-8 opacity-90 max-w-2xl mx-auto">
               Let us create a personalized itinerary that matches your interests, 

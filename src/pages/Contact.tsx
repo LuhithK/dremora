@@ -51,19 +51,19 @@ const Contact = () => {
     {
       icon: MapPinIcon,
       title: "Visit Our Office",
-      details: ["123 Galle Road, Colombo 03", "Sri Lanka"],
+      details: ["No. 45, Galle Road, Colombo 04", "Sri Lanka"],
       color: "text-blue-600"
     },
     {
       icon: PhoneIcon,
       title: "Call Us",
-      details: ["+94 77 123 4567", "+94 11 234 5678"],
+      details: ["+94 11 234 5678", "+94 77 987 6543"],
       color: "text-green-600"
     },
     {
       icon: EnvelopeIcon,
       title: "Email Us",
-      details: ["info@olankatravels.com", "bookings@olankatravels.com"],
+      details: ["info@olankatravels.com", "tours@olankatravels.com"],
       color: "text-purple-600"
     },
     {

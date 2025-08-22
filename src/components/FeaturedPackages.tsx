@@ -14,45 +14,45 @@ const FeaturedPackages = () => {
   const packages = [
     {
       id: 1,
-      title: "Ancient Kingdoms Explorer",
-      description: "Journey through Sri Lanka's cultural triangle visiting the magnificent Sigiriya Rock Fortress, ancient Polonnaruwa ruins, and sacred Anuradhapura.",
+      title: "Cultural Triangle Tour",
+      description: "Explore Sri Lanka's ancient heritage with visits to Sigiriya Rock Fortress, Polonnaruwa ancient city, and the sacred city of Anuradhapura.",
       image: "https://images.pexels.com/photos/2166559/pexels-photo-2166559.jpeg?auto=compress&cs=tinysrgb&w=800",
-      duration: "6 Days",
+      duration: "5 Days / 4 Nights",
       location: "Sigiriya, Polonnaruwa",
-      price: 750,
-      originalPrice: 950,
+      price: 450,
+      originalPrice: 550,
       rating: 4.8,
       reviews: 156,
       maxGuests: 8,
-      highlights: ["Ancient Sigiriya Rock", "Temple of the Tooth", "Elephant Safari"]
+      highlights: ["Sigiriya Rock Fortress", "Ancient Polonnaruwa", "Minneriya Safari"]
     },
     {
       id: 2,
-      title: "Misty Mountains & Tea Trails",
-      description: "Discover the breathtaking hill country with its emerald tea plantations, colonial charm of Nuwara Eliya, and scenic train journeys through Ella.",
+      title: "Hill Country Experience",
+      description: "Journey through misty mountains, lush tea plantations, and charming hill stations including Kandy, Nuwara Eliya, and Ella.",
       image: "https://images.pexels.com/photos/1450353/pexels-photo-1450353.jpeg?auto=compress&cs=tinysrgb&w=800",
-      duration: "5 Days",
+      duration: "4 Days / 3 Nights",
       location: "Kandy, Ella, Nuwara Eliya",
-      price: 580,
-      originalPrice: 750,
+      price: 380,
+      originalPrice: 480,
       rating: 4.9,
       reviews: 142,
       maxGuests: 6,
-      highlights: ["Nine Arch Bridge", "Tea Factory Visit", "Little Adam's Peak"]
+      highlights: ["Temple of Tooth", "Tea Plantation", "Nine Arch Bridge"]
     },
     {
       id: 3,
-      title: "Golden Coast Adventure",
-      description: "Experience the pristine beaches of the south coast, explore the historic Galle Fort, and enjoy whale watching in Mirissa's crystal-clear waters.",
+      title: "Southern Coast Tour",
+      description: "Discover pristine beaches, historic Galle Fort, and enjoy whale watching along Sri Lanka's stunning southern coastline.",
       image: "https://images.pexels.com/photos/1450361/pexels-photo-1450361.jpeg?auto=compress&cs=tinysrgb&w=800",
-      duration: "7 Days",
+      duration: "3 Days / 2 Nights",
       location: "Galle, Mirissa, Unawatuna",
-      price: 680,
-      originalPrice: 850,
+      price: 280,
+      originalPrice: 350,
       rating: 4.7,
       reviews: 198,
       maxGuests: 10,
-      highlights: ["Whale Watching", "Galle Fort", "Beach Activities"]
+      highlights: ["Galle Dutch Fort", "Whale Watching", "Beach Relaxation"]
     }
   ];
 
