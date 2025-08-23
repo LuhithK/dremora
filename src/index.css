@@ -31,6 +31,12 @@
   }
 }
 
+@layer utilities {
+  .border-border {
+    border: 1px solid #ccc;
+  }
+}
+
 html {
   scroll-behavior: smooth;
 }
