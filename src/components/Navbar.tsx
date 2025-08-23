@@ -5,16 +5,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const [isScrolled, setIsScrolled] = useState(false);
   const location = useLocation();
-
-  useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 50);
-    };
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
 
   const navItems = [
     { name: 'Home', path: '/' },
@@ -45,9 +36,7 @@ const Navbar = () => {
       </div>
 
       {/* Main Navigation */}
-      <nav className={`w-full z-50 transition-all duration-300 ${
-        isScrolled ? 'bg-white shadow-lg' : 'bg-white shadow-md'
-      }`}>
+      <nav className="w-full bg-white shadow-md">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
             {/* Logo */}
@@ -55,9 +44,7 @@ const Navbar = () => {
               <div className="w-10 h-10 bg-gradient-to-r from-primary-600 to-secondary-600 rounded-lg flex items-center justify-center">
                 <span className="text-white font-bold text-xl">D</span>
               </div>
-              <span className={`font-bold text-xl ${
-                isScrolled ? 'text-gray-900' : 'text-white'
-              }`}>
+              <span className="font-bold text-xl text-gray-900">
                 Dremora Tours
               </span>
             </Link>
@@ -70,12 +57,8 @@ const Navbar = () => {
                   to={item.path}
                   className={`font-medium transition-colors duration-200 ${
                     location.pathname === item.path
-                      ? isScrolled
-                        ? 'text-primary-600'
-                        : 'text-white border-b-2 border-white'
-                      : isScrolled
-                      ? 'text-gray-700 hover:text-primary-600'
-                      : 'text-white/90 hover:text-white'
+                      ? 'text-primary-600'
+                      : 'text-gray-700 hover:text-primary-600'
                   }`}
                 >
                   {item.name}
@@ -90,9 +73,7 @@ const Navbar = () => {
             <div className="md:hidden">
               <button
                 onClick={() => setIsOpen(!isOpen)}
-                className={`p-2 rounded-md ${
-                  isScrolled ? 'text-gray-700' : 'text-white'
-                }`}
+                className="p-2 rounded-md text-gray-700"
               >
                 {isOpen ? (
                   <XMarkIcon className="h-6 w-6" />
