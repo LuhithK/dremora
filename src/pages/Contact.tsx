@@ -63,7 +63,7 @@ const Contact = () => {
     {
       icon: EnvelopeIcon,
       title: "Email Us",
-      details: ["info@olankatravels.com", "tours@olankatravels.com"],
+      details: ["info@dremoratours.com", "tours@dremoratours.com"],
       color: "text-purple-600"
     },
     {

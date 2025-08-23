@@ -45,7 +45,7 @@ const Hero = () => {
             >
               Discover Sri Lanka with
               <span className="block text-gradient bg-gradient-to-r from-yellow-400 to-orange-400 bg-clip-text text-transparent">
-                Olanka Travels
+                Dremora Tours
               </span>
             </motion.h1>
             <motion.p 

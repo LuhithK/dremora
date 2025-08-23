@@ -35,7 +35,7 @@ const Navbar = () => {
             </div>
             <div className="flex items-center space-x-2">
               <EnvelopeIcon className="h-4 w-4" />
-              <span>info@olankatravels.com</span>
+              <span>info@dremoratours.com</span>
             </div>
           </div>
           <div className="hidden md:block">
@@ -58,7 +58,7 @@ const Navbar = () => {
               <span className={`font-bold text-xl ${
                 isScrolled ? 'text-gray-900' : 'text-white'
               }`}>
-                Olanka Travels
+                Dremora Tours
               </span>
             </Link>
 

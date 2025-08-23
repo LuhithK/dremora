@@ -72,7 +72,7 @@ const About = () => {
             className="text-center"
           >
             <h1 className="text-4xl md:text-6xl font-bold mb-6">
-              About Olanka Travels
+              About Dremora Tours
             </h1>
             <p className="text-xl md:text-2xl max-w-3xl mx-auto leading-relaxed">
               Your trusted partner for unforgettable Sri Lankan adventures. 
@@ -277,7 +277,7 @@ const About = () => {
               viewport={{ once: true }}
             >
               <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6">
-                Why Choose Olanka Travels?
+                Why Choose Dremora Tours?
               </h2>
               <div className="space-y-4">
                 {[
