@@ -226,7 +226,7 @@ const BookingForm = () => {
                           value={bookingData.checkIn}
                           onChange={handleInputChange}
                           required
-                          className="w-full py-3 px-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                          className="w-full py-3 px-4 border-0 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 shadow-sm bg-gray-50"
                         />
                       </div>
                       
@@ -240,7 +240,7 @@ const BookingForm = () => {
                           value={bookingData.checkOut}
                           onChange={handleInputChange}
                           required
-                          className="w-full py-3 px-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                          className="w-full py-3 px-4 border-0 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 shadow-sm bg-gray-50"
                         />
                       </div>
                     </div>
@@ -253,7 +253,7 @@ const BookingForm = () => {
                         name="guests"
                         value={bookingData.guests}
                         onChange={handleInputChange}
-                        className="w-full py-3 px-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                        className="w-full py-3 px-4 border-0 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 shadow-sm bg-gray-50"
                       >
                         {[1,2,3,4,5,6,7,8,9,10].map(num => (
                           <option key={num} value={num}>{num} Guest{num > 1 ? 's' : ''}</option>
@@ -270,7 +270,7 @@ const BookingForm = () => {
                         value={bookingData.specialRequests}
                         onChange={handleInputChange}
                         rows={4}
-                        className="w-full py-3 px-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none"
+                        className="w-full py-3 px-4 border-0 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 shadow-sm bg-gray-50 resize-none"
                         placeholder="Any special dietary requirements, accessibility needs, or other requests..."
                       />
                     </div>
@@ -293,7 +293,7 @@ const BookingForm = () => {
                           value={bookingData.firstName}
                           onChange={handleInputChange}
                           required
-                          className="w-full py-3 px-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                          className="w-full py-3 px-4 border-0 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 shadow-sm bg-gray-50"
                           placeholder="John"
                         />
                       </div>
@@ -308,7 +308,7 @@ const BookingForm = () => {
                           value={bookingData.lastName}
                           onChange={handleInputChange}
                           required
-                          className="w-full py-3 px-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                          className="w-full py-3 px-4 border-0 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 shadow-sm bg-gray-50"
                           placeholder="Doe"
                         />
                       </div>
@@ -324,7 +324,7 @@ const BookingForm = () => {
                         value={bookingData.email}
                         onChange={handleInputChange}
                         required
-                        className="w-full py-3 px-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                        className="w-full py-3 px-4 border-0 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 shadow-sm bg-gray-50"
                         placeholder="john@example.com"
                       />
                     </div>
@@ -340,7 +340,7 @@ const BookingForm = () => {
                           value={bookingData.phone}
                           onChange={handleInputChange}
                           required
-                          className="w-full py-3 px-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                          className="w-full py-3 px-4 border-0 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 shadow-sm bg-gray-50"
                           placeholder="+1 234 567 8900"
                         />
                       </div>
@@ -354,7 +354,7 @@ const BookingForm = () => {
                           value={bookingData.country}
                           onChange={handleInputChange}
                           required
-                          className="w-full py-3 px-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                          className="w-full py-3 px-4 border-0 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 shadow-sm bg-gray-50"
                         >
                           <option value="">Select Country</option>
                           <option value="US">United States</option>
@@ -387,7 +387,7 @@ const BookingForm = () => {
                         value={bookingData.cardNumber}
                         onChange={handleInputChange}
                         required
-                        className="w-full py-3 px-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                        className="w-full py-3 px-4 border-0 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 shadow-sm bg-gray-50"
                         placeholder="1234 5678 9012 3456"
                       />
                     </div>
@@ -403,7 +403,7 @@ const BookingForm = () => {
                           value={bookingData.expiryDate}
                           onChange={handleInputChange}
                           required
-                          className="w-full py-3 px-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                          className="w-full py-3 px-4 border-0 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 shadow-sm bg-gray-50"
                           placeholder="MM/YY"
                         />
                       </div>
@@ -418,7 +418,7 @@ const BookingForm = () => {
                           value={bookingData.cvv}
                           onChange={handleInputChange}
                           required
-                          className="w-full py-3 px-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                          className="w-full py-3 px-4 border-0 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 shadow-sm bg-gray-50"
                           placeholder="123"
                         />
                       </div>
@@ -434,7 +434,7 @@ const BookingForm = () => {
                         value={bookingData.cardName}
                         onChange={handleInputChange}
                         required
-                        className="w-full py-3 px-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                        className="w-full py-3 px-4 border-0 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 shadow-sm bg-gray-50"
                         placeholder="John Doe"
                       />
                     </div>
