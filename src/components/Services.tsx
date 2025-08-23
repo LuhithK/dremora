@@ -96,7 +96,7 @@ const Services = () => {
             <motion.div
               key={index}
               variants={itemVariants}
-              className="group p-8 bg-gray-50 rounded-2xl hover:bg-white hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2"
+              className="group p-8 bg-gray-50 rounded-2xl hover:bg-white hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2 border-0"
             >
               <div className="flex flex-col items-center text-center space-y-4">
                 {/* Icon */}

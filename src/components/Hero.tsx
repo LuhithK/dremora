@@ -77,7 +77,7 @@ const Hero = () => {
                     <select
                       value={searchData.destination}
                       onChange={(e) => setSearchData({...searchData, destination: e.target.value})}
-                      className="w-full pl-10 pr-4 py-3 bg-white/90 border border-gray-300 rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent"
+                      className="w-full pl-10 pr-4 py-3 bg-white/90 border-0 rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-orange-500 shadow-sm"
                     >
                       <option value="">Select destination</option>
                       <option value="kandy">Kandy</option>
@@ -101,7 +101,7 @@ const Hero = () => {
                       type="date"
                       value={searchData.checkIn}
                       onChange={(e) => setSearchData({...searchData, checkIn: e.target.value})}
-                      className="w-full pl-10 pr-4 py-3 bg-white/90 border border-gray-300 rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent"
+                      className="w-full pl-10 pr-4 py-3 bg-white/90 border-0 rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-orange-500 shadow-sm"
                     />
                   </div>
                 </div>
@@ -115,7 +115,7 @@ const Hero = () => {
                       type="date"
                       value={searchData.checkOut}
                       onChange={(e) => setSearchData({...searchData, checkOut: e.target.value})}
-                      className="w-full pl-10 pr-4 py-3 bg-white/90 border border-gray-300 rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent"
+                      className="w-full pl-10 pr-4 py-3 bg-white/90 border-0 rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-orange-500 shadow-sm"
                     />
                   </div>
                 </div>
@@ -128,7 +128,7 @@ const Hero = () => {
                     <select
                       value={searchData.guests}
                       onChange={(e) => setSearchData({...searchData, guests: e.target.value})}
-                      className="w-full pl-10 pr-4 py-3 bg-white/90 border border-gray-300 rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent"
+                      className="w-full pl-10 pr-4 py-3 bg-white/90 border-0 rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-orange-500 shadow-sm"
                     >
                       <option value="1">1 Guest</option>
                       <option value="2">2 Guests</option>

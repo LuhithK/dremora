@@ -91,7 +91,7 @@ const Testimonials = () => {
             <motion.div
               key={testimonial.id}
               variants={itemVariants}
-              className="bg-white rounded-2xl p-8 shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2"
+              className="bg-white rounded-2xl p-8 shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 border-0"
             >
               {/* Rating */}
               <div className="flex items-center mb-4">

@@ -109,7 +109,7 @@ const FeaturedPackages = () => {
             <motion.div
               key={pkg.id}
               variants={itemVariants}
-              className="bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 overflow-hidden group"
+              className="bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 overflow-hidden group border-0"
             >
               {/* Image */}
               <div className="relative overflow-hidden">
