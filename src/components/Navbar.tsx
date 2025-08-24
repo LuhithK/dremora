@@ -57,20 +57,11 @@ const Navbar = () => {
           <div className="flex justify-between items-center h-20">
             {/* Premium Logo */}
             <Link to="/" className="flex items-center space-x-3 group">
-              <div className="relative">
-                <div className="w-12 h-12 bg-gradient-to-br from-amber-600 via-orange-600 to-red-600 rounded-xl flex items-center justify-center shadow-lg group-hover:shadow-xl transition-all duration-300 transform group-hover:scale-105">
-                  <span className="text-white font-bold text-xl tracking-wider">D</span>
-                </div>
-                <div className="absolute -inset-1 bg-gradient-to-br from-amber-600 via-orange-600 to-red-600 rounded-xl opacity-20 group-hover:opacity-30 transition-opacity duration-300 blur"></div>
-              </div>
-              <div className="flex flex-col">
-                <span className="font-bold text-2xl text-slate-800 tracking-tight group-hover:text-orange-600 transition-colors duration-300">
-                  Dremora Tours
-                </span>
-                <span className="text-xs text-slate-500 font-light tracking-widest uppercase">
-                  Luxury Travel
-                </span>
-              </div>
+              <img
+                src="/src/assets/images/logo/dremoralogo.png"
+                alt="Dremora Tours"
+                className="h-12 w-auto transition-all duration-300 transform group-hover:scale-105"
+              />
             </Link>
 
             {/* Desktop Premium Navigation */}
