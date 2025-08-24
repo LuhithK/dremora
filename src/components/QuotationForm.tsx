@@ -135,8 +135,7 @@ ${formData.fullName}
                 Get a <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-purple-600">Quote</span>
               </h2>
               <p className="text-lg text-gray-600 leading-relaxed">
-                Our dedicated team of local experts are available 24/7, ready to provide 
-                assistance whenever you need it
+                Get 24/7 support from our dedicated local experts—always here when you need us.
               </p>
             </div>
 
