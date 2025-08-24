@@ -8,7 +8,7 @@ const Hero = () => {
       <div 
         className="absolute inset-0 bg-cover bg-center bg-no-repeat"
         style={{
-          backgroundImage: `url("https://images.pexels.com/photos/1170986/pexels-photo-1170986.jpeg?auto=compress&cs=tinysrgb&w=1920&h=1080&fit=crop")`
+          backgroundImage: `url("https://static01.nyt.com/images/2019/02/03/travel/03frugal-srilanka01/merlin_148552275_74c0d250-949c-46e0-b8a1-e6d499e992cf-superJumbo.jpg?quality=75&auto=webp")`
         }}
       >
         <div className="absolute inset-0 bg-gradient-to-r from-black/50 via-black/30 to-black/50"></div>
