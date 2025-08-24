@@ -29,7 +29,7 @@ const Hero = () => {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 1, delay: 0.3 }}
-              className="text-2xl md:text-3xl lg:text-4xl font-light text-white leading-tight tracking-wide text-center"
+              className="text-3xl md:text-4xl lg:text-5xl font-bold text-white leading-tight tracking-wide text-center"
             >
               Begin Your Dream Vacation with Dremora!
             </motion.h1>
@@ -37,7 +37,7 @@ const Hero = () => {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 1, delay: 0.6 }}
-              className="text-base md:text-lg lg:text-xl text-gray-100 max-w-4xl mx-auto leading-relaxed font-light tracking-wide text-center"
+              className="text-lg md:text-xl lg:text-2xl text-gray-100 max-w-4xl mx-auto leading-relaxed font-normal tracking-wide text-center"
             >
               Discover hand-crafted journeys with Dremora — your trusted partner in unforgettable experiences.
             </motion.p>
