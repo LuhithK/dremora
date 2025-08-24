@@ -57,24 +57,21 @@ const Hero = () => {
             </button>
           </motion.div>
 
-          {/* Premium Info Cards */}
+          {/* Simple Info Points */}
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1, delay: 1.2 }}
-            className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto mt-20"
+            className="flex flex-col sm:flex-row justify-center items-center gap-8 max-w-4xl mx-auto mt-16"
           >
-            <div className="bg-white/10 backdrop-blur-lg rounded-2xl p-8 text-center border border-white/20 hover:bg-white/15 transition-all duration-300">
-              <div className="text-xl font-light text-white mb-3 tracking-wide">Best Price Guarantee</div>
-              <div className="text-gray-200 text-sm font-light">We match any competitor's price</div>
+            <div className="text-center">
+              <div className="text-sm text-white/90 font-light tracking-wide">Best Price Guarantee</div>
             </div>
-            <div className="bg-white/10 backdrop-blur-lg rounded-2xl p-8 text-center border border-white/20 hover:bg-white/15 transition-all duration-300">
-              <div className="text-xl font-light text-white mb-3 tracking-wide">24/7 Support</div>
-              <div className="text-gray-200 text-sm font-light">Round the clock assistance</div>
+            <div className="text-center">
+              <div className="text-sm text-white/90 font-light tracking-wide">24/7 Support</div>
             </div>
-            <div className="bg-white/10 backdrop-blur-lg rounded-2xl p-8 text-center border border-white/20 hover:bg-white/15 transition-all duration-300">
-              <div className="text-xl font-light text-white mb-3 tracking-wide">Expert Guides</div>
-              <div className="text-gray-200 text-sm font-light">Local knowledge & expertise</div>
+            <div className="text-center">
+              <div className="text-sm text-white/90 font-light tracking-wide">Expert Guides</div>
             </div>
           </motion.div>
         </motion.div>
