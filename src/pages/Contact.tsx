@@ -96,6 +96,7 @@ const Contact = () => {
           </motion.div>
         </div>
       </section>
+      </section>
 
       {/* Contact Info Cards */}
       <section className="py-20 bg-white">
