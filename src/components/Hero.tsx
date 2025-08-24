@@ -29,7 +29,7 @@ const Hero = () => {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 1, delay: 0.3 }}
-              className="text-3xl md:text-5xl lg:text-6xl font-light text-white leading-tight tracking-wide"
+              className="text-3xl md:text-5xl lg:text-6xl font-light text-white leading-tight tracking-wide whitespace-nowrap"
             >
               Begin Your Dream Vacation with Dremora!
             </motion.h1>
