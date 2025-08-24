@@ -1,30 +1,103 @@
-import React, { useState } from 'react';
-import { motion } from 'framer-motion';
-import { MagnifyingGlassIcon, CalendarIcon, MapPinIcon, UserGroupIcon } from '@heroicons/react/24/outline';
+import React, { useState, useEffect } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/24/outline';
 
 const Hero = () => {
-  const [searchData, setSearchData] = useState({
-    destination: '',
-    checkIn: '',
-    checkOut: '',
-    guests: '2'
-  });
+  const [currentSlide, setCurrentSlide] = useState(0);
 
-  const handleSearch = (e: React.FormEvent) => {
-    e.preventDefault();
-    console.log('Search data:', searchData);
+  const slides = [
+    {
+      id: 1,
+      image: "https://images.pexels.com/photos/1170986/pexels-photo-1170986.jpeg?auto=compress&cs=tinysrgb&w=1920&h=1080&fit=crop",
+      alt: "Sri Lankan Elephants in Natural Habitat"
+    },
+    {
+      id: 2,
+      image: "https://images.pexels.com/photos/631317/pexels-photo-631317.jpeg?auto=compress&cs=tinysrgb&w=1920&h=1080&fit=crop",
+      alt: "Elephant Herd in Sri Lanka"
+    },
+    {
+      id: 3,
+      image: "https://images.pexels.com/photos/1170986/pexels-photo-1170986.jpeg?auto=compress&cs=tinysrgb&w=1920&h=1080&fit=crop",
+      alt: "Majestic Sri Lankan Elephant"
+    }
+  ];
+
+  // Auto-advance slides
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setCurrentSlide((prev) => (prev + 1) % slides.length);
+    }, 5000);
+
+    return () => clearInterval(timer);
+  }, [slides.length]);
+
+  const nextSlide = () => {
+    setCurrentSlide((prev) => (prev + 1) % slides.length);
+  };
+
+  const prevSlide = () => {
+    setCurrentSlide((prev) => (prev - 1 + slides.length) % slides.length);
+  };
+
+  const goToSlide = (index: number) => {
+    setCurrentSlide(index);
   };
 
   return (
     <div className="relative min-h-screen flex items-center justify-center overflow-hidden">
-      {/* Background Image with Overlay */}
-      <div 
-        className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-        style={{
-          backgroundImage: 'url("https://images.pexels.com/photos/1450360/pexels-photo-1450360.jpeg?auto=compress&cs=tinysrgb&w=1920&h=1080&fit=crop")'
-        }}
+      {/* Carousel Images */}
+      <AnimatePresence mode="wait">
+        <motion.div
+          key={currentSlide}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 0.8 }}
+          className="absolute inset-0"
+        >
+          <div 
+            className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+            style={{
+              backgroundImage: `url("${slides[currentSlide].image}")`
+            }}
+          >
+            <div className="absolute inset-0 bg-gradient-to-r from-black/60 via-black/40 to-black/60"></div>
+          </div>
+        </motion.div>
+      </AnimatePresence>
+
+      {/* Navigation Arrows */}
+      <button
+        onClick={prevSlide}
+        className="absolute left-4 md:left-8 top-1/2 transform -translate-y-1/2 z-20 bg-white/20 backdrop-blur-sm hover:bg-white/30 text-white p-3 rounded-full transition-all duration-300 hover:scale-110"
+        aria-label="Previous slide"
       >
-        <div className="absolute inset-0 bg-gradient-to-r from-black/60 via-black/40 to-black/60"></div>
+        <ChevronLeftIcon className="h-6 w-6" />
+      </button>
+
+      <button
+        onClick={nextSlide}
+        className="absolute right-4 md:right-8 top-1/2 transform -translate-y-1/2 z-20 bg-white/20 backdrop-blur-sm hover:bg-white/30 text-white p-3 rounded-full transition-all duration-300 hover:scale-110"
+        aria-label="Next slide"
+      >
+        <ChevronRightIcon className="h-6 w-6" />
+      </button>
+
+      {/* Slide Indicators */}
+      <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 z-20 flex space-x-3">
+        {slides.map((_, index) => (
+          <button
+            key={index}
+            onClick={() => goToSlide(index)}
+            className={`w-3 h-3 rounded-full transition-all duration-300 ${
+              index === currentSlide 
+                ? 'bg-white scale-125' 
+                : 'bg-white/50 hover:bg-white/75'
+            }`}
+            aria-label={`Go to slide ${index + 1}`}
+          />
+        ))}
       </div>
 
       {/* Content */}
@@ -36,122 +109,38 @@ const Hero = () => {
           className="space-y-8"
         >
           {/* Main Heading */}
-          <div className="space-y-4">
+          <div className="space-y-6">
             <motion.h1 
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.2 }}
               className="text-4xl md:text-5xl lg:text-6xl font-bold text-white leading-tight"
             >
-              Discover Sri Lanka with
-              <span className="block text-gradient bg-gradient-to-r from-yellow-400 to-orange-400 bg-clip-text text-transparent">
-                Dremora Tours
-              </span>
+              Begin Your Dream Vacation Today!
             </motion.h1>
             <motion.p 
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.4 }}
-              className="text-lg md:text-xl text-gray-200 max-w-3xl mx-auto leading-relaxed"
+              className="text-xl md:text-2xl text-gray-200 max-w-3xl mx-auto leading-relaxed"
             >
-              Your gateway to unforgettable Sri Lankan adventures. Experience the island's rich culture, 
-              stunning landscapes, and warm hospitality with our expertly crafted tour packages and 
-              personalized service.
+              Get real-time advice from local specialists, available 24/7
             </motion.p>
           </div>
 
-          {/* Search Form */}
+          {/* Call to Action Buttons */}
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.6 }}
-            className="max-w-4xl mx-auto"
+            className="flex flex-col sm:flex-row gap-4 justify-center"
           >
-            <form onSubmit={handleSearch} className="bg-white/10 backdrop-blur-md rounded-2xl p-6 md:p-8 border border-white/20">
-              <div className="grid grid-cols-1 md:grid-cols-4 gap-4 md:gap-6">
-                {/* Destination */}
-                <div className="space-y-2">
-                  <label className="block text-white text-sm font-medium">Where to?</label>
-                  <div className="relative">
-                    <MapPinIcon className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400" />
-                    <select
-                      value={searchData.destination}
-                      onChange={(e) => setSearchData({...searchData, destination: e.target.value})}
-                      className="w-full pl-10 pr-4 py-3 bg-white/90 border-0 rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-orange-500 shadow-sm"
-                    >
-                      <option value="">Select destination</option>
-                      <option value="kandy">Kandy</option>
-                      <option value="galle">Galle</option>
-                      <option value="ella">Ella</option>
-                      <option value="sigiriya">Sigiriya</option>
-                      <option value="nuwara-eliya">Nuwara Eliya</option>
-                      <option value="anuradhapura">Anuradhapura</option>
-                      <option value="polonnaruwa">Polonnaruwa</option>
-                      <option value="yala">Yala National Park</option>
-                    </select>
-                  </div>
-                </div>
-
-                {/* Check In */}
-                <div className="space-y-2">
-                  <label className="block text-white text-sm font-medium">Check In</label>
-                  <div className="relative">
-                    <CalendarIcon className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400" />
-                    <input
-                      type="date"
-                      value={searchData.checkIn}
-                      onChange={(e) => setSearchData({...searchData, checkIn: e.target.value})}
-                      className="w-full pl-10 pr-4 py-3 bg-white/90 border-0 rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-orange-500 shadow-sm"
-                    />
-                  </div>
-                </div>
-
-                {/* Check Out */}
-                <div className="space-y-2">
-                  <label className="block text-white text-sm font-medium">Check Out</label>
-                  <div className="relative">
-                    <CalendarIcon className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400" />
-                    <input
-                      type="date"
-                      value={searchData.checkOut}
-                      onChange={(e) => setSearchData({...searchData, checkOut: e.target.value})}
-                      className="w-full pl-10 pr-4 py-3 bg-white/90 border-0 rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-orange-500 shadow-sm"
-                    />
-                  </div>
-                </div>
-
-                {/* Guests */}
-                <div className="space-y-2">
-                  <label className="block text-white text-sm font-medium">Guests</label>
-                  <div className="relative">
-                    <UserGroupIcon className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400" />
-                    <select
-                      value={searchData.guests}
-                      onChange={(e) => setSearchData({...searchData, guests: e.target.value})}
-                      className="w-full pl-10 pr-4 py-3 bg-white/90 border-0 rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-orange-500 shadow-sm"
-                    >
-                      <option value="1">1 Guest</option>
-                      <option value="2">2 Guests</option>
-                      <option value="3">3 Guests</option>
-                      <option value="4">4 Guests</option>
-                      <option value="5+">5+ Guests</option>
-                      <option value="10+">Group (10+)</option>
-                    </select>
-                  </div>
-                </div>
-              </div>
-
-              {/* Search Button */}
-              <div className="mt-6">
-                <button
-                  type="submit"
-                  className="w-full md:w-auto bg-gradient-to-r from-orange-600 to-red-600 hover:from-orange-700 hover:to-red-700 text-white font-semibold py-4 px-8 rounded-lg transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl flex items-center justify-center space-x-2"
-                >
-                  <MagnifyingGlassIcon className="h-5 w-5" />
-                  <span>Search Tours</span>
-                </button>
-              </div>
-            </form>
+            <button className="bg-gradient-to-r from-orange-600 to-red-600 hover:from-orange-700 hover:to-red-700 text-white font-semibold py-4 px-8 rounded-lg transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl">
+              Explore Packages
+            </button>
+            <button className="border-2 border-white text-white hover:bg-white hover:text-gray-900 font-semibold py-4 px-8 rounded-lg transition-all duration-300 transform hover:scale-105">
+              Contact Specialist
+            </button>
           </motion.div>
 
           {/* Quick Info Cards */}
@@ -159,7 +148,7 @@ const Hero = () => {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.8 }}
-            className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-4xl mx-auto"
+            className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-4xl mx-auto mt-16"
           >
             <div className="bg-white/10 backdrop-blur-md rounded-xl p-6 text-center border border-white/20">
               <div className="text-2xl font-bold text-white mb-2">Best Price Guarantee</div>
@@ -176,20 +165,6 @@ const Hero = () => {
           </motion.div>
         </motion.div>
       </div>
-
-      {/* Scroll Indicator */}
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 1, delay: 1.2 }}
-        className="absolute bottom-8 left-1/2 transform -translate-x-1/2"
-      >
-        <div className="animate-bounce">
-          <div className="w-6 h-10 border-2 border-white rounded-full flex justify-center">
-            <div className="w-1 h-3 bg-white rounded-full mt-2 animate-pulse"></div>
-          </div>
-        </div>
-      </motion.div>
     </div>
   );
 };
