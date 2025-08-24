@@ -192,7 +192,6 @@ const TravelersDestinations = () => {
 
                             {/* Content */}
                             <div className="absolute bottom-0 left-0 right-0 p-6 text-white">
-                              <h3 className="text-xl font-bold mb-2 group-hover:text-orange-300 transition-colors duration-300">
                               <h3 className="text-xl font-bold mb-2 group-hover:text-blue-300 transition-colors duration-300">
                                 {destination.name}
                               </h3>
@@ -250,7 +249,6 @@ const TravelersDestinations = () => {
           viewport={{ once: true }}
           className="text-center mt-16"
         >
-          <div className="bg-gradient-to-r from-orange-600 to-red-600 rounded-2xl p-8 text-white">
           <div className="bg-gradient-to-r from-blue-600 to-blue-500 rounded-2xl p-8 text-white">
             <h3 className="text-2xl md:text-3xl font-bold mb-4">
               Ready to Explore These Amazing Destinations?
