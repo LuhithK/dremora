@@ -40,10 +40,10 @@ const WhyChooseUs = () => {
   ];
 
   const stats = [
-    { number: "1000+", label: "Happy Travelers" },
+    { number: "50+", label: "Happy Travelers" },
     { number: "4.9/5", label: "Average Rating" },
-    { number: "8+", label: "Years Experience" },
-    { number: "25+", label: "Destinations" }
+    { number: "5+", label: "Years Experience" },
+    { number: "25+", label: "Diffrent tours" }
   ];
 
   const containerVariants = {
