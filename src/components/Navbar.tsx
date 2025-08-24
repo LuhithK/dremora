@@ -50,8 +50,8 @@ const Navbar = () => {
       {/* Main Premium Navigation */}
       <nav className={`w-full transition-all duration-500 ${
         isScrolled 
-          ? 'bg-white/80 backdrop-blur-lg shadow-xl border-b border-gray-100' 
-          : 'bg-white/90 backdrop-blur-md shadow-lg'
+          ? 'bg-white/10 backdrop-blur-xl shadow-2xl border-b border-white/20' 
+          : 'bg-transparent backdrop-blur-sm'
       }`}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-20">
@@ -81,8 +81,8 @@ const Navbar = () => {
                   to={item.path}
                   className={`relative font-medium text-base tracking-wide transition-all duration-300 group ${
                     location.pathname === item.path
-                      ? 'text-orange-600'
-                      : 'text-slate-700 hover:text-orange-600'
+                      ? 'text-white'
+                      : 'text-white/90 hover:text-white'
                   }`}
                 >
                   {item.name}
@@ -93,9 +93,9 @@ const Navbar = () => {
               ))}
               
               {/* Premium CTA Button */}
-              <button className="relative overflow-hidden bg-gradient-to-r from-orange-600 to-red-600 hover:from-orange-700 hover:to-red-700 text-white font-medium text-sm py-3 px-6 rounded-full transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl group">
+              <button className="relative overflow-hidden bg-white/20 backdrop-blur-md border border-white/30 hover:bg-white/30 text-white font-medium text-sm py-3 px-6 rounded-full transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl group">
                 <span className="relative z-10 tracking-wide">Book Now</span>
-                <div className="absolute inset-0 bg-gradient-to-r from-red-600 to-orange-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                <div className="absolute inset-0 bg-gradient-to-r from-orange-600/50 to-red-600/50 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
               </button>
             </div>
 
@@ -103,7 +103,7 @@ const Navbar = () => {
             <div className="md:hidden">
               <button
                 onClick={() => setIsOpen(!isOpen)}
-                className="p-3 rounded-xl text-slate-700 hover:text-orange-600 hover:bg-orange-50 transition-all duration-300"
+                className="p-3 rounded-xl text-white/90 hover:text-white hover:bg-white/20 transition-all duration-300"
               >
                 {isOpen ? (
                   <XMarkIcon className="h-6 w-6" />
@@ -123,7 +123,7 @@ const Navbar = () => {
               animate={{ opacity: 1, height: 'auto' }}
               exit={{ opacity: 0, height: 0 }}
               transition={{ duration: 0.3, ease: 'easeInOut' }}
-              className="md:hidden bg-white/95 backdrop-blur-lg border-t border-gray-100 shadow-xl"
+              className="md:hidden bg-white/10 backdrop-blur-xl border-t border-white/20 shadow-xl"
             >
               <div className="px-4 pt-4 pb-6 space-y-2">
                 {navItems.map((item) => (
@@ -133,15 +133,15 @@ const Navbar = () => {
                     onClick={() => setIsOpen(false)}
                     className={`block px-6 py-4 rounded-xl text-base font-medium tracking-wide transition-all duration-300 ${
                       location.pathname === item.path
-                        ? 'text-orange-600 bg-orange-50 border-l-4 border-orange-600'
-                        : 'text-slate-700 hover:text-orange-600 hover:bg-orange-50'
+                        ? 'text-white bg-white/20 border-l-4 border-white'
+                        : 'text-white/90 hover:text-white hover:bg-white/20'
                     }`}
                   >
                     {item.name}
                   </Link>
                 ))}
                 <div className="px-6 py-4">
-                  <button className="w-full bg-gradient-to-r from-orange-600 to-red-600 hover:from-orange-700 hover:to-red-700 text-white font-medium text-sm py-4 px-6 rounded-xl transition-all duration-300 transform hover:scale-105 shadow-lg tracking-wide">
+                  <button className="w-full bg-white/20 backdrop-blur-md border border-white/30 hover:bg-white/30 text-white font-medium text-sm py-4 px-6 rounded-xl transition-all duration-300 transform hover:scale-105 shadow-lg tracking-wide">
                     Book Now
                   </button>
                 </div>
