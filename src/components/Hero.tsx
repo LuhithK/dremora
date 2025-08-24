@@ -1,5 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
+import { Link } from 'react-router-dom';
 
 const Hero = () => {
   return (
@@ -30,7 +31,7 @@ const Hero = () => {
               transition={{ duration: 1, delay: 0.3 }}
               className="text-3xl md:text-5xl lg:text-6xl font-light text-white leading-tight tracking-wide"
             >
-              Begin Your Dream Vacation Today!
+              Begin Your Dream Vacation with Dremora!
             </motion.h1>
             <motion.p 
               initial={{ opacity: 0, y: 20 }}
@@ -38,7 +39,7 @@ const Hero = () => {
               transition={{ duration: 1, delay: 0.6 }}
               className="text-lg md:text-xl lg:text-2xl text-gray-100 max-w-4xl mx-auto leading-relaxed font-light tracking-wide"
             >
-              Get real-time advice from local specialists, available 24/7
+              Discover hand-crafted journeys with Dremora — your trusted partner in unforgettable experiences.
             </motion.p>
           </div>
 
@@ -49,12 +50,18 @@ const Hero = () => {
             transition={{ duration: 1, delay: 0.9 }}
             className="flex flex-col sm:flex-row gap-6 justify-center mt-12"
           >
-            <button className="bg-gradient-to-r from-orange-600 to-red-600 hover:from-orange-700 hover:to-red-700 text-white font-medium py-4 px-10 rounded-lg transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl text-lg tracking-wide">
+            <Link 
+              to="/packages"
+              className="bg-gradient-to-r from-orange-600 to-red-600 hover:from-orange-700 hover:to-red-700 text-white font-medium py-4 px-10 rounded-lg transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl text-lg tracking-wide text-center"
+            >
               Explore Packages
-            </button>
-            <button className="border-2 border-white text-white hover:bg-white hover:text-gray-900 font-medium py-4 px-10 rounded-lg transition-all duration-300 transform hover:scale-105 text-lg tracking-wide">
-              Contact Specialist
-            </button>
+            </Link>
+            <a 
+              href="#quote-section"
+              className="border-2 border-white text-white hover:bg-white hover:text-gray-900 font-medium py-4 px-10 rounded-lg transition-all duration-300 transform hover:scale-105 text-lg tracking-wide text-center"
+            >
+              Get a Quote
+            </a>
           </motion.div>
 
           {/* Simple Info Points */}

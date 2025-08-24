@@ -108,6 +108,7 @@ ${formData.fullName}
 
   return (
     <section 
+      id="quote-section"
       className="py-20 relative overflow-hidden"
       style={{
         backgroundImage: `url("https://media1.thrillophilia.com/filestore/zpxe5aul83j9euqc020bjj8dwvcl_1579095457_7.png")`,

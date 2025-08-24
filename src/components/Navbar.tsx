@@ -93,10 +93,13 @@ const Navbar = () => {
               ))}
               
               {/* Premium CTA Button */}
-              <button className="relative overflow-hidden bg-gradient-to-r from-orange-600 to-red-600 hover:from-orange-700 hover:to-red-700 text-white font-medium text-sm py-3 px-6 rounded-full transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl group">
-                <span className="relative z-10 tracking-wide">Book Now</span>
+              <a 
+                href="#quote-section"
+                className="relative overflow-hidden bg-gradient-to-r from-orange-600 to-red-600 hover:from-orange-700 hover:to-red-700 text-white font-medium text-sm py-3 px-6 rounded-full transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl group"
+              >
+                <span className="relative z-10 tracking-wide">Get a Quote</span>
                 <div className="absolute inset-0 bg-gradient-to-r from-red-600 to-orange-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-              </button>
+              </a>
             </div>
 
             {/* Mobile menu button */}
@@ -141,9 +144,12 @@ const Navbar = () => {
                   </Link>
                 ))}
                 <div className="px-6 py-4">
-                  <button className="w-full bg-gradient-to-r from-orange-600 to-red-600 hover:from-orange-700 hover:to-red-700 text-white font-medium text-sm py-4 px-6 rounded-xl transition-all duration-300 transform hover:scale-105 shadow-lg tracking-wide">
-                    Book Now
-                  </button>
+                  <a 
+                    href="#quote-section"
+                    className="block w-full bg-gradient-to-r from-orange-600 to-red-600 hover:from-orange-700 hover:to-red-700 text-white font-medium text-sm py-4 px-6 rounded-xl transition-all duration-300 transform hover:scale-105 shadow-lg tracking-wide text-center"
+                  >
+                    Get a Quote
+                  </a>
                 </div>
               </div>
             </motion.div>
