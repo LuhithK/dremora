@@ -60,7 +60,7 @@ const Navbar = () => {
               <img
                 src="src/assets/images/logo/dremoralogo1.png"
                 alt="Dremora Tours"
-                className="h-20 w-auto max-w-none transition-all duration-300 transform group-hover:scale-105"
+                className="h-16 w-auto max-w-none transition-all duration-300 transform group-hover:scale-105"
               />
             </Link>
 
