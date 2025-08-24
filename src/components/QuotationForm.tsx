@@ -132,7 +132,7 @@ ${formData.fullName}
           >
             <div>
               <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
-                Get a <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-purple-600">Quote</span>
+                Get a <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-blue-500">Quote</span>
               </h2>
               <p className="text-lg text-gray-600 leading-relaxed">
                 Get 24/7 support from our dedicated local experts—always here when you need us.
@@ -291,7 +291,7 @@ ${formData.fullName}
                 disabled={isSubmitting}
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
-                className={`w-full bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 text-white font-semibold py-4 px-6 rounded-xl transition-all duration-300 shadow-lg hover:shadow-xl flex items-center justify-center space-x-2 ${
+                className={`w-full bg-gradient-to-r from-blue-600 to-blue-500 hover:from-blue-700 hover:to-blue-600 text-white font-semibold py-4 px-6 rounded-xl transition-all duration-300 shadow-lg hover:shadow-xl flex items-center justify-center space-x-2 ${
                   isSubmitting ? 'opacity-70 cursor-not-allowed' : ''
                 }`}
               >

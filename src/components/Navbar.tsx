@@ -72,12 +72,12 @@ const Navbar = () => {
                   to={item.path}
                   className={`relative font-medium text-base tracking-wide transition-all duration-300 group ${
                     location.pathname === item.path
-                      ? 'text-orange-600'
-                      : 'text-slate-700 hover:text-orange-600'
+                      ? 'text-blue-600'
+                      : 'text-slate-700 hover:text-blue-600'
                   }`}
                 >
                   {item.name}
-                  <span className={`absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-orange-600 to-red-600 transition-all duration-300 group-hover:w-full ${
+                  <span className={`absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-blue-600 to-blue-500 transition-all duration-300 group-hover:w-full ${
                     location.pathname === item.path ? 'w-full' : ''
                   }`}></span>
                 </Link>
@@ -86,10 +86,10 @@ const Navbar = () => {
               {/* Premium CTA Button */}
               <a 
                 href="#quote-section"
-                className="relative overflow-hidden bg-gradient-to-r from-orange-600 to-red-600 hover:from-orange-700 hover:to-red-700 text-white font-medium text-sm py-3 px-6 rounded-full transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl group"
+                className="relative overflow-hidden bg-gradient-to-r from-blue-600 to-blue-500 hover:from-blue-700 hover:to-blue-600 text-white font-medium text-sm py-3 px-6 rounded-full transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl group"
               >
                 <span className="relative z-10 tracking-wide">Get a Quote</span>
-                <div className="absolute inset-0 bg-gradient-to-r from-red-600 to-orange-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                <div className="absolute inset-0 bg-gradient-to-r from-blue-500 to-blue-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
               </a>
             </div>
 
@@ -127,8 +127,8 @@ const Navbar = () => {
                     onClick={() => setIsOpen(false)}
                     className={`block px-6 py-4 rounded-xl text-base font-medium tracking-wide transition-all duration-300 ${
                       location.pathname === item.path
-                        ? 'text-orange-600 bg-orange-50 border-l-4 border-orange-600'
-                        : 'text-slate-700 hover:text-orange-600 hover:bg-orange-50'
+                        ? 'text-blue-600 bg-blue-50 border-l-4 border-blue-600'
+                        : 'text-slate-700 hover:text-blue-600 hover:bg-blue-50'
                     }`}
                   >
                     {item.name}
@@ -137,7 +137,7 @@ const Navbar = () => {
                 <div className="px-6 py-4">
                   <a 
                     href="#quote-section"
-                    className="block w-full bg-gradient-to-r from-orange-600 to-red-600 hover:from-orange-700 hover:to-red-700 text-white font-medium text-sm py-4 px-6 rounded-xl transition-all duration-300 transform hover:scale-105 shadow-lg tracking-wide text-center"
+                    className="block w-full bg-gradient-to-r from-blue-600 to-blue-500 hover:from-blue-700 hover:to-blue-600 text-white font-medium text-sm py-4 px-6 rounded-xl transition-all duration-300 transform hover:scale-105 shadow-lg tracking-wide text-center"
                   >
                     Get a Quote
                   </a>

@@ -452,8 +452,8 @@ const BookingForm = () => {
                 <div className="flex justify-between mt-8">
                   <button
                     type="button"
-                    onClick={prevStep}
-                    disabled={currentStep === 1}
+                    className="flex items-center space-x-2 bg-gradient-to-r from-blue-600 to-blue-500 hover:from-blue-700 hover:to-blue-600 text-white font-semibold py-3 px-6 rounded-lg transition-all duration-300 transform hover:scale-105"
+                    className="flex items-center space-x-2 bg-gradient-to-r from-blue-600 to-blue-500 hover:from-blue-700 hover:to-blue-600 text-white font-semibold py-3 px-6 rounded-lg transition-all duration-300 transform hover:scale-105"
                     className={`flex items-center space-x-2 py-3 px-6 rounded-lg font-semibold transition-all duration-300 ${
                       currentStep === 1
                         ? 'bg-gray-100 text-gray-400 cursor-not-allowed'

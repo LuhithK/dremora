@@ -89,7 +89,7 @@ const WhyChooseUs = () => {
             <span className="text-blue-800 font-medium text-sm tracking-wide">Why Choose Us</span>
           </div>
           <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4 leading-tight">
-            Why Choose <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-purple-600">Dremora Tours</span>?
+            Why Choose <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-blue-500">Dremora Tours</span>?
           </h2>
           <p className="text-lg text-gray-600 max-w-4xl mx-auto leading-relaxed">
             With over 5 years of experience, we create unforgettable journeys just for you. 
@@ -116,7 +116,7 @@ const WhyChooseUs = () => {
             >
               <div className="bg-white rounded-xl p-6 shadow-md hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2 border border-gray-100 h-full text-center">
                 {/* Icon */}
-                <div className={`w-12 h-12 bg-gradient-to-r ${feature.color} rounded-xl flex items-center justify-center mb-4 mx-auto group-hover:scale-110 transition-transform duration-300 shadow-md`}>
+                <div className="w-12 h-12 bg-gradient-to-r from-blue-600 to-blue-500 rounded-xl flex items-center justify-center mb-4 mx-auto group-hover:scale-110 transition-transform duration-300 shadow-md">
                   <feature.icon className="h-6 w-6 text-white" />
                 </div>
 
@@ -129,7 +129,7 @@ const WhyChooseUs = () => {
                 </p>
 
                 {/* Hover Effect */}
-                <div className="absolute inset-0 bg-gradient-to-r from-blue-50 to-purple-50 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 -z-10"></div>
+                <div className="absolute inset-0 bg-gradient-to-r from-blue-50 to-blue-100 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 -z-10"></div>
               </div>
             </motion.div>
           ))}
@@ -190,10 +190,10 @@ const WhyChooseUs = () => {
           className="text-center mt-12"
         >
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <button className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white font-semibold py-3 px-8 rounded-xl transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl">
+            <button className="bg-gradient-to-r from-blue-600 to-blue-500 hover:from-blue-700 hover:to-blue-600 text-white font-semibold py-3 px-8 rounded-xl transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl">
               Start Planning Now
             </button>
-            <button className="border-2 border-gray-300 text-gray-700 hover:border-blue-600 hover:text-blue-600 font-semibold py-3 px-8 rounded-xl transition-all duration-300 transform hover:scale-105">
+            <button className="border-2 border-blue-300 text-blue-600 hover:border-blue-600 hover:text-blue-700 font-semibold py-3 px-8 rounded-xl transition-all duration-300 transform hover:scale-105">
               View All Packages
             </button>
           </div>

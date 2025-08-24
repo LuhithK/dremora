@@ -78,6 +78,7 @@ const Contact = () => {
     <div className="min-h-screen bg-gray-50">
       {/* Hero Section */}
       <section className="relative py-20 bg-gradient-to-r from-blue-600 to-purple-600 text-white">
+      <section className="relative py-20 bg-gradient-to-r from-blue-600 to-blue-500 text-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
@@ -291,7 +292,7 @@ const Contact = () => {
               </div>
 
               {/* Emergency Contact */}
-              <div className="bg-gradient-to-r from-red-500 to-pink-500 rounded-2xl p-8 text-white">
+              <div className="bg-gradient-to-r from-blue-600 to-blue-500 rounded-2xl p-8 text-white">
                 <h3 className="text-2xl font-bold mb-4">24/7 Emergency Support</h3>
                 <p className="mb-4 opacity-90">
                   Need immediate assistance during your trip? Our emergency hotline is available 24/7.

@@ -30,7 +30,7 @@ const Newsletter = () => {
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
           viewport={{ once: true }}
-          className="bg-gradient-to-r from-blue-600 to-purple-600 rounded-3xl p-12 md:p-16 text-center text-white relative overflow-hidden"
+          className="bg-gradient-to-r from-blue-600 to-blue-500 rounded-3xl p-12 md:p-16 text-center text-white relative overflow-hidden"
         >
           {/* Background Pattern */}
           <div className="absolute inset-0 opacity-10">
@@ -79,7 +79,7 @@ const Newsletter = () => {
                   </div>
                   <button
                     type="submit"
-                    className="w-full bg-white text-orange-600 hover:bg-gray-100 font-semibold py-4 px-6 rounded-lg transition-all duration-300 transform hover:scale-105 shadow-lg"
+                    className="w-full bg-white text-blue-600 hover:bg-gray-100 font-semibold py-4 px-6 rounded-lg transition-all duration-300 transform hover:scale-105 shadow-lg"
                   >
                     Subscribe Now
                   </button>

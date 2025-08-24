@@ -130,6 +130,7 @@ const Testimonials = () => {
           className="mt-20"
         >
           <div className="bg-gradient-to-r from-orange-600 to-red-600 rounded-3xl p-12 text-white">
+          <div className="bg-gradient-to-r from-blue-600 to-blue-500 rounded-3xl p-12 text-white">
             <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
               <div>
                 <div className="text-4xl md:text-5xl font-bold mb-2">1000+</div>

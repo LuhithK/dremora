@@ -202,7 +202,7 @@ const FeaturedPackages = () => {
                   </div>
                   <Link
                     to={`/booking/${pkg.id}`}
-                    className="bg-gradient-to-r from-orange-600 to-red-600 hover:from-orange-700 hover:to-red-700 text-white font-semibold py-2 px-4 rounded-lg transition-all duration-300 transform hover:scale-105 text-sm"
+                    className="bg-gradient-to-r from-blue-600 to-blue-500 hover:from-blue-700 hover:to-blue-600 text-white font-semibold py-2 px-4 rounded-lg transition-all duration-300 transform hover:scale-105 text-sm"
                   >
                     Book Now
                   </Link>
@@ -222,7 +222,7 @@ const FeaturedPackages = () => {
         >
           <Link
             to="/packages"
-            className="inline-flex items-center space-x-2 bg-white text-orange-600 border-2 border-orange-600 hover:bg-orange-600 hover:text-white font-semibold py-3 px-8 rounded-lg transition-all duration-300 transform hover:scale-105"
+            className="inline-flex items-center space-x-2 bg-white text-blue-600 border-2 border-blue-600 hover:bg-blue-600 hover:text-white font-semibold py-3 px-8 rounded-lg transition-all duration-300 transform hover:scale-105"
           >
             <span>View All Packages</span>
             <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">

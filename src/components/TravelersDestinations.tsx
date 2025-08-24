@@ -184,7 +184,7 @@ const TravelersDestinations = () => {
                               {/* Location Badge */}
                               <div className="absolute top-4 left-4">
                                 <div className="bg-white/90 backdrop-blur-sm rounded-full px-3 py-1 flex items-center space-x-1">
-                                  <MapPinIcon className="h-4 w-4 text-orange-600" />
+                                  <MapPinIcon className="h-4 w-4 text-blue-600" />
                                   <span className="text-sm font-medium text-gray-700">{destination.location}</span>
                                 </div>
                               </div>
@@ -193,6 +193,7 @@ const TravelersDestinations = () => {
                             {/* Content */}
                             <div className="absolute bottom-0 left-0 right-0 p-6 text-white">
                               <h3 className="text-xl font-bold mb-2 group-hover:text-orange-300 transition-colors duration-300">
+                              <h3 className="text-xl font-bold mb-2 group-hover:text-blue-300 transition-colors duration-300">
                                 {destination.name}
                               </h3>
                               <p className="text-sm text-gray-200 opacity-90 group-hover:opacity-100 transition-opacity duration-300">
@@ -201,7 +202,7 @@ const TravelersDestinations = () => {
                             </div>
 
                             {/* Hover Overlay */}
-                            <div className="absolute inset-0 bg-gradient-to-t from-orange-600/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                            <div className="absolute inset-0 bg-gradient-to-t from-blue-600/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
                           </div>
                         </motion.div>
                       ))}
@@ -219,7 +220,7 @@ const TravelersDestinations = () => {
                 onClick={() => goToSlide(index)}
                 className={`w-3 h-3 rounded-full transition-all duration-300 ${
                   currentSlide === index
-                    ? 'bg-orange-600 w-8'
+                    ? 'bg-blue-600 w-8'
                     : 'bg-gray-300 hover:bg-gray-400'
                 }`}
               />
@@ -232,7 +233,7 @@ const TravelersDestinations = () => {
               onClick={() => setIsAutoPlaying(!isAutoPlaying)}
               className={`text-sm px-4 py-2 rounded-full transition-all duration-300 ${
                 isAutoPlaying
-                  ? 'bg-green-100 text-green-700 hover:bg-green-200'
+                  ? 'bg-blue-100 text-blue-700 hover:bg-blue-200'
                   : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
               }`}
             >
@@ -250,13 +251,14 @@ const TravelersDestinations = () => {
           className="text-center mt-16"
         >
           <div className="bg-gradient-to-r from-orange-600 to-red-600 rounded-2xl p-8 text-white">
+          <div className="bg-gradient-to-r from-blue-600 to-blue-500 rounded-2xl p-8 text-white">
             <h3 className="text-2xl md:text-3xl font-bold mb-4">
               Ready to Explore These Amazing Destinations?
             </h3>
             <p className="text-lg mb-6 opacity-90">
               Let us create a personalized itinerary that includes your favorite destinations
             </p>
-            <button className="bg-white text-orange-600 hover:bg-gray-100 font-semibold py-3 px-8 rounded-lg transition-all duration-300 transform hover:scale-105 shadow-lg">
+            <button className="bg-white text-blue-600 hover:bg-gray-100 font-semibold py-3 px-8 rounded-lg transition-all duration-300 transform hover:scale-105 shadow-lg">
               Plan My Journey
             </button>
           </div>

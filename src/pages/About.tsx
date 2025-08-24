@@ -64,6 +64,7 @@ const About = () => {
     <div className="min-h-screen bg-gray-50">
       {/* Hero Section */}
       <section className="relative py-20 bg-gradient-to-r from-blue-600 to-purple-600 text-white">
+      <section className="relative py-20 bg-gradient-to-r from-blue-600 to-blue-500 text-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
@@ -166,6 +167,7 @@ const About = () => {
                 className="text-center p-6 bg-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2"
               >
                 <div className="w-16 h-16 bg-gradient-to-r from-orange-600 to-red-600 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                <div className="w-16 h-16 bg-gradient-to-r from-blue-600 to-blue-500 rounded-2xl flex items-center justify-center mx-auto mb-4">
                   <value.icon className="h-8 w-8 text-white" />
                 </div>
                 <h3 className="text-xl font-bold text-gray-900 mb-2">{value.title}</h3>
@@ -220,6 +222,7 @@ const About = () => {
 
       {/* Achievements */}
       <section className="py-20 bg-gradient-to-r from-orange-600 to-red-600 text-white">
+      <section className="py-20 bg-gradient-to-r from-blue-600 to-blue-500 text-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
