@@ -151,7 +151,7 @@ ${formData.fullName}
                 <div className="text-6xl text-gray-200 font-bold leading-none">"</div>
                 <div>
                   <h3 className="text-xl font-bold text-gray-900 mb-2">
-                    Get a personalised quote in 2 hours.
+                    Get a personalised quote in 24 hours.
                   </h3>
                   <p className="text-gray-600 text-sm">
                     Fast, reliable, and tailored to your travel dreams
@@ -171,7 +171,7 @@ ${formData.fullName}
               <svg className="h-4 w-4 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
               </svg>
-              <span>We guarantee that your information will not be shared with any third parties</span>
+              <span>We respect your privacy and keep your details strictly confidential</span>
             </motion.p>
           </motion.div>
 
