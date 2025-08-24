@@ -92,12 +92,11 @@ const WhyChooseUs = () => {
             Why Choose <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-purple-600">Dremora Tours</span>?
           </h2>
           <p className="text-lg text-gray-600 max-w-4xl mx-auto leading-relaxed">
-            With <strong>8+ years of expertise</strong> and a passion for showcasing Sri Lanka's beauty, 
-            we create unforgettable experiences with <strong>expert local guides</strong>, 
-            <strong>24/7 support</strong>, and <strong>best price guarantee</strong>. 
-            Our <strong>personalized itineraries</strong> and access to <strong>hidden gems</strong> 
-            ensure your journey goes beyond ordinary tourism, backed by <strong>1000+ happy travelers</strong> 
-            and a <strong>4.9/5 rating</strong>.
+            With over 5 years of experience, we create unforgettable journeys just for you. 
+            Every trip is personalized to match your dreams, and our best price guarantee ensures 
+            luxury doesn't break your budget. Our friendly team is available 24/7 to support you 
+            wherever you are. From hidden gems to iconic destinations, Tremora takes you beyond 
+            the ordinary to make memories that last a lifetime.
           </p>
         </motion.div>
 
