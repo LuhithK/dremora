@@ -50,8 +50,8 @@ const Navbar = () => {
       {/* Main Premium Navigation */}
       <nav className={`w-full transition-all duration-500 ${
         isScrolled 
-          ? 'bg-white/95 backdrop-blur-lg shadow-xl border-b border-gray-100' 
-          : 'bg-white shadow-lg'
+          ? 'bg-white/80 backdrop-blur-lg shadow-xl border-b border-gray-100' 
+          : 'bg-white/90 backdrop-blur-md shadow-lg'
       }`}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-20">
@@ -79,7 +79,7 @@ const Navbar = () => {
                 <Link
                   key={item.name}
                   to={item.path}
-                  className={`relative font-medium text-lg tracking-wide transition-all duration-300 group ${
+                  className={`relative font-medium text-base tracking-wide transition-all duration-300 group ${
                     location.pathname === item.path
                       ? 'text-orange-600'
                       : 'text-slate-700 hover:text-orange-600'
@@ -93,7 +93,7 @@ const Navbar = () => {
               ))}
               
               {/* Premium CTA Button */}
-              <button className="relative overflow-hidden bg-gradient-to-r from-orange-600 to-red-600 hover:from-orange-700 hover:to-red-700 text-white font-semibold py-3 px-8 rounded-full transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl group">
+              <button className="relative overflow-hidden bg-gradient-to-r from-orange-600 to-red-600 hover:from-orange-700 hover:to-red-700 text-white font-medium text-sm py-3 px-6 rounded-full transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl group">
                 <span className="relative z-10 tracking-wide">Book Now</span>
                 <div className="absolute inset-0 bg-gradient-to-r from-red-600 to-orange-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
               </button>
@@ -131,7 +131,7 @@ const Navbar = () => {
                     key={item.name}
                     to={item.path}
                     onClick={() => setIsOpen(false)}
-                    className={`block px-6 py-4 rounded-xl text-lg font-medium tracking-wide transition-all duration-300 ${
+                    className={`block px-6 py-4 rounded-xl text-base font-medium tracking-wide transition-all duration-300 ${
                       location.pathname === item.path
                         ? 'text-orange-600 bg-orange-50 border-l-4 border-orange-600'
                         : 'text-slate-700 hover:text-orange-600 hover:bg-orange-50'
@@ -141,7 +141,7 @@ const Navbar = () => {
                   </Link>
                 ))}
                 <div className="px-6 py-4">
-                  <button className="w-full bg-gradient-to-r from-orange-600 to-red-600 hover:from-orange-700 hover:to-red-700 text-white font-semibold py-4 px-6 rounded-xl transition-all duration-300 transform hover:scale-105 shadow-lg tracking-wide">
+                  <button className="w-full bg-gradient-to-r from-orange-600 to-red-600 hover:from-orange-700 hover:to-red-700 text-white font-medium text-sm py-4 px-6 rounded-xl transition-all duration-300 transform hover:scale-105 shadow-lg tracking-wide">
                     Book Now
                   </button>
                 </div>
