@@ -18,7 +18,7 @@ const Navbar = () => {
   }, []);
 
   const navItems = [
-    { name: 'Home', path: '/' },
+    { name: 'Home', path: '/ ' },
     { name: 'Packages', path: '/packages' },
     { name: 'About', path: '/about' },
     { name: 'Contact', path: '/contact' },
@@ -32,11 +32,11 @@ const Navbar = () => {
           <div className="flex items-center space-x-8">
             <div className="flex items-center space-x-2 text-slate-300 hover:text-white transition-colors duration-300">
               <PhoneIcon className="h-4 w-4" />
-              <span className="font-light tracking-wide">+94 11 234 5678</span>
+              <span className="font-light tracking-wide">+94 76 921 4087</span>
             </div>
             <div className="hidden md:flex items-center space-x-2 text-slate-300 hover:text-white transition-colors duration-300">
               <EnvelopeIcon className="h-4 w-4" />
-              <span className="font-light tracking-wide">info@dremoratours.com</span>
+              <span className="font-light tracking-wide">dremoratours@gmail.com</span>
             </div>
           </div>
           <div className="hidden lg:block">

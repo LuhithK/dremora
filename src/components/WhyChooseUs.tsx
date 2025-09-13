@@ -190,12 +190,16 @@ const WhyChooseUs = () => {
           className="text-center mt-12"
         >
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <a href="/contact">
             <button className="bg-gradient-to-r from-blue-600 to-blue-500 hover:from-blue-700 hover:to-blue-600 text-white font-semibold py-3 px-8 rounded-xl transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl">
               Start Planning Now
             </button>
-            <button className="border-2 border-blue-300 text-blue-600 hover:border-blue-600 hover:text-blue-700 font-semibold py-3 px-8 rounded-xl transition-all duration-300 transform hover:scale-105">
-              View All Packages
-            </button>
+            </a>
+            <a href="/packages">
+              <button className="border-2 border-blue-300 text-blue-600 hover:border-blue-600 hover:text-blue-700 font-semibold py-3 px-8 rounded-xl transition-all duration-300 transform hover:scale-105">
+                View All Packages
+              </button>
+            </a>
           </div>
         </motion.div>
       </div>
