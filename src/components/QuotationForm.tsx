@@ -84,7 +84,6 @@ const Login = () => {
 
       // Add new admin
       const newAdmin = {
-        id: Date.now(),
         name: formData.name,
         email: formData.email,
         password: formData.password
@@ -105,7 +104,6 @@ const Login = () => {
 
       // Add new user
       const newUser = {
-        id: Date.now(),
         name: formData.name,
         email: formData.email,
         password: formData.password
@@ -130,14 +128,12 @@ const Login = () => {
 
     if (loginType === 'admin') {
       // Admin login
-      const admins = getStoredAdmins();
-      const admin = admins.find((a: any) => a.email === formData.email && a.password === formData.password);
-      
-      if (admin) {
-        toast.success(`Welcome back, ${admin.name}!`);
+      const adminCredentials = { email: 'admin@travel.com', password: 'admin123' };
+      if (formData.email === adminCredentials.email && formData.password === adminCredentials.password) {
+        toast.success('Admin login successful!');
         localStorage.setItem('currentUser', JSON.stringify({ 
           type: 'admin', 
-          ...admin 
+          email: formData.email 
         }));
         navigate('/admin');
       } else {
@@ -251,35 +247,9 @@ const Login = () => {
             </div>
           )}
 
-          {/* Mode Selector for Admins */}
-          {loginType === 'admin' && (
-            <div className="flex space-x-4 mb-6">
-              <button
-                onClick={() => switchMode('login')}
-                className={`flex-1 py-2 px-4 rounded-lg font-medium transition-all duration-300 ${
-                  mode === 'login'
-                    ? 'bg-blue-100 text-blue-700'
-                    : 'text-gray-600 hover:text-blue-600'
-                }`}
-              >
-                Login
-              </button>
-              <button
-                onClick={() => switchMode('signup')}
-                className={`flex-1 py-2 px-4 rounded-lg font-medium transition-all duration-300 ${
-                  mode === 'signup'
-                    ? 'bg-blue-100 text-blue-700'
-                    : 'text-gray-600 hover:text-blue-600'
-                }`}
-              >
-                Sign Up
-              </button>
-            </div>
-          )}
-
           <form onSubmit={mode === 'login' ? handleLogin : handleSignup} className="space-y-6">
             {/* Name Field (only for signup) */}
-            {mode === 'signup' && (
+            {mode === 'signup' && loginType === 'traveller' && (
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">
                   Full Name
@@ -349,7 +319,7 @@ const Login = () => {
             </div>
 
             {/* Confirm Password Field (only for signup) */}
-            {mode === 'signup' && (
+            {mode === 'signup' && loginType === 'traveller' && (
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">
                   Confirm Password
@@ -376,7 +346,7 @@ const Login = () => {
               className="w-full bg-gradient-to-r from-blue-600 to-blue-500 hover:from-blue-700 hover:to-blue-600 text-white font-semibold py-3 px-6 rounded-xl transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl"
             >
               {loginType === 'admin' 
-                ? mode === 'login' ? 'Sign In as Admin' : 'Create Admin Account'
+                ? 'Sign In as Admin'
                 : mode === 'login' 
                   ? 'Sign In as Traveller'
                   : 'Create Account'
@@ -384,18 +354,20 @@ const Login = () => {
             </button>
           </form>
 
-          {/* Additional Links */}
-          <div className="mt-6 text-center">
-            <p className="text-sm text-gray-600">
-              {mode === 'login' ? "Don't have an account? " : "Already have an account? "}
-              <button 
-                onClick={() => switchMode(mode === 'login' ? 'signup' : 'login')}
-                className="text-blue-600 hover:text-blue-700 font-medium"
-              >
-                {mode === 'login' ? 'Sign up' : 'Sign in'}
-              </button>
-            </p>
-          </div>
+          {/* Additional Links for Travellers */}
+          {loginType === 'traveller' && (
+            <div className="mt-6 text-center">
+              <p className="text-sm text-gray-600">
+                {mode === 'login' ? "Don't have an account? " : "Already have an account? "}
+                <button 
+                  onClick={() => switchMode(mode === 'login' ? 'signup' : 'login')}
+                  className="text-blue-600 hover:text-blue-700 font-medium"
+                >
+                  {mode === 'login' ? 'Sign up' : 'Sign in'}
+                </button>
+              </p>
+            </div>
+          )}
         </motion.div>
       </div>
     </div>

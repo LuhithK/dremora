@@ -35,15 +35,11 @@ const Login = () => {
     const admins = localStorage.getItem('registeredAdmins');
     return admins ? JSON.parse(admins) : [];
   };
-  // Get stored admins from localStorage
-  const getStoredAdmins = () => {
-    const admins = localStorage.getItem('registeredAdmins');
-    return admins ? JSON.parse(admins) : [];
-  };
   // Save users to localStorage
   const saveUsers = (users: any[]) => {
     localStorage.setItem('registeredUsers', JSON.stringify(users));
   };
+
   // Save admins to localStorage
   const saveAdmins = (admins: any[]) => {
     localStorage.setItem('registeredAdmins', JSON.stringify(admins));
@@ -85,13 +81,37 @@ const Login = () => {
         toast.error('Admin with this email already exists');
         return;
       }
+
+      // Add new admin
+      const newAdmin = {
+        name: formData.name,
+        email: formData.email,
+        password: formData.password
+      };
+      
+      admins.push(newAdmin);
+      saveAdmins(admins);
+    } else {
+      // Traveller signup
+      const users = getStoredUsers();
+      
+      // Check if user already exists
+      const existingUser = users.find((user: any) => user.email === formData.email);
+      if (existingUser) {
+        toast.error('User with this email already exists');
         return;
       }
 
-      // Add new admin
+      // Add new user
+      const newUser = {
+        name: formData.name,
+        email: formData.email,
+        password: formData.password
+      };
 
-    users.push(newUser);
-    saveUsers(users);
+      users.push(newUser);
+      saveUsers(users);
+    }
 
     toast.success('Account created successfully! Please login.');
     setMode('login');
@@ -108,6 +128,7 @@ const Login = () => {
 
     if (loginType === 'admin') {
       // Admin login
+      const adminCredentials = { email: 'admin@travel.com', password: 'admin123' };
       if (formData.email === adminCredentials.email && formData.password === adminCredentials.password) {
         toast.success('Admin login successful!');
         localStorage.setItem('currentUser', JSON.stringify({ 
@@ -148,12 +169,7 @@ const Login = () => {
   const switchLoginType = (type: 'traveller' | 'admin') => {
     setLoginType(type);
     resetForm();
-    setMode('login'); // Always switc
-      )
-      )
-    }
-  }
-}h to login mode when changing type
+    setMode('login'); // Always switch to login mode when changing type
   };
 
   return (
@@ -299,7 +315,15 @@ const Login = () => {
                     <EyeIcon className="h-5 w-5" />
                   )}
                 </button>
-      // Add new admin
+              </div>
+            </div>
+
+            {/* Confirm Password Field (only for signup) */}
+            {mode === 'signup' && loginType === 'traveller' && (
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Confirm Password
+                </label>
                 <div className="relative">
                   <LockClosedIcon className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400" />
                   <input
@@ -336,13 +360,12 @@ const Login = () => {
               <p className="text-sm text-gray-600">
                 {mode === 'login' ? "Don't have an account? " : "Already have an account? "}
                 <button 
-    toast.success('Logged out successfully');
                   onClick={() => switchMode(mode === 'login' ? 'signup' : 'login')}
                   className="text-blue-600 hover:text-blue-700 font-medium"
                 >
                   {mode === 'login' ? 'Sign up' : 'Sign in'}
-  const displayQuotes = quotes.length > 0 ? quotes : mockQuotes;
-  const displayCustomers = customers.length > 0 ? customers : mockCustomers;
+                </button>
+              </p>
             </div>
           )}
         </motion.div>
