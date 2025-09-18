@@ -19,8 +19,23 @@ const AdminDashboard = () => {
   const [activeTab, setActiveTab] = useState('quotes');
   const [searchTerm, setSearchTerm] = useState('');
 
+  // Get stored users and quotes from localStorage
+  const getStoredUsers = () => {
+    const users = localStorage.getItem('registeredUsers');
+    return users ? JSON.parse(users) : [];
+  };
+
+  const getStoredQuotes = () => {
+    const quotes = localStorage.getItem('quotationRequests');
+    return quotes ? JSON.parse(quotes) : [];
+  };
+
+  // Get real data from localStorage
+  const quotes = getStoredQuotes();
+  const customers = getStoredUsers();
+
   // Mock data for quotes
-  const quotes = [
+  const mockQuotes = [
     {
       id: 1,
       name: 'John Smith',
@@ -69,7 +84,7 @@ const AdminDashboard = () => {
   ];
 
   // Mock data for registered customers
-  const customers = [
+  const mockCustomers = [
     {
       id: 1,
       name: 'Alice Cooper',
@@ -97,16 +112,21 @@ const AdminDashboard = () => {
   ];
 
   const handleLogout = () => {
+    localStorage.removeItem('currentUser');
     navigate('/');
   };
 
-  const filteredQuotes = quotes.filter(quote =>
+  // Use real data if available, otherwise use mock data
+  const displayQuotes = quotes.length > 0 ? quotes : mockQuotes;
+  const displayCustomers = customers.length > 0 ? customers : mockCustomers;
+
+  const filteredQuotes = displayQuotes.filter(quote =>
     quote.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
     quote.email.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    quote.package.toLowerCase().includes(searchTerm.toLowerCase())
+    (quote.package && quote.package.toLowerCase().includes(searchTerm.toLowerCase()))
   );
 
-  const filteredCustomers = customers.filter(customer =>
+  const filteredCustomers = displayCustomers.filter(customer =>
     customer.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
     customer.email.toLowerCase().includes(searchTerm.toLowerCase())
   );
@@ -114,19 +134,19 @@ const AdminDashboard = () => {
   const stats = [
     {
       title: 'Total Quotes',
-      value: quotes.length,
+      value: displayQuotes.length,
       icon: ChatBubbleLeftRightIcon,
       color: 'bg-blue-500'
     },
     {
       title: 'Pending Quotes',
-      value: quotes.filter(q => q.status === 'pending').length,
+      value: displayQuotes.filter(q => q.status === 'pending' || !q.status).length,
       icon: ChartBarIcon,
       color: 'bg-orange-500'
     },
     {
       title: 'Registered Customers',
-      value: customers.length,
+      value: displayCustomers.length,
       icon: UserGroupIcon,
       color: 'bg-green-500'
     }
@@ -192,7 +212,7 @@ const AdminDashboard = () => {
                     : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
                 }`}
               >
-                Quote Requests ({quotes.length})
+                Quote Requests ({displayQuotes.length})
               </button>
               <button
                 onClick={() => setActiveTab('customers')}
@@ -202,7 +222,7 @@ const AdminDashboard = () => {
                     : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
                 }`}
               >
-                Registered Customers ({customers.length})
+                Registered Customers ({displayCustomers.length})
               </button>
             </nav>
           </div>
@@ -256,10 +276,10 @@ const AdminDashboard = () => {
                             </div>
                             <div className="flex items-center space-x-2">
                               <CalendarIcon className="h-4 w-4" />
-                              <span>{quote.date}</span>
+                              <span>{quote.date || new Date().toISOString().split('T')[0]}</span>
                             </div>
                             <div className="font-medium text-blue-600">
-                              {quote.package}
+                              {quote.package || 'General Inquiry'}
                             </div>
                           </div>
                         </div>

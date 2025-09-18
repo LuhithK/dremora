@@ -7,18 +7,39 @@ import {
   EyeIcon,
   EyeSlashIcon,
   UserGroupIcon,
-  ShieldCheckIcon
+  ShieldCheckIcon,
+  EnvelopeIcon
 } from '@heroicons/react/24/outline';
 import toast from 'react-hot-toast';
 
 const Login = () => {
   const navigate = useNavigate();
   const [loginType, setLoginType] = useState<'traveller' | 'admin'>('traveller');
+  const [mode, setMode] = useState<'login' | 'signup'>('login');
   const [showPassword, setShowPassword] = useState(false);
   const [formData, setFormData] = useState({
+    name: '',
     email: '',
-    password: ''
+    password: '',
+    confirmPassword: ''
   });
+
+  // Get stored users from localStorage
+  const getStoredUsers = () => {
+    const users = localStorage.getItem('registeredUsers');
+    return users ? JSON.parse(users) : [];
+  };
+
+  // Save users to localStorage
+  const saveUsers = (users: any[]) => {
+    localStorage.setItem('registeredUsers', JSON.stringify(users));
+  };
+
+  // Admin credentials (hardcoded for demo)
+  const adminCredentials = {
+    email: 'admin@dremoratours.com',
+    password: 'admin123'
+  };
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -28,7 +49,52 @@ const Login = () => {
     }));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSignup = (e: React.FormEvent) => {
+    e.preventDefault();
+    
+    if (!formData.name || !formData.email || !formData.password || !formData.confirmPassword) {
+      toast.error('Please fill in all fields');
+      return;
+    }
+
+    if (formData.password !== formData.confirmPassword) {
+      toast.error('Passwords do not match');
+      return;
+    }
+
+    if (formData.password.length < 6) {
+      toast.error('Password must be at least 6 characters long');
+      return;
+    }
+
+    const users = getStoredUsers();
+    
+    // Check if user already exists
+    const existingUser = users.find((user: any) => user.email === formData.email);
+    if (existingUser) {
+      toast.error('User with this email already exists');
+      return;
+    }
+
+    // Add new user
+    const newUser = {
+      id: Date.now(),
+      name: formData.name,
+      email: formData.email,
+      password: formData.password,
+      joinDate: new Date().toISOString().split('T')[0],
+      totalBookings: 0
+    };
+
+    users.push(newUser);
+    saveUsers(users);
+
+    toast.success('Account created successfully! Please login.');
+    setMode('login');
+    setFormData({ name: '', email: '', password: '', confirmPassword: '' });
+  };
+
+  const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
     
     if (!formData.email || !formData.password) {
@@ -36,19 +102,49 @@ const Login = () => {
       return;
     }
 
-    // Simple authentication logic (in real app, this would be API calls)
     if (loginType === 'admin') {
-      if (formData.email === 'admin@dremoratours.com' && formData.password === 'admin123') {
+      // Admin login
+      if (formData.email === adminCredentials.email && formData.password === adminCredentials.password) {
         toast.success('Admin login successful!');
+        localStorage.setItem('currentUser', JSON.stringify({ 
+          type: 'admin', 
+          email: formData.email 
+        }));
         navigate('/admin');
       } else {
         toast.error('Invalid admin credentials');
       }
     } else {
-      // For traveller login, we'll just show success and redirect to home
-      toast.success('Login successful!');
-      navigate('/');
+      // Traveller login
+      const users = getStoredUsers();
+      const user = users.find((u: any) => u.email === formData.email && u.password === formData.password);
+      
+      if (user) {
+        toast.success(`Welcome back, ${user.name}!`);
+        localStorage.setItem('currentUser', JSON.stringify({ 
+          type: 'traveller', 
+          ...user 
+        }));
+        navigate('/');
+      } else {
+        toast.error('Invalid email or password');
+      }
     }
+  };
+
+  const resetForm = () => {
+    setFormData({ name: '', email: '', password: '', confirmPassword: '' });
+  };
+
+  const switchMode = (newMode: 'login' | 'signup') => {
+    setMode(newMode);
+    resetForm();
+  };
+
+  const switchLoginType = (type: 'traveller' | 'admin') => {
+    setLoginType(type);
+    resetForm();
+    setMode('login'); // Always switch to login mode when changing type
   };
 
   return (
@@ -60,20 +156,24 @@ const Login = () => {
           transition={{ duration: 0.6 }}
           className="text-center"
         >
-          <h2 className="text-3xl font-bold text-gray-900 mb-2">Welcome Back</h2>
-          <p className="text-gray-600">Sign in to your account</p>
+          <h2 className="text-3xl font-bold text-gray-900 mb-2">
+            {mode === 'login' ? 'Welcome Back' : 'Create Account'}
+          </h2>
+          <p className="text-gray-600">
+            {mode === 'login' ? 'Sign in to your account' : 'Join us for amazing travel experiences'}
+          </p>
         </motion.div>
 
-        {/* Login Type Selector */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.2 }}
           className="bg-white rounded-2xl shadow-lg p-6"
         >
+          {/* Login Type Selector */}
           <div className="flex space-x-4 mb-6">
             <button
-              onClick={() => setLoginType('traveller')}
+              onClick={() => switchLoginType('traveller')}
               className={`flex-1 flex items-center justify-center space-x-2 py-3 px-4 rounded-lg transition-all duration-300 ${
                 loginType === 'traveller'
                   ? 'bg-blue-600 text-white shadow-lg'
@@ -84,7 +184,7 @@ const Login = () => {
               <span className="font-medium">Traveller</span>
             </button>
             <button
-              onClick={() => setLoginType('admin')}
+              onClick={() => switchLoginType('admin')}
               className={`flex-1 flex items-center justify-center space-x-2 py-3 px-4 rounded-lg transition-all duration-300 ${
                 loginType === 'admin'
                   ? 'bg-blue-600 text-white shadow-lg'
@@ -96,14 +196,61 @@ const Login = () => {
             </button>
           </div>
 
-          <form onSubmit={handleSubmit} className="space-y-6">
+          {/* Mode Selector for Travellers */}
+          {loginType === 'traveller' && (
+            <div className="flex space-x-4 mb-6">
+              <button
+                onClick={() => switchMode('login')}
+                className={`flex-1 py-2 px-4 rounded-lg font-medium transition-all duration-300 ${
+                  mode === 'login'
+                    ? 'bg-blue-100 text-blue-700'
+                    : 'text-gray-600 hover:text-blue-600'
+                }`}
+              >
+                Login
+              </button>
+              <button
+                onClick={() => switchMode('signup')}
+                className={`flex-1 py-2 px-4 rounded-lg font-medium transition-all duration-300 ${
+                  mode === 'signup'
+                    ? 'bg-blue-100 text-blue-700'
+                    : 'text-gray-600 hover:text-blue-600'
+                }`}
+              >
+                Sign Up
+              </button>
+            </div>
+          )}
+
+          <form onSubmit={mode === 'login' ? handleLogin : handleSignup} className="space-y-6">
+            {/* Name Field (only for signup) */}
+            {mode === 'signup' && (
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Full Name
+                </label>
+                <div className="relative">
+                  <UserIcon className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400" />
+                  <input
+                    type="text"
+                    name="name"
+                    value={formData.name}
+                    onChange={handleInputChange}
+                    required
+                    className="w-full pl-10 pr-4 py-3 border-0 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 shadow-sm bg-gray-50 transition-all duration-300"
+                    placeholder="Enter your full name"
+                  />
+                </div>
+              </div>
+            )}
+
             {/* Email Field */}
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-2">
                 Email Address
               </label>
               <div className="relative">
-                <UserIcon className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400" />
+                <EnvelopeIcon className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400" />
                 <input
                   type="email"
                   name="email"
@@ -146,8 +293,29 @@ const Login = () => {
               </div>
             </div>
 
-            {/* Demo Credentials */}
-            {loginType === 'admin' && (
+            {/* Confirm Password Field (only for signup) */}
+            {mode === 'signup' && (
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Confirm Password
+                </label>
+                <div className="relative">
+                  <LockClosedIcon className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400" />
+                  <input
+                    type={showPassword ? 'text' : 'password'}
+                    name="confirmPassword"
+                    value={formData.confirmPassword}
+                    onChange={handleInputChange}
+                    required
+                    className="w-full pl-10 pr-4 py-3 border-0 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 shadow-sm bg-gray-50 transition-all duration-300"
+                    placeholder="Confirm your password"
+                  />
+                </div>
+              </div>
+            )}
+
+            {/* Demo Credentials for Admin */}
+            {loginType === 'admin' && mode === 'login' && (
               <div className="bg-blue-50 border border-blue-200 rounded-lg p-3">
                 <p className="text-sm text-blue-800 font-medium mb-1">Demo Admin Credentials:</p>
                 <p className="text-xs text-blue-600">Email: admin@dremoratours.com</p>
@@ -160,19 +328,27 @@ const Login = () => {
               type="submit"
               className="w-full bg-gradient-to-r from-blue-600 to-blue-500 hover:from-blue-700 hover:to-blue-600 text-white font-semibold py-3 px-6 rounded-xl transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl"
             >
-              Sign In as {loginType === 'admin' ? 'Admin' : 'Traveller'}
+              {mode === 'login' 
+                ? `Sign In as ${loginType === 'admin' ? 'Admin' : 'Traveller'}`
+                : 'Create Account'
+              }
             </button>
           </form>
 
-          {/* Additional Links */}
-          <div className="mt-6 text-center">
-            <p className="text-sm text-gray-600">
-              Don't have an account?{' '}
-              <button className="text-blue-600 hover:text-blue-700 font-medium">
-                Sign up
-              </button>
-            </p>
-          </div>
+          {/* Additional Links for Travellers */}
+          {loginType === 'traveller' && (
+            <div className="mt-6 text-center">
+              <p className="text-sm text-gray-600">
+                {mode === 'login' ? "Don't have an account? " : "Already have an account? "}
+                <button 
+                  onClick={() => switchMode(mode === 'login' ? 'signup' : 'login')}
+                  className="text-blue-600 hover:text-blue-700 font-medium"
+                >
+                  {mode === 'login' ? 'Sign up' : 'Sign in'}
+                </button>
+              </p>
+            </div>
+          )}
         </motion.div>
       </div>
     </div>

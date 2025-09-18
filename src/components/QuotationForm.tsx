@@ -65,6 +65,20 @@ const QuotationForm = () => {
     setIsSubmitting(true);
 
     try {
+      // Save quote to localStorage for admin dashboard
+      const existingQuotes = JSON.parse(localStorage.getItem('quotationRequests') || '[]');
+      const newQuote = {
+        id: Date.now(),
+        name: formData.fullName,
+        email: formData.email,
+        phone: formData.countryCode + ' ' + formData.phoneNumber,
+        package: formData.package,
+        date: new Date().toISOString().split('T')[0],
+        status: 'pending'
+      };
+      existingQuotes.push(newQuote);
+      localStorage.setItem('quotationRequests', JSON.stringify(existingQuotes));
+
       // Create mailto link with form data
       const subject = encodeURIComponent('Quotation Request - Dremora Tours');
       const body = encodeURIComponent(`
