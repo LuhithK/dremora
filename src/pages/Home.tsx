@@ -24,6 +24,12 @@ const Login = () => {
     confirmPassword: ''
   });
 
+  // Admin credentials
+  const adminCredentials = {
+    email: 'admin@dremoratours.com',
+    password: 'admin123'
+  };
+
   // Get stored users from localStorage
   const getStoredUsers = () => {
     const users = localStorage.getItem('registeredUsers');
@@ -83,9 +89,33 @@ const Login = () => {
       }
 
       // Add new admin
+      const newAdmin = {
+        name: formData.name,
+        email: formData.email,
+        password: formData.password
+      };
+      admins.push(newAdmin);
+      saveAdmins(admins);
+    } else {
+      // Traveller signup
+      const users = getStoredUsers();
+      
+      // Check if user already exists
+      const existingUser = users.find((user: any) => user.email === formData.email);
+      if (existingUser) {
+        toast.error('User with this email already exists');
+        return;
+      }
 
-    users.push(newUser);
-    saveUsers(users);
+      // Add new user
+      const newUser = {
+        name: formData.name,
+        email: formData.email,
+        password: formData.password
+      };
+      users.push(newUser);
+      saveUsers(users);
+    }
 
     toast.success('Account created successfully! Please login.');
     setMode('login');
