@@ -1,52 +1,40 @@
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { Toaster } from 'react-hot-toast';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import Home from './pages/Home';
-import About from './pages/About';
 import Packages from './pages/Packages';
-import PackageDetails from './pages/PackageDetails';
 import Destinations from './pages/Destinations';
+import About from './pages/About';
 import Contact from './pages/Contact';
 import BookingForm from './pages/BookingForm';
+import PackageDetails from './pages/PackageDetails';
 import Login from './pages/Login';
 import AdminDashboard from './pages/AdminDashboard';
-import UserProfile from './pages/UserProfile';
+import FloatingQuoteButton from './components/FloatingQuoteButton';
 
 function App() {
   return (
     <Router>
-      <div className="App">
+      <div className="min-h-screen bg-gray-50">
+        <Navbar />
+        <FloatingQuoteButton />
+        <main>
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/packages" element={<Packages />} />
+            <Route path="/destinations" element={<Destinations />} />
+            <Route path="/about" element={<About />} />
+            <Route path="/contact" element={<Contact />} />
+            <Route path="/booking/:packageId" element={<BookingForm />} />
+            <Route path="/package/:packageId" element={<PackageDetails />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/admin" element={<AdminDashboard />} />
+          </Routes>
+        </main>
+        <Footer />
         <Toaster position="top-right" />
-        <Routes>
-          {/* Login Route */}
-          <Route path="/login" element={<Login />} />
-          
-          {/* Admin Dashboard Route */}
-          <Route path="/admin" element={<AdminDashboard />} />
-          
-          {/* User Profile Route */}
-          <Route path="/profile" element={<UserProfile />} />
-          
-          {/* Main App Routes with Navbar and Footer */}
-          <Route path="/*" element={
-            <>
-              <Navbar />
-              <Routes>
-                <Route path="/" element={<Home />} />
-                <Route path="/about" element={<About />} />
-                <Route path="/packages" element={<Packages />} />
-                <Route path="/package/:id" element={<PackageDetails />} />
-                <Route path="/destinations" element={<Destinations />} />
-                <Route path="/contact" element={<Contact />} />
-                <Route path="/booking/:packageId" element={<BookingForm />} />
-                <Route path="*" element={<Navigate to="/" replace />} />
-              </Routes>
-              <Footer />
-            </>
-          } />
-        </Routes>
       </div>
     </Router>
   );

@@ -4,28 +4,49 @@ import {
   UserIcon,
   EnvelopeIcon,
   PhoneIcon,
-  CalendarIcon,
   MapPinIcon,
-  UserGroupIcon,
-  ChatBubbleLeftRightIcon,
   PaperAirplaneIcon
 } from '@heroicons/react/24/outline';
 import toast from 'react-hot-toast';
 
 const QuotationForm = () => {
   const [formData, setFormData] = useState({
-    name: '',
+    fullName: '',
     email: '',
-    phone: '',
-    destination: '',
-    travelDate: '',
-    duration: '',
-    travelers: '2',
-    budget: '',
-    message: ''
+    package: '',
+    phoneNumber: '',
+    countryCode: '+94'
   });
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const packages = [
+    'Select a Package',
+    'Sri Lanka Holiday Package 3 Days',
+    'Sri Lanka Holiday Package 4 Days',
+    'Sri Lanka Holiday Package 5 Days',
+    'Sri Lanka Holiday Package 6 Days',
+    'Sri Lanka Holiday Package 7 Days',
+    'Sri Lanka Holiday Package 8 Days',
+    'Sri Lanka Holiday Package 10 Days',
+    'Sri Lanka Holiday Package 12 Days',
+    'Sri Lanka Holiday Package 14 Days',
+    'Sri Lanka Holiday Package 15 Days',
+    'Custom Tour Package'
+  ];
+
+  const countryCodes = [
+    { code: '+94', country: 'LK', flag: '🇱🇰' },
+    { code: '+1', country: 'US', flag: '🇺🇸' },
+    { code: '+44', country: 'UK', flag: '🇬🇧' },
+    { code: '+61', country: 'AU', flag: '🇦🇺' },
+    { code: '+91', country: 'IN', flag: '🇮🇳' },
+    { code: '+49', country: 'DE', flag: '🇩🇪' },
+    { code: '+33', country: 'FR', flag: '🇫🇷' },
+    { code: '+81', country: 'JP', flag: '🇯🇵' }
+  ];
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
     setFormData(prev => ({
       ...prev,
@@ -33,118 +54,155 @@ const QuotationForm = () => {
     }));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
-    // Basic validation
-    if (!formData.name || !formData.email || !formData.phone || !formData.destination) {
+    if (!formData.fullName || !formData.email || !formData.package || formData.package === 'Select a Package') {
       toast.error('Please fill in all required fields');
       return;
     }
 
-    // Save quote to localStorage for admin dashboard
-    const quotes = JSON.parse(localStorage.getItem('quotes') || '[]');
-    const newQuote = {
-      id: Date.now(),
-      ...formData,
-      status: 'Pending',
-      submittedAt: new Date().toISOString(),
-      date: new Date().toLocaleDateString(),
-      time: new Date().toLocaleTimeString()
-    };
-    
-    quotes.push(newQuote);
-    localStorage.setItem('quotes', JSON.stringify(quotes));
+    setIsSubmitting(true);
 
-    // Create email content
-    const emailSubject = `Travel Quote Request - ${formData.destination}`;
-    const emailBody = `
+    try {
+      // Save quote to localStorage for admin dashboard
+      const existingQuotes = JSON.parse(localStorage.getItem('quotationRequests') || '[]');
+      const newQuote = {
+        id: Date.now(),
+        name: formData.fullName,
+        email: formData.email,
+        phone: formData.countryCode + ' ' + formData.phoneNumber,
+        package: formData.package,
+        date: new Date().toISOString().split('T')[0],
+        status: 'pending'
+      };
+      existingQuotes.push(newQuote);
+      localStorage.setItem('quotationRequests', JSON.stringify(existingQuotes));
+
+      // Create mailto link with form data
+      const subject = encodeURIComponent('Quotation Request - Dremora Tours');
+      const body = encodeURIComponent(`
 Dear Dremora Tours Team,
 
-I would like to request a quote for the following travel details:
+I would like to request a quotation for a Sri Lankan tour package.
 
-Name: ${formData.name}
-Email: ${formData.email}
-Phone: ${formData.phone}
-Destination: ${formData.destination}
-Travel Date: ${formData.travelDate}
-Duration: ${formData.duration}
-Number of Travelers: ${formData.travelers}
-Budget Range: ${formData.budget}
+Details:
+- Full Name: ${formData.fullName}
+- Email: ${formData.email}
+- Phone: ${formData.countryCode} ${formData.phoneNumber}
+- Package: ${formData.package}
 
-Additional Message:
-${formData.message}
+Please provide me with a personalized quote and itinerary for this package.
 
-Please provide me with a detailed quote and itinerary.
+Thank you for your assistance.
 
 Best regards,
-${formData.name}
-    `.trim();
+${formData.fullName}
+      `);
 
-    // Open email client
-    const mailtoLink = `mailto:dremoratours@gmail.com?subject=${encodeURIComponent(emailSubject)}&body=${encodeURIComponent(emailBody)}`;
-    window.open(mailtoLink);
+      const mailtoLink = `mailto:dremoratravels@gmail.com?subject=${subject}&body=${body}`;
+      
+      // Open email client
+      window.location.href = mailtoLink;
+      
+      // Show success message
+      toast.success('Email client opened! Please send the email to complete your quotation request.');
+      
+      // Reset form
+      setFormData({
+        fullName: '',
+        email: '',
+        package: '',
+        phoneNumber: '',
+        countryCode: '+94'
+      });
 
-    toast.success('Quote request submitted successfully! Your email client will open shortly.');
-    
-    // Reset form
-    setFormData({
-      name: '',
-      email: '',
-      phone: '',
-      destination: '',
-      travelDate: '',
-      duration: '',
-      travelers: '2',
-      budget: '',
-      message: ''
-    });
+    } catch (error) {
+      toast.error('Something went wrong. Please try again.');
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
-  const destinations = [
-    'Sigiriya Rock Fortress',
-    'Kandy & Temple of Tooth',
-    'Ella & Nine Arch Bridge',
-    'Galle Dutch Fort',
-    'Yala National Park',
-    'Nuwara Eliya Tea Country',
-    'Mirissa Beach',
-    'Polonnaruwa Ancient City',
-    'Adam\'s Peak',
-    'Bentota Beach',
-    'Custom Itinerary'
-  ];
-
   return (
-    <section id="quote-section" className="py-20 bg-gradient-to-br from-blue-50 to-indigo-100">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          viewport={{ once: true }}
-          className="text-center mb-12"
-        >
-          <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
-            Get Your Free Quote
-          </h2>
-          <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-            Tell us about your dream Sri Lankan adventure and we'll create a personalized 
-            itinerary just for you. Get started with a free, no-obligation quote.
-          </p>
-        </motion.div>
+    <section 
+      id="quote-section"
+      className="py-20 relative overflow-hidden"
+      style={{
+        backgroundImage: `url("https://media1.thrillophilia.com/filestore/zpxe5aul83j9euqc020bjj8dwvcl_1579095457_7.png")`,
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+        backgroundRepeat: 'no-repeat'
+      }}
+    >
+      {/* Background Overlay */}
+      <div className="absolute inset-0 bg-white/85 backdrop-blur-sm"></div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
-          {/* Quote Form */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+          {/* Left Side - Content */}
           <motion.div
             initial={{ opacity: 0, x: -30 }}
             whileInView={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.8 }}
             viewport={{ once: true }}
-            className="bg-white rounded-2xl shadow-xl p-8"
+            className="space-y-6"
+          >
+            <div>
+              <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
+                Get a <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-blue-500">Quote</span>
+              </h2>
+              <p className="text-lg text-gray-600 leading-relaxed">
+                Get 24/7 support from our dedicated local experts—always here when you need us.
+              </p>
+            </div>
+
+            {/* Quote Highlight */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.3 }}
+              viewport={{ once: true }}
+              className="bg-white/80 backdrop-blur-sm rounded-2xl p-6 shadow-lg border border-white/20"
+            >
+              <div className="flex items-start space-x-4">
+                <div className="text-6xl text-gray-200 font-bold leading-none">"</div>
+                <div>
+                  <h3 className="text-xl font-bold text-gray-900 mb-2">
+                    Get a personalised quote in 24 hours.
+                  </h3>
+                  <p className="text-gray-600 text-sm">
+                    Fast, reliable, and tailored to your travel dreams
+                  </p>
+                </div>
+              </div>
+            </motion.div>
+
+            {/* Privacy Notice */}
+            <motion.p
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
+              transition={{ duration: 0.6, delay: 0.5 }}
+              viewport={{ once: true }}
+              className="text-sm text-gray-500 flex items-center space-x-2"
+            >
+              <svg className="h-4 w-4 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+              <span>We respect your privacy and keep your details strictly confidential</span>
+            </motion.p>
+          </motion.div>
+
+          {/* Right Side - Form */}
+          <motion.div
+            initial={{ opacity: 0, x: 30 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.8 }}
+            viewport={{ once: true }}
+            className="bg-white rounded-3xl shadow-2xl p-8 border border-gray-100"
           >
             <form onSubmit={handleSubmit} className="space-y-6">
-              {/* Personal Information */}
+              {/* Full Name and Email */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-2">
@@ -154,12 +212,12 @@ ${formData.name}
                     <UserIcon className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400" />
                     <input
                       type="text"
-                      name="name"
-                      value={formData.name}
+                      name="fullName"
+                      value={formData.fullName}
                       onChange={handleInputChange}
                       required
-                      className="w-full pl-10 pr-4 py-3 border-0 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 shadow-sm bg-gray-50"
-                      placeholder="Your full name"
+                      className="w-full pl-10 pr-4 py-3 border-0 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 shadow-sm bg-gray-50 transition-all duration-300"
+                      placeholder="John Jackson"
                     />
                   </div>
                 </div>
@@ -176,205 +234,105 @@ ${formData.name}
                       value={formData.email}
                       onChange={handleInputChange}
                       required
-                      className="w-full pl-10 pr-4 py-3 border-0 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 shadow-sm bg-gray-50"
-                      placeholder="your@email.com"
+                      className="w-full pl-10 pr-4 py-3 border-0 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 shadow-sm bg-gray-50 transition-all duration-300"
+                      placeholder="Hello@outlook.com"
                     />
                   </div>
                 </div>
               </div>
 
+              {/* Destination */}
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Phone Number *
-                </label>
-                <div className="relative">
-                  <PhoneIcon className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400" />
-                  <input
-                    type="tel"
-                    name="phone"
-                    value={formData.phone}
-                    onChange={handleInputChange}
-                    required
-                    className="w-full pl-10 pr-4 py-3 border-0 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 shadow-sm bg-gray-50"
-                    placeholder="+94 77 123 4567"
-                  />
-                </div>
-              </div>
-
-              {/* Travel Details */}
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Preferred Destination *
+                  Select Package *
                 </label>
                 <div className="relative">
                   <MapPinIcon className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400" />
                   <select
-                    name="destination"
-                    value={formData.destination}
+                    name="package"
+                    value={formData.package}
                     onChange={handleInputChange}
                     required
-                    className="w-full pl-10 pr-4 py-3 border-0 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 shadow-sm bg-gray-50"
+                    className="w-full pl-10 pr-4 py-3 border-0 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 shadow-sm bg-gray-50 transition-all duration-300 appearance-none cursor-pointer"
                   >
-                    <option value="">Select a destination</option>
-                    {destinations.map((dest, index) => (
-                      <option key={index} value={dest}>{dest}</option>
+                    {packages.map((pkg, index) => (
+                      <option key={index} value={pkg} disabled={index === 0}>
+                        {pkg}
+                      </option>
                     ))}
                   </select>
-                </div>
-              </div>
-
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Travel Date
-                  </label>
-                  <div className="relative">
-                    <CalendarIcon className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400" />
-                    <input
-                      type="date"
-                      name="travelDate"
-                      value={formData.travelDate}
-                      onChange={handleInputChange}
-                      className="w-full pl-10 pr-4 py-3 border-0 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 shadow-sm bg-gray-50"
-                    />
+                  <div className="absolute right-3 top-1/2 transform -translate-y-1/2 pointer-events-none">
+                    <svg className="h-5 w-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                    </svg>
                   </div>
                 </div>
-
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Duration
-                  </label>
-                  <select
-                    name="duration"
-                    value={formData.duration}
-                    onChange={handleInputChange}
-                    className="w-full py-3 px-4 border-0 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 shadow-sm bg-gray-50"
-                  >
-                    <option value="">Select duration</option>
-                    <option value="1-3 days">1-3 days</option>
-                    <option value="4-7 days">4-7 days</option>
-                    <option value="1-2 weeks">1-2 weeks</option>
-                    <option value="2+ weeks">2+ weeks</option>
-                  </select>
-                </div>
               </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Number of Travelers
-                  </label>
+              {/* Phone Number */}
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Phone Number
+                </label>
+                <div className="flex space-x-3">
                   <div className="relative">
-                    <UserGroupIcon className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400" />
                     <select
-                      name="travelers"
-                      value={formData.travelers}
+                      name="countryCode"
+                      value={formData.countryCode}
                       onChange={handleInputChange}
-                      className="w-full pl-10 pr-4 py-3 border-0 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 shadow-sm bg-gray-50"
+                      className="w-20 py-3 px-3 border-0 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 shadow-sm bg-gray-50 transition-all duration-300 appearance-none cursor-pointer text-center"
                     >
-                      {[1,2,3,4,5,6,7,8,9,10].map(num => (
-                        <option key={num} value={num}>{num} {num === 1 ? 'Person' : 'People'}</option>
+                      {countryCodes.map((country) => (
+                        <option key={country.code} value={country.code}>
+                          {country.code}
+                        </option>
                       ))}
                     </select>
                   </div>
-                </div>
-
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Budget Range (USD)
-                  </label>
-                  <select
-                    name="budget"
-                    value={formData.budget}
-                    onChange={handleInputChange}
-                    className="w-full py-3 px-4 border-0 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 shadow-sm bg-gray-50"
-                  >
-                    <option value="">Select budget range</option>
-                    <option value="Under $500">Under $500</option>
-                    <option value="$500 - $1000">$500 - $1000</option>
-                    <option value="$1000 - $2000">$1000 - $2000</option>
-                    <option value="$2000 - $5000">$2000 - $5000</option>
-                    <option value="Above $5000">Above $5000</option>
-                  </select>
-                </div>
-              </div>
-
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Additional Message
-                </label>
-                <div className="relative">
-                  <ChatBubbleLeftRightIcon className="absolute left-3 top-3 h-5 w-5 text-gray-400" />
-                  <textarea
-                    name="message"
-                    value={formData.message}
-                    onChange={handleInputChange}
-                    rows={4}
-                    className="w-full pl-10 pr-4 py-3 border-0 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 shadow-sm bg-gray-50 resize-none"
-                    placeholder="Tell us about your preferences, special requirements, or any questions you have..."
-                  />
-                </div>
-              </div>
-
-              <button
-                type="submit"
-                className="w-full bg-gradient-to-r from-blue-600 to-blue-500 hover:from-blue-700 hover:to-blue-600 text-white font-semibold py-4 px-6 rounded-lg transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl flex items-center justify-center space-x-2"
-              >
-                <PaperAirplaneIcon className="h-5 w-5" />
-                <span>Get My Free Quote</span>
-              </button>
-            </form>
-          </motion.div>
-
-          {/* Benefits */}
-          <motion.div
-            initial={{ opacity: 0, x: 30 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.8 }}
-            viewport={{ once: true }}
-            className="space-y-8"
-          >
-            <div className="bg-white rounded-2xl shadow-lg p-8">
-              <h3 className="text-2xl font-bold text-gray-900 mb-6">Why Choose Our Quote Service?</h3>
-              <div className="space-y-4">
-                {[
-                  { title: "100% Free", desc: "No hidden fees or obligations" },
-                  { title: "Personalized", desc: "Tailored to your preferences and budget" },
-                  { title: "Expert Advice", desc: "Local knowledge and insider tips" },
-                  { title: "Quick Response", desc: "Get your quote within 24 hours" },
-                  { title: "Best Price", desc: "Competitive rates guaranteed" }
-                ].map((benefit, index) => (
-                  <div key={index} className="flex items-start space-x-3">
-                    <div className="w-6 h-6 bg-green-100 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
-                      <svg className="w-4 h-4 text-green-600" fill="currentColor" viewBox="0 0 20 20">
-                        <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
-                      </svg>
-                    </div>
-                    <div>
-                      <h4 className="font-semibold text-gray-900">{benefit.title}</h4>
-                      <p className="text-gray-600 text-sm">{benefit.desc}</p>
-                    </div>
+                  <div className="relative flex-1">
+                    <PhoneIcon className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400" />
+                    <input
+                      type="tel"
+                      name="phoneNumber"
+                      value={formData.phoneNumber}
+                      onChange={handleInputChange}
+                      className="w-full pl-10 pr-4 py-3 border-0 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 shadow-sm bg-gray-50 transition-all duration-300"
+                      placeholder="77 123 4567"
+                    />
                   </div>
-                ))}
+                </div>
               </div>
-            </div>
 
-            <div className="bg-gradient-to-r from-blue-600 to-blue-500 rounded-2xl p-8 text-white">
-              <h3 className="text-2xl font-bold mb-4">Need Help?</h3>
-              <p className="mb-4 opacity-90">
-                Our travel experts are here to assist you with any questions about your Sri Lankan adventure.
-              </p>
-              <div className="space-y-2 text-sm">
-                <div className="flex items-center space-x-2">
-                  <PhoneIcon className="h-4 w-4" />
-                  <span>+94 76 921 4087</span>
-                </div>
-                <div className="flex items-center space-x-2">
-                  <EnvelopeIcon className="h-4 w-4" />
-                  <span>dremoratours@gmail.com</span>
-                </div>
+              {/* Submit Button */}
+              <motion.button
+                type="submit"
+                disabled={isSubmitting}
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
+                className={`w-full bg-gradient-to-r from-blue-600 to-blue-500 hover:from-blue-700 hover:to-blue-600 text-white font-semibold py-4 px-6 rounded-xl transition-all duration-300 shadow-lg hover:shadow-xl flex items-center justify-center space-x-2 ${
+                  isSubmitting ? 'opacity-70 cursor-not-allowed' : ''
+                }`}
+              >
+                {isSubmitting ? (
+                  <>
+                    <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white"></div>
+                    <span>Processing...</span>
+                  </>
+                ) : (
+                  <>
+                    <PaperAirplaneIcon className="h-5 w-5" />
+                    <span>Submit</span>
+                  </>
+                )}
+              </motion.button>
+
+              {/* Additional Info */}
+              <div className="text-center">
+                <p className="text-sm text-gray-500 mb-2">
+                  Have a coupon? <a href="#" className="text-blue-600 hover:text-blue-700 underline">Apply here</a>
+                </p>
               </div>
-            </div>
+            </form>
           </motion.div>
         </div>
       </div>
