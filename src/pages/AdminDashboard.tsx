@@ -323,7 +323,7 @@ const AdminDashboard = () => {
               </div>
             )}
           </div>
-        </div>
+        </motion.div>
       </div>
     </div>
   );
