@@ -30,93 +30,153 @@ const Packages = () => {
   const packages = [
     {
       id: 1,
-      title: "Cultural Triangle Tour",
-      description: "Explore Sri Lanka's ancient heritage with visits to Sigiriya Rock Fortress, Polonnaruwa ancient city, and the sacred city of Anuradhapura.",
+      title: "Sri Lanka Holiday Package 3 Days",
+      description: "Perfect short getaway covering Colombo city tour, Kandy Temple of Tooth, and scenic Peradeniya Botanical Gardens.",
       image: "https://images.pexels.com/photos/2166559/pexels-photo-2166559.jpeg?auto=compress&cs=tinysrgb&w=800",
-      duration: "5 Days / 4 Nights",
-      location: "Sigiriya, Polonnaruwa",
-      price: 450,
-      originalPrice: 550,
+      duration: "3 Days / 2 Nights",
+      location: "Colombo, Kandy",
+      price: 280,
+      originalPrice: 350,
       rating: 4.8,
       reviews: 124,
       maxGuests: 8,
       category: 'cultural',
-      highlights: ["Sigiriya Rock Fortress", "Ancient Polonnaruwa", "Minneriya Safari"]
+      highlights: ["Colombo City Tour", "Temple of Tooth", "Botanical Gardens"]
     },
     {
       id: 2,
-      title: "Hill Country Experience",
-      description: "Journey through misty mountains, lush tea plantations, and charming hill stations including Kandy, Nuwara Eliya, and Ella.",
+      title: "Sri Lanka Holiday Package 5 Days",
+      description: "Explore cultural triangle with Sigiriya Rock Fortress, Polonnaruwa ancient city, and Dambulla Cave Temple.",
       image: "https://images.pexels.com/photos/1450353/pexels-photo-1450353.jpeg?auto=compress&cs=tinysrgb&w=800",
-      duration: "4 Days / 3 Nights",
-      location: "Kandy, Ella, Nuwara Eliya",
-      price: 380,
-      originalPrice: 480,
+      duration: "5 Days / 4 Nights",
+      location: "Sigiriya, Polonnaruwa, Dambulla",
+      price: 450,
+      originalPrice: 550,
       rating: 4.9,
       reviews: 89,
       maxGuests: 6,
-      category: 'hill-country',
-      highlights: ["Temple of Tooth", "Tea Plantation", "Nine Arch Bridge"]
+      category: 'cultural',
+      highlights: ["Sigiriya Rock", "Ancient Polonnaruwa", "Dambulla Caves"]
     },
     {
       id: 3,
-      title: "Southern Coast Tour",
-      description: "Discover pristine beaches, historic Galle Fort, and enjoy whale watching along Sri Lanka's stunning southern coastline.",
+      title: "Sri Lanka Holiday Package 7 Days",
+      description: "Complete hill country experience with Kandy, Nuwara Eliya, Ella, and scenic train journey through tea plantations.",
       image: "https://images.pexels.com/photos/1450361/pexels-photo-1450361.jpeg?auto=compress&cs=tinysrgb&w=800",
-      duration: "3 Days / 2 Nights",
-      location: "Galle, Mirissa, Unawatuna",
-      price: 280,
-      originalPrice: 350,
+      duration: "7 Days / 6 Nights",
+      location: "Kandy, Nuwara Eliya, Ella",
+      price: 650,
+      originalPrice: 750,
       rating: 4.7,
       reviews: 156,
       maxGuests: 10,
-      category: 'beach',
-      highlights: ["Galle Dutch Fort", "Whale Watching", "Beach Relaxation"]
+      category: 'hill-country',
+      highlights: ["Tea Plantations", "Nine Arch Bridge", "Train Journey"]
     },
     {
       id: 4,
-      title: "Wildlife Safari Tour",
-      description: "Experience Sri Lanka's incredible wildlife including elephants, leopards, and exotic birds in their natural habitat.",
+      title: "Sri Lanka Holiday Package 10 Days",
+      description: "Comprehensive Sri Lanka tour covering cultural sites, hill country, wildlife safari, and southern beaches.",
       image: "https://images.pexels.com/photos/1170986/pexels-photo-1170986.jpeg?auto=compress&cs=tinysrgb&w=800",
-      duration: "2 Days / 1 Night",
-      location: "Yala, Udawalawe",
-      price: 380,
-      originalPrice: 450,
+      duration: "10 Days / 9 Nights",
+      location: "Multiple Destinations",
+      price: 950,
+      originalPrice: 1100,
       rating: 4.6,
       reviews: 98,
       maxGuests: 6,
-      category: 'wildlife',
-      highlights: ["Yala National Park", "Elephant Safari", "Bird Watching"]
+      category: 'adventure',
+      highlights: ["Cultural Triangle", "Hill Country", "Wildlife Safari", "Beach Time"]
     },
     {
       id: 5,
-      title: "Adventure Tour Package",
-      description: "Exciting adventures including white water rafting, hiking, and exploring Sri Lanka's diverse landscapes.",
+      title: "Sri Lanka Holiday Package 12 Days",
+      description: "Ultimate Sri Lanka experience including all major attractions, wildlife parks, beaches, and cultural heritage sites.",
       image: "https://images.pexels.com/photos/1365425/pexels-photo-1365425.jpeg?auto=compress&cs=tinysrgb&w=800",
-      duration: "6 Days / 5 Nights",
-      location: "Kitulgala, Ella, Kandy",
-      price: 950,
-      originalPrice: 1100,
+      duration: "12 Days / 11 Nights",
+      location: "Island Wide",
+      price: 1200,
+      originalPrice: 1400,
       rating: 4.8,
       reviews: 76,
       maxGuests: 8,
       category: 'adventure',
-      highlights: ["White Water Rafting", "Hiking Trails", "Adventure Sports"]
+      highlights: ["Complete Island Tour", "All Major Sites", "Wildlife & Beaches"]
     },
     {
       id: 6,
-      title: "Honeymoon Special Package",
-      description: "Romantic getaway with luxury accommodations, private dinners, and breathtaking sunset views for couples.",
+      title: "Sri Lanka Holiday Package 14 Days",
+      description: "Extended luxury tour with premium accommodations, private guides, and exclusive experiences across the island.",
       image: "https://images.pexels.com/photos/1450363/pexels-photo-1450363.jpeg?auto=compress&cs=tinysrgb&w=800",
-      duration: "7 Days / 6 Nights",
-      location: "Bentota, Kandy, Nuwara Eliya",
-      price: 1200,
-      originalPrice: 1400,
+      duration: "14 Days / 13 Nights",
+      location: "Premium Island Tour",
+      price: 1500,
+      originalPrice: 1750,
       rating: 4.9,
       reviews: 145,
       maxGuests: 2,
       category: 'honeymoon',
-      highlights: ["Luxury Hotels", "Romantic Dinners", "Couple Activities"]
+      highlights: ["Luxury Accommodations", "Private Guides", "Exclusive Experiences"]
+    },
+    {
+      id: 7,
+      title: "Sri Lanka Holiday Package 4 Days",
+      description: "Quick cultural and nature tour covering Kandy, Sigiriya, and Dambulla with comfortable accommodations.",
+      image: "https://images.pexels.com/photos/2166559/pexels-photo-2166559.jpeg?auto=compress&cs=tinysrgb&w=800",
+      duration: "4 Days / 3 Nights",
+      location: "Kandy, Sigiriya, Dambulla",
+      price: 350,
+      originalPrice: 420,
+      rating: 4.7,
+      reviews: 112,
+      maxGuests: 8,
+      category: 'cultural',
+      highlights: ["Sigiriya Rock", "Temple of Tooth", "Cave Temples"]
+    },
+    {
+      id: 8,
+      title: "Sri Lanka Holiday Package 6 Days",
+      description: "Perfect blend of culture and beaches with Colombo, Kandy, Galle Fort, and southern coast relaxation.",
+      image: "https://images.pexels.com/photos/1450361/pexels-photo-1450361.jpeg?auto=compress&cs=tinysrgb&w=800",
+      duration: "6 Days / 5 Nights",
+      location: "Colombo, Kandy, Galle",
+      price: 520,
+      originalPrice: 620,
+      rating: 4.8,
+      reviews: 134,
+      maxGuests: 10,
+      category: 'beach',
+      highlights: ["Cultural Sites", "Galle Fort", "Beach Time"]
+    },
+    {
+      id: 9,
+      title: "Sri Lanka Holiday Package 8 Days",
+      description: "Adventure and wildlife tour with Yala Safari, Ella hiking, white water rafting, and scenic train rides.",
+      image: "https://images.pexels.com/photos/1170986/pexels-photo-1170986.jpeg?auto=compress&cs=tinysrgb&w=800",
+      duration: "8 Days / 7 Nights",
+      location: "Yala, Ella, Kitulgala",
+      price: 750,
+      originalPrice: 850,
+      rating: 4.6,
+      reviews: 87,
+      maxGuests: 6,
+      category: 'wildlife',
+      highlights: ["Yala Safari", "Adventure Sports", "Scenic Railways"]
+    },
+    {
+      id: 10,
+      title: "Sri Lanka Holiday Package 15 Days",
+      description: "Ultimate luxury experience covering every corner of Sri Lanka with premium hotels, private transfers, and exclusive access.",
+      image: "https://images.pexels.com/photos/1450353/pexels-photo-1450353.jpeg?auto=compress&cs=tinysrgb&w=800",
+      duration: "15 Days / 14 Nights",
+      location: "Complete Sri Lanka",
+      price: 1800,
+      originalPrice: 2100,
+      rating: 5.0,
+      reviews: 67,
+      maxGuests: 4,
+      category: 'honeymoon',
+      highlights: ["Complete Island", "Luxury Experience", "Private Services"]
     }
   ];
 
@@ -357,9 +417,15 @@ const Packages = () => {
                   </div>
                   <Link
                     to={`/booking/${pkg.id}`}
-                    className="bg-gradient-to-r from-blue-600 to-blue-500 hover:from-blue-700 hover:to-blue-600 text-white font-semibold py-2 px-4 rounded-lg transition-all duration-300 transform hover:scale-105 text-sm"
+                    className="bg-gradient-to-r from-blue-600 to-blue-500 hover:from-blue-700 hover:to-blue-600 text-white font-semibold py-2 px-3 rounded-lg transition-all duration-300 transform hover:scale-105 text-xs mr-2"
                   >
                     Book Now
+                  </Link>
+                  <Link
+                    to={`/package/${pkg.id}`}
+                    className="border border-blue-600 text-blue-600 hover:bg-blue-600 hover:text-white font-semibold py-2 px-3 rounded-lg transition-all duration-300 transform hover:scale-105 text-xs"
+                  >
+                    View Details
                   </Link>
                 </div>
               </div>
