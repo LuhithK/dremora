@@ -83,35 +83,9 @@ const Login = () => {
       }
 
       // Add new admin
-      const newAdmin = {
-        name: formData.name,
-        email: formData.email,
-        password: formData.password
-      };
-      
-      admins.push(newAdmin);
-      saveAdmins(admins);
-    } else {
-      // Traveller signup
-      const users = getStoredUsers();
-      
-      // Check if user already exists
-      const existingUser = users.find((user: any) => user.email === formData.email);
-      if (existingUser) {
-        toast.error('User with this email already exists');
-        return;
-      }
 
-      // Add new user
-      const newUser = {
-        name: formData.name,
-        email: formData.email,
-        password: formData.password
-      };
-
-      users.push(newUser);
-      saveUsers(users);
-    }
+    users.push(newUser);
+    saveUsers(users);
 
     toast.success('Account created successfully! Please login.');
     setMode('login');
@@ -127,8 +101,8 @@ const Login = () => {
     }
 
     if (loginType === 'admin') {
-      // Admin login
-      const adminCredentials = { email: 'admin@travel.com', password: 'admin123' };
+      // Admin login with fixed credentials
+      const adminCredentials = { email: 'admin@dremoratours.com', password: 'Luhith@2000' };
       if (formData.email === adminCredentials.email && formData.password === adminCredentials.password) {
         toast.success('Admin login successful!');
         localStorage.setItem('currentUser', JSON.stringify({ 
