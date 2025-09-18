@@ -85,13 +85,13 @@ const Navbar = () => {
               ))}
               
               {/* Premium CTA Button */}
-              <a 
-                href="#quote-section"
+              <Link
+                to="/login"
                 className="relative overflow-hidden bg-gradient-to-r from-blue-600 to-blue-500 hover:from-blue-700 hover:to-blue-600 text-white font-medium text-sm py-3 px-6 rounded-full transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl group"
               >
-                <span className="relative z-10 tracking-wide">Get a Quote</span>
+                <span className="relative z-10 tracking-wide">Login</span>
                 <div className="absolute inset-0 bg-gradient-to-r from-blue-500 to-blue-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-              </a>
+              </Link>
             </div>
 
             {/* Mobile menu button */}
@@ -136,12 +136,12 @@ const Navbar = () => {
                   </Link>
                 ))}
                 <div className="px-6 py-4">
-                  <a 
-                    href="#quote-section"
+                  <Link
+                    to="/login"
                     className="block w-full bg-gradient-to-r from-blue-600 to-blue-500 hover:from-blue-700 hover:to-blue-600 text-white font-medium text-sm py-4 px-6 rounded-xl transition-all duration-300 transform hover:scale-105 shadow-lg tracking-wide text-center"
                   >
-                    Get a Quote
-                  </a>
+                    Login
+                  </Link>
                 </div>
               </div>
             </motion.div>

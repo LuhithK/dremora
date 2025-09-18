@@ -13,21 +13,25 @@ const QuotationForm = () => {
   const [formData, setFormData] = useState({
     fullName: '',
     email: '',
-    destination: '',
+    package: '',
     phoneNumber: '',
     countryCode: '+94'
   });
 
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const destinations = [
-    'Select a Destination',
-    'Cultural Triangle (Sigiriya, Polonnaruwa)',
-    'Hill Country (Kandy, Ella, Nuwara Eliya)',
-    'Southern Coast (Galle, Mirissa, Unawatuna)',
-    'Wildlife Safari (Yala, Udawalawe)',
-    'Adventure Tours (Kitulgala, Hiking)',
-    'Honeymoon Package',
+  const packages = [
+    'Select a Package',
+    'Sri Lanka Holiday Package 3 Days',
+    'Sri Lanka Holiday Package 4 Days',
+    'Sri Lanka Holiday Package 5 Days',
+    'Sri Lanka Holiday Package 6 Days',
+    'Sri Lanka Holiday Package 7 Days',
+    'Sri Lanka Holiday Package 8 Days',
+    'Sri Lanka Holiday Package 10 Days',
+    'Sri Lanka Holiday Package 12 Days',
+    'Sri Lanka Holiday Package 14 Days',
+    'Sri Lanka Holiday Package 15 Days',
     'Custom Tour Package'
   ];
 
@@ -53,7 +57,7 @@ const QuotationForm = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
-    if (!formData.fullName || !formData.email || !formData.destination || formData.destination === 'Select a Destination') {
+    if (!formData.fullName || !formData.email || !formData.package || formData.package === 'Select a Package') {
       toast.error('Please fill in all required fields');
       return;
     }
@@ -72,9 +76,9 @@ Details:
 - Full Name: ${formData.fullName}
 - Email: ${formData.email}
 - Phone: ${formData.countryCode} ${formData.phoneNumber}
-- Destination: ${formData.destination}
+- Package: ${formData.package}
 
-Please provide me with a personalized quote and itinerary for this destination.
+Please provide me with a personalized quote and itinerary for this package.
 
 Thank you for your assistance.
 
@@ -94,7 +98,7 @@ ${formData.fullName}
       setFormData({
         fullName: '',
         email: '',
-        destination: '',
+        package: '',
         phoneNumber: '',
         countryCode: '+94'
       });
@@ -226,20 +230,20 @@ ${formData.fullName}
               {/* Destination */}
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Destination *
+                  Select Package *
                 </label>
                 <div className="relative">
                   <MapPinIcon className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400" />
                   <select
-                    name="destination"
-                    value={formData.destination}
+                    name="package"
+                    value={formData.package}
                     onChange={handleInputChange}
                     required
                     className="w-full pl-10 pr-4 py-3 border-0 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 shadow-sm bg-gray-50 transition-all duration-300 appearance-none cursor-pointer"
                   >
-                    {destinations.map((dest, index) => (
-                      <option key={index} value={dest} disabled={index === 0}>
-                        {dest}
+                    {packages.map((pkg, index) => (
+                      <option key={index} value={pkg} disabled={index === 0}>
+                        {pkg}
                       </option>
                     ))}
                   </select>

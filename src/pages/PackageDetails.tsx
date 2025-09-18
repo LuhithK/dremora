@@ -549,7 +549,7 @@ const PackageDetails = () => {
                   Book This Trip
                 </Link>
                 <a
-                  href="#quote-section"
+                  href="/#quote-section"
                   className="w-full border border-blue-600 text-blue-600 hover:bg-blue-50 font-medium py-3 px-6 rounded-lg transition-colors duration-200 text-center block"
                 >
                   Get Custom Quote
