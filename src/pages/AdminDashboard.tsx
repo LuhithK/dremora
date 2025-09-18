@@ -35,15 +35,11 @@ const Login = () => {
     const admins = localStorage.getItem('registeredAdmins');
     return admins ? JSON.parse(admins) : [];
   };
-  // Get stored admins from localStorage
-  const getStoredAdmins = () => {
-    const admins = localStorage.getItem('registeredAdmins');
-    return admins ? JSON.parse(admins) : [];
-  };
   // Save users to localStorage
   const saveUsers = (users: any[]) => {
     localStorage.setItem('registeredUsers', JSON.stringify(users));
   };
+
   // Save admins to localStorage
   const saveAdmins = (admins: any[]) => {
     localStorage.setItem('registeredAdmins', JSON.stringify(admins));
@@ -85,13 +81,39 @@ const Login = () => {
         toast.error('Admin with this email already exists');
         return;
       }
+
+      // Add new admin
+      const newAdmin = {
+        id: Date.now(),
+        name: formData.name,
+        email: formData.email,
+        password: formData.password
+      };
+
+      admins.push(newAdmin);
+      saveAdmins(admins);
+    } else {
+      // Traveller signup
+      const users = getStoredUsers();
+      
+      // Check if user already exists
+      const existingUser = users.find((user: any) => user.email === formData.email);
+      if (existingUser) {
+        toast.error('User with this email already exists');
         return;
       }
 
-      // Add new admin
+      // Add new user
+      const newUser = {
+        id: Date.now(),
+        name: formData.name,
+        email: formData.email,
+        password: formData.password
+      };
 
-    users.push(newUser);
-    saveUsers(users);
+      users.push(newUser);
+      saveUsers(users);
+    }
 
     toast.success('Account created successfully! Please login.');
     setMode('login');
@@ -108,11 +130,14 @@ const Login = () => {
 
     if (loginType === 'admin') {
       // Admin login
-      if (formData.email === adminCredentials.email && formData.password === adminCredentials.password) {
-        toast.success('Admin login successful!');
+      const admins = getStoredAdmins();
+      const admin = admins.find((a: any) => a.email === formData.email && a.password === formData.password);
+      
+      if (admin) {
+        toast.success(`Welcome back, ${admin.name}!`);
         localStorage.setItem('currentUser', JSON.stringify({ 
           type: 'admin', 
-          email: formData.email 
+          ...admin 
         }));
         navigate('/admin');
       } else {
@@ -200,35 +225,33 @@ const Login = () => {
             </button>
           </div>
 
-          {/* Mode Selector for Travellers */}
-          {loginType === 'traveller' && (
-            <div className="flex space-x-4 mb-6">
-              <button
-                onClick={() => switchMode('login')}
-                className={`flex-1 py-2 px-4 rounded-lg font-medium transition-all duration-300 ${
-                  mode === 'login'
-                    ? 'bg-blue-100 text-blue-700'
-                    : 'text-gray-600 hover:text-blue-600'
-                }`}
-              >
-                Login
-              </button>
-              <button
-                onClick={() => switchMode('signup')}
-                className={`flex-1 py-2 px-4 rounded-lg font-medium transition-all duration-300 ${
-                  mode === 'signup'
-                    ? 'bg-blue-100 text-blue-700'
-                    : 'text-gray-600 hover:text-blue-600'
-                }`}
-              >
-                Sign Up
-              </button>
-            </div>
-          )}
+          {/* Mode Selector */}
+          <div className="flex space-x-4 mb-6">
+            <button
+              onClick={() => switchMode('login')}
+              className={`flex-1 py-2 px-4 rounded-lg font-medium transition-all duration-300 ${
+                mode === 'login'
+                  ? 'bg-blue-100 text-blue-700'
+                  : 'text-gray-600 hover:text-blue-600'
+              }`}
+            >
+              Login
+            </button>
+            <button
+              onClick={() => switchMode('signup')}
+              className={`flex-1 py-2 px-4 rounded-lg font-medium transition-all duration-300 ${
+                mode === 'signup'
+                  ? 'bg-blue-100 text-blue-700'
+                  : 'text-gray-600 hover:text-blue-600'
+              }`}
+            >
+              Sign Up
+            </button>
+          </div>
 
           <form onSubmit={mode === 'login' ? handleLogin : handleSignup} className="space-y-6">
             {/* Name Field (only for signup) */}
-            {mode === 'signup' && loginType === 'traveller' && (
+            {mode === 'signup' && (
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">
                   Full Name
@@ -294,7 +317,15 @@ const Login = () => {
                     <EyeIcon className="h-5 w-5" />
                   )}
                 </button>
-      // Add new admin
+              </div>
+            </div>
+
+            {/* Confirm Password Field (only for signup) */}
+            {mode === 'signup' && (
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Confirm Password
+                </label>
                 <div className="relative">
                   <LockClosedIcon className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400" />
                   <input
@@ -310,14 +341,13 @@ const Login = () => {
               </div>
             )}
 
-
             {/* Submit Button */}
             <button
               type="submit"
               className="w-full bg-gradient-to-r from-blue-600 to-blue-500 hover:from-blue-700 hover:to-blue-600 text-white font-semibold py-3 px-6 rounded-xl transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl"
             >
               {loginType === 'admin' 
-                ? 'Sign In as Admin'
+                ? mode === 'login' ? 'Sign In as Admin' : 'Create Admin Account'
                 : mode === 'login' 
                   ? 'Sign In as Traveller'
                   : 'Create Account'
@@ -325,21 +355,18 @@ const Login = () => {
             </button>
           </form>
 
-          {/* Additional Links for Travellers */}
-          {loginType === 'traveller' && (
-            <div className="mt-6 text-center">
-              <p className="text-sm text-gray-600">
-                {mode === 'login' ? "Don't have an account? " : "Already have an account? "}
-                <button 
-    toast.success('Logged out successfully');
-                  onClick={() => switchMode(mode === 'login' ? 'signup' : 'login')}
-                  className="text-blue-600 hover:text-blue-700 font-medium"
-                >
-                  {mode === 'login' ? 'Sign up' : 'Sign in'}
-  const displayQuotes = quotes.length > 0 ? quotes : mockQuotes;
-  const displayCustomers = customers.length > 0 ? customers : mockCustomers;
-            </div>
-          )}
+          {/* Additional Links */}
+          <div className="mt-6 text-center">
+            <p className="text-sm text-gray-600">
+              {mode === 'login' ? "Don't have an account? " : "Already have an account? "}
+              <button 
+                onClick={() => switchMode(mode === 'login' ? 'signup' : 'login')}
+                className="text-blue-600 hover:text-blue-700 font-medium"
+              >
+                {mode === 'login' ? 'Sign up' : 'Sign in'}
+              </button>
+            </p>
+          </div>
         </motion.div>
       </div>
     </div>
