@@ -1,358 +1,244 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import {
-  UserIcon,
-  LockClosedIcon,
-  EyeIcon,
-  EyeSlashIcon,
+  ClockIcon,
+  MapPinIcon,
   UserGroupIcon,
-  ShieldCheckIcon,
-  EnvelopeIcon
+  StarIcon,
+  CurrencyDollarIcon
 } from '@heroicons/react/24/outline';
-import toast from 'react-hot-toast';
+import { StarIcon as StarSolidIcon } from '@heroicons/react/24/solid';
 
-const Login = () => {
+const FeaturedPackages = () => {
   const navigate = useNavigate();
-  const [loginType, setLoginType] = useState<'traveller' | 'admin'>('traveller');
-  const [mode, setMode] = useState<'login' | 'signup'>('login');
-  const [showPassword, setShowPassword] = useState(false);
-  const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    password: '',
-    confirmPassword: ''
-  });
 
-  // Get stored users from localStorage
-  const getStoredUsers = () => {
-    const users = localStorage.getItem('registeredUsers');
-    return users ? JSON.parse(users) : [];
-  };
-
-  // Save users to localStorage
-  const saveUsers = (users: any[]) => {
-    localStorage.setItem('registeredUsers', JSON.stringify(users));
-  };
-
-  // Admin credentials (hardcoded for demo)
-  const adminCredentials = {
-    email: 'admin@dremoratours.com',
-    password: 'admin123'
-  };
-
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setFormData(prev => ({
-      ...prev,
-      [name]: value
-    }));
-  };
-
-  const handleSignup = (e: React.FormEvent) => {
-    e.preventDefault();
-    
-    if (!formData.name || !formData.email || !formData.password || !formData.confirmPassword) {
-      toast.error('Please fill in all fields');
-      return;
+  const packages = [
+    {
+      id: 1,
+      title: "Sri Lanka Holiday Package 3 Days",
+      duration: "3 Days",
+      nights: "2 Nights",
+      location: "Colombo, Kandy",
+      price: 280,
+      originalPrice: 350,
+      rating: 4.8,
+      reviews: 124,
+      maxGuests: 8,
+      image: "https://images.pexels.com/photos/2166559/pexels-photo-2166559.jpeg?auto=compress&cs=tinysrgb&w=600",
+      highlights: ["Colombo City Tour", "Temple of Tooth", "Botanical Gardens"]
+    },
+    {
+      id: 2,
+      title: "Sri Lanka Holiday Package 4 Days",
+      duration: "4 Days",
+      nights: "3 Nights",
+      location: "Kandy, Sigiriya, Dambulla",
+      price: 350,
+      originalPrice: 420,
+      rating: 4.7,
+      reviews: 112,
+      maxGuests: 8,
+      image: "https://images.pexels.com/photos/1450353/pexels-photo-1450353.jpeg?auto=compress&cs=tinysrgb&w=600",
+      highlights: ["Sigiriya Rock", "Temple of Tooth", "Cave Temples"]
+    },
+    {
+      id: 3,
+      title: "Sri Lanka Holiday Package 5 Days",
+      duration: "5 Days",
+      nights: "4 Nights",
+      location: "Sigiriya, Polonnaruwa, Dambulla",
+      price: 450,
+      originalPrice: 550,
+      rating: 4.9,
+      reviews: 89,
+      maxGuests: 6,
+      image: "https://images.pexels.com/photos/2166559/pexels-photo-2166559.jpeg?auto=compress&cs=tinysrgb&w=600",
+      highlights: ["Sigiriya Rock", "Ancient Polonnaruwa", "Dambulla Caves"]
+    },
+    {
+      id: 4,
+      title: "Sri Lanka Holiday Package 6 Days",
+      duration: "6 Days",
+      nights: "5 Nights",
+      location: "Colombo, Kandy, Galle",
+      price: 520,
+      originalPrice: 620,
+      rating: 4.8,
+      reviews: 134,
+      maxGuests: 10,
+      image: "https://images.pexels.com/photos/1450361/pexels-photo-1450361.jpeg?auto=compress&cs=tinysrgb&w=600",
+      highlights: ["Cultural Sites", "Galle Fort", "Beach Time"]
+    },
+    {
+      id: 5,
+      title: "Sri Lanka Holiday Package 7 Days",
+      duration: "7 Days",
+      nights: "6 Nights",
+      location: "Kandy, Nuwara Eliya, Ella",
+      price: 650,
+      originalPrice: 750,
+      rating: 4.7,
+      reviews: 156,
+      maxGuests: 10,
+      image: "https://images.pexels.com/photos/1450353/pexels-photo-1450353.jpeg?auto=compress&cs=tinysrgb&w=600",
+      highlights: ["Tea Plantations", "Nine Arch Bridge", "Train Journey"]
+    },
+    {
+      id: 6,
+      title: "Sri Lanka Holiday Package 8 Days",
+      duration: "8 Days",
+      nights: "7 Nights",
+      location: "Yala, Ella, Kitulgala",
+      price: 750,
+      originalPrice: 850,
+      rating: 4.6,
+      reviews: 87,
+      maxGuests: 6,
+      image: "https://images.pexels.com/photos/1170986/pexels-photo-1170986.jpeg?auto=compress&cs=tinysrgb&w=600",
+      highlights: ["Yala Safari", "Adventure Sports", "Scenic Railways"]
     }
+  ];
 
-    if (formData.password !== formData.confirmPassword) {
-      toast.error('Passwords do not match');
-      return;
-    }
-
-    if (formData.password.length < 6) {
-      toast.error('Password must be at least 6 characters long');
-      return;
-    }
-
-    const users = getStoredUsers();
-    
-    // Check if user already exists
-    const existingUser = users.find((user: any) => user.email === formData.email);
-    if (existingUser) {
-      toast.error('User with this email already exists');
-      return;
-    }
-
-    // Add new user
-    const newUser = {
-      id: Date.now(),
-      name: formData.name,
-      email: formData.email,
-      password: formData.password,
-      joinDate: new Date().toISOString().split('T')[0],
-      totalBookings: 0
-    };
-
-    users.push(newUser);
-    saveUsers(users);
-
-    toast.success('Account created successfully! Please login.');
-    setMode('login');
-    setFormData({ name: '', email: '', password: '', confirmPassword: '' });
-  };
-
-  const handleLogin = (e: React.FormEvent) => {
-    e.preventDefault();
-    
-    if (!formData.email || !formData.password) {
-      toast.error('Please fill in all fields');
-      return;
-    }
-
-    if (loginType === 'admin') {
-      // Admin login
-      if (formData.email === adminCredentials.email && formData.password === adminCredentials.password) {
-        toast.success('Admin login successful!');
-        localStorage.setItem('currentUser', JSON.stringify({ 
-          type: 'admin', 
-          email: formData.email 
-        }));
-        navigate('/admin');
-      } else {
-        toast.error('Invalid admin credentials');
-      }
-    } else {
-      // Traveller login
-      const users = getStoredUsers();
-      const user = users.find((u: any) => u.email === formData.email && u.password === formData.password);
-      
-      if (user) {
-        toast.success(`Welcome back, ${user.name}!`);
-        localStorage.setItem('currentUser', JSON.stringify({ 
-          type: 'traveller', 
-          ...user 
-        }));
-        navigate('/');
-      } else {
-        toast.error('Invalid email or password');
-      }
-    }
-  };
-
-  const resetForm = () => {
-    setFormData({ name: '', email: '', password: '', confirmPassword: '' });
-  };
-
-  const switchMode = (newMode: 'login' | 'signup') => {
-    setMode(newMode);
-    resetForm();
-  };
-
-  const switchLoginType = (type: 'traveller' | 'admin') => {
-    setLoginType(type);
-    resetForm();
-    setMode('login'); // Always switch to login mode when changing type
+  const handleViewAllPackages = () => {
+    navigate('/packages');
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-md w-full space-y-8">
+    <section className="py-20 bg-white">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        {/* Section Header */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
+          whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
-          className="text-center"
+          viewport={{ once: true }}
+          className="text-center mb-16"
         >
-          <h2 className="text-3xl font-bold text-gray-900 mb-2">
-            {mode === 'login' ? 'Welcome Back' : 'Create Account'}
+          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+            Featured Tour Packages
           </h2>
-          <p className="text-gray-600">
-            {mode === 'login' ? 'Sign in to your account' : 'Join us for amazing travel experiences'}
+          <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+            Discover our most popular destinations and experiences, carefully crafted to give 
+            you the best of Sri Lanka's natural beauty and cultural heritage.
           </p>
         </motion.div>
 
+        {/* Packages Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {packages.map((pkg, index) => (
+            <motion.div
+              key={pkg.id}
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: index * 0.1 }}
+              viewport={{ once: true }}
+              className="bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 overflow-hidden border border-gray-100 group"
+            >
+              {/* Image */}
+              <div className="relative overflow-hidden">
+                <img
+                  src={pkg.image}
+                  alt={pkg.title}
+                  className="w-full h-48 object-cover group-hover:scale-110 transition-transform duration-500"
+                />
+                <div className="absolute top-3 left-3">
+                  <span className="bg-red-500 text-white px-2 py-1 rounded text-xs font-medium">
+                    ${pkg.originalPrice - pkg.price} OFF
+                  </span>
+                </div>
+                <div className="absolute top-3 right-3">
+                  <div className="bg-white rounded px-2 py-1 flex items-center space-x-1">
+                    <StarSolidIcon className="h-3 w-3 text-yellow-400" />
+                    <span className="text-xs font-medium">{pkg.rating}</span>
+                  </div>
+                </div>
+              </div>
+
+              {/* Content */}
+              <div className="p-6">
+                {/* Title */}
+                <h3 className="text-lg font-semibold text-gray-900 mb-2 line-clamp-2 group-hover:text-blue-600 transition-colors duration-300">
+                  {pkg.title}
+                </h3>
+
+                {/* Duration and Location */}
+                <div className="flex items-center justify-between text-sm text-gray-600 mb-3">
+                  <div className="flex items-center space-x-1">
+                    <ClockIcon className="h-4 w-4" />
+                    <span>{pkg.duration} / {pkg.nights}</span>
+                  </div>
+                  <div className="flex items-center space-x-1">
+                    <UserGroupIcon className="h-4 w-4" />
+                    <span>Max {pkg.maxGuests}</span>
+                  </div>
+                </div>
+
+                {/* Location */}
+                <div className="flex items-center space-x-1 text-sm text-gray-600 mb-3">
+                  <MapPinIcon className="h-4 w-4" />
+                  <span>{pkg.location}</span>
+                </div>
+
+                {/* Highlights */}
+                <div className="mb-4">
+                  <div className="flex flex-wrap gap-1">
+                    {pkg.highlights.slice(0, 2).map((highlight, idx) => (
+                      <span
+                        key={idx}
+                        className="bg-blue-50 text-blue-700 px-2 py-1 rounded text-xs"
+                      >
+                        {highlight}
+                      </span>
+                    ))}
+                    {pkg.highlights.length > 2 && (
+                      <span className="bg-gray-100 text-gray-600 px-2 py-1 rounded text-xs">
+                        +{pkg.highlights.length - 2} more
+                      </span>
+                    )}
+                  </div>
+                </div>
+
+                {/* Price and Reviews */}
+                <div className="flex items-center justify-between mb-4">
+                  <div>
+                    <div className="flex items-center space-x-2">
+                      <span className="text-xl font-bold text-gray-900">${pkg.price}</span>
+                      <span className="text-sm text-gray-500 line-through">${pkg.originalPrice}</span>
+                    </div>
+                    <p className="text-xs text-gray-500">per person</p>
+                  </div>
+                  <div className="text-right">
+                    <div className="flex items-center space-x-1">
+                      <StarSolidIcon className="h-4 w-4 text-yellow-400" />
+                      <span className="text-sm font-medium">{pkg.rating}</span>
+                    </div>
+                    <p className="text-xs text-gray-500">({pkg.reviews} reviews)</p>
+                  </div>
+                </div>
+              </div>
+            </motion.div>
+          ))}
+        </div>
+
+        {/* View All Button */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.2 }}
-          className="bg-white rounded-2xl shadow-lg p-6"
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.4 }}
+          viewport={{ once: true }}
+          className="text-center mt-12"
         >
-          {/* Login Type Selector */}
-          <div className="flex space-x-4 mb-6">
-            <button
-              onClick={() => switchLoginType('traveller')}
-              className={`flex-1 flex items-center justify-center space-x-2 py-3 px-4 rounded-lg transition-all duration-300 ${
-                loginType === 'traveller'
-                  ? 'bg-blue-600 text-white shadow-lg'
-                  : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
-              }`}
-            >
-              <UserGroupIcon className="h-5 w-5" />
-              <span className="font-medium">Traveller</span>
-            </button>
-            <button
-              onClick={() => switchLoginType('admin')}
-              className={`flex-1 flex items-center justify-center space-x-2 py-3 px-4 rounded-lg transition-all duration-300 ${
-                loginType === 'admin'
-                  ? 'bg-blue-600 text-white shadow-lg'
-                  : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
-              }`}
-            >
-              <ShieldCheckIcon className="h-5 w-5" />
-              <span className="font-medium">Admin</span>
-            </button>
-          </div>
-
-          {/* Mode Selector for Travellers */}
-          {loginType === 'traveller' && (
-            <div className="flex space-x-4 mb-6">
-              <button
-                onClick={() => switchMode('login')}
-                className={`flex-1 py-2 px-4 rounded-lg font-medium transition-all duration-300 ${
-                  mode === 'login'
-                    ? 'bg-blue-100 text-blue-700'
-                    : 'text-gray-600 hover:text-blue-600'
-                }`}
-              >
-                Login
-              </button>
-              <button
-                onClick={() => switchMode('signup')}
-                className={`flex-1 py-2 px-4 rounded-lg font-medium transition-all duration-300 ${
-                  mode === 'signup'
-                    ? 'bg-blue-100 text-blue-700'
-                    : 'text-gray-600 hover:text-blue-600'
-                }`}
-              >
-                Sign Up
-              </button>
-            </div>
-          )}
-
-          <form onSubmit={mode === 'login' ? handleLogin : handleSignup} className="space-y-6">
-            {/* Name Field (only for signup) */}
-            {mode === 'signup' && (
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Full Name
-                </label>
-                <div className="relative">
-                  <UserIcon className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400" />
-                  <input
-                    type="text"
-                    name="name"
-                    value={formData.name}
-                    onChange={handleInputChange}
-                    required
-                    className="w-full pl-10 pr-4 py-3 border-0 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 shadow-sm bg-gray-50 transition-all duration-300"
-                    placeholder="Enter your full name"
-                  />
-                </div>
-              </div>
-            )}
-
-            {/* Email Field */}
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
-                Email Address
-              </label>
-              <div className="relative">
-                <EnvelopeIcon className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400" />
-                <input
-                  type="email"
-                  name="email"
-                  value={formData.email}
-                  onChange={handleInputChange}
-                  required
-                  className="w-full pl-10 pr-4 py-3 border-0 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 shadow-sm bg-gray-50 transition-all duration-300"
-                  placeholder={loginType === 'admin' ? 'admin@dremoratours.com' : 'your@email.com'}
-                />
-              </div>
-            </div>
-
-            {/* Password Field */}
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
-                Password
-              </label>
-              <div className="relative">
-                <LockClosedIcon className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400" />
-                <input
-                  type={showPassword ? 'text' : 'password'}
-                  name="password"
-                  value={formData.password}
-                  onChange={handleInputChange}
-                  required
-                  className="w-full pl-10 pr-12 py-3 border-0 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 shadow-sm bg-gray-50 transition-all duration-300"
-                  placeholder={loginType === 'admin' ? 'admin123' : 'Enter your password'}
-                />
-                <button
-                  type="button"
-                  onClick={() => setShowPassword(!showPassword)}
-                  className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600"
-                >
-                  {showPassword ? (
-                    <EyeSlashIcon className="h-5 w-5" />
-                  ) : (
-                    <EyeIcon className="h-5 w-5" />
-                  )}
-                </button>
-              </div>
-            </div>
-
-            {/* Confirm Password Field (only for signup) */}
-            {mode === 'signup' && (
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Confirm Password
-                </label>
-                <div className="relative">
-                  <LockClosedIcon className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400" />
-                  <input
-                    type={showPassword ? 'text' : 'password'}
-                    name="confirmPassword"
-                    value={formData.confirmPassword}
-                    onChange={handleInputChange}
-                    required
-                    className="w-full pl-10 pr-4 py-3 border-0 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 shadow-sm bg-gray-50 transition-all duration-300"
-                    placeholder="Confirm your password"
-                  />
-                </div>
-              </div>
-            )}
-
-            {/* Demo Credentials for Admin */}
-            {loginType === 'admin' && mode === 'login' && (
-              <div className="bg-blue-50 border border-blue-200 rounded-lg p-3">
-                <p className="text-sm text-blue-800 font-medium mb-1">Demo Admin Credentials:</p>
-                <p className="text-xs text-blue-600">Email: admin@dremoratours.com</p>
-                <p className="text-xs text-blue-600">Password: admin123</p>
-              </div>
-            )}
-
-            {/* Submit Button */}
-            <button
-              type="submit"
-              className="w-full bg-gradient-to-r from-blue-600 to-blue-500 hover:from-blue-700 hover:to-blue-600 text-white font-semibold py-3 px-6 rounded-xl transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl"
-            >
-              {mode === 'login' 
-                ? `Sign In as ${loginType === 'admin' ? 'Admin' : 'Traveller'}`
-                : 'Create Account'
-              }
-            </button>
-          </form>
-
-          {/* Additional Links for Travellers */}
-          {loginType === 'traveller' && (
-            <div className="mt-6 text-center">
-              <p className="text-sm text-gray-600">
-                {mode === 'login' ? "Don't have an account? " : "Already have an account? "}
-                <button 
-                  onClick={() => switchMode(mode === 'login' ? 'signup' : 'login')}
-                  className="text-blue-600 hover:text-blue-700 font-medium"
-                >
-                  {mode === 'login' ? 'Sign up' : 'Sign in'}
-                </button>
-              </p>
-            </div>
-          )}
+          <button
+            onClick={handleViewAllPackages}
+            className="bg-gradient-to-r from-blue-600 to-blue-500 hover:from-blue-700 hover:to-blue-600 text-white font-semibold py-3 px-8 rounded-lg transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl"
+          >
+            View All Packages
+          </button>
         </motion.div>
       </div>
-    </div>
+    </section>
   );
 };
 
-export default Login;
+export default FeaturedPackages;
