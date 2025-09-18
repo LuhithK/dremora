@@ -1,269 +1,380 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { ChevronLeftIcon, ChevronRightIcon, MapPinIcon } from '@heroicons/react/24/outline';
+import { useNavigate } from 'react-router-dom';
+import {
+  UserIcon,
+  LockClosedIcon,
+  EyeIcon,
+  EyeSlashIcon,
+  UserGroupIcon,
+  ShieldCheckIcon,
+  EnvelopeIcon
+} from '@heroicons/react/24/outline';
+import toast from 'react-hot-toast';
 
-const TravelersDestinations = () => {
-  const [currentSlide, setCurrentSlide] = useState(0);
-  const [isAutoPlaying, setIsAutoPlaying] = useState(true);
+const Login = () => {
+  const navigate = useNavigate();
+  const [loginType, setLoginType] = useState<'traveller' | 'admin'>('traveller');
+  const [mode, setMode] = useState<'login' | 'signup'>('login');
+  const [showPassword, setShowPassword] = useState(false);
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    password: '',
+    confirmPassword: ''
+  });
 
-  const destinations = [
-    {
-      id: 1,
-      name: "Sigiriya Rock Fortress",
-      location: "Central Province",
-      image: "https://images.pexels.com/photos/2166559/pexels-photo-2166559.jpeg?auto=compress&cs=tinysrgb&w=800",
-      description: "Ancient rock fortress and palace ruins with stunning frescoes"
-    },
-    {
-      id: 2,
-      name: "Ella Nine Arch Bridge",
-      location: "Uva Province",
-      image: "https://images.pexels.com/photos/1450353/pexels-photo-1450353.jpeg?auto=compress&cs=tinysrgb&w=800",
-      description: "Iconic railway bridge surrounded by lush tea plantations"
-    },
-    {
-      id: 3,
-      name: "Galle Dutch Fort",
-      location: "Southern Province",
-      image: "https://images.pexels.com/photos/1450361/pexels-photo-1450361.jpeg?auto=compress&cs=tinysrgb&w=800",
-      description: "Historic fortified city with colonial architecture"
-    },
-    {
-      id: 4,
-      name: "Temple of the Tooth",
-      location: "Kandy",
-      image: "https://images.pexels.com/photos/1586298/pexels-photo-1586298.jpeg?auto=compress&cs=tinysrgb&w=800",
-      description: "Sacred Buddhist temple housing the tooth relic of Buddha"
-    },
-    {
-      id: 5,
-      name: "Yala National Park",
-      location: "Southern Province",
-      image: "https://images.pexels.com/photos/1170986/pexels-photo-1170986.jpeg?auto=compress&cs=tinysrgb&w=800",
-      description: "Premier wildlife destination famous for leopards and elephants"
-    },
-    {
-      id: 6,
-      name: "Adam's Peak",
-      location: "Central Province",
-      image: "https://images.pexels.com/photos/1365425/pexels-photo-1365425.jpeg?auto=compress&cs=tinysrgb&w=800",
-      description: "Sacred mountain peak with breathtaking sunrise views"
-    },
-    {
-      id: 7,
-      name: "Mirissa Beach",
-      location: "Southern Province",
-      image: "https://images.pexels.com/photos/1450363/pexels-photo-1450363.jpeg?auto=compress&cs=tinysrgb&w=800",
-      description: "Pristine beach perfect for whale watching and relaxation"
-    },
-    {
-      id: 8,
-      name: "Polonnaruwa Ancient City",
-      location: "North Central Province",
-      image: "https://images.pexels.com/photos/2166559/pexels-photo-2166559.jpeg?auto=compress&cs=tinysrgb&w=800",
-      description: "Medieval capital with well-preserved ruins and statues"
-    },
-    {
-      id: 9,
-      name: "Nuwara Eliya Tea Country",
-      location: "Central Province",
-      image: "https://images.pexels.com/photos/1450353/pexels-photo-1450353.jpeg?auto=compress&cs=tinysrgb&w=800",
-      description: "Cool climate hill station with scenic tea plantations"
-    },
-    {
-      id: 10,
-      name: "Anuradhapura Sacred City",
-      location: "North Central Province",
-      image: "https://images.pexels.com/photos/2166559/pexels-photo-2166559.jpeg?auto=compress&cs=tinysrgb&w=800",
-      description: "Ancient capital with sacred Buddhist sites and stupas"
+  // Get stored users from localStorage
+  const getStoredUsers = () => {
+    const users = localStorage.getItem('registeredUsers');
+    return users ? JSON.parse(users) : [];
+  };
+
+  // Get stored admins from localStorage
+  const getStoredAdmins = () => {
+    const admins = localStorage.getItem('registeredAdmins');
+    return admins ? JSON.parse(admins) : [];
+  };
+  // Save users to localStorage
+  const saveUsers = (users: any[]) => {
+    localStorage.setItem('registeredUsers', JSON.stringify(users));
+  };
+
+  // Save admins to localStorage
+  const saveAdmins = (admins: any[]) => {
+    localStorage.setItem('registeredAdmins', JSON.stringify(admins));
+  };
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({
+      ...prev,
+      [name]: value
+    }));
+  };
+
+  const handleSignup = (e: React.FormEvent) => {
+    e.preventDefault();
+    
+    if (!formData.name || !formData.email || !formData.password || !formData.confirmPassword) {
+      toast.error('Please fill in all fields');
+      return;
     }
-  ];
 
-  const itemsPerSlide = 4;
-  const totalSlides = Math.ceil(destinations.length / itemsPerSlide);
+    if (formData.password !== formData.confirmPassword) {
+      toast.error('Passwords do not match');
+      return;
+    }
 
-  // Auto-play functionality
-  useEffect(() => {
-    if (!isAutoPlaying) return;
+    if (formData.password.length < 6) {
+      toast.error('Password must be at least 6 characters long');
+      return;
+    }
 
-    const interval = setInterval(() => {
-      setCurrentSlide((prev) => (prev + 1) % totalSlides);
-    }, 4000);
+    if (loginType === 'admin') {
+      // Admin signup
+      const admins = getStoredAdmins();
+      
+      // Check if admin already exists
+      const existingAdmin = admins.find((admin: any) => admin.email === formData.email);
+      if (existingAdmin) {
+        toast.error('Admin with this email already exists');
+        return;
+      }
 
-    return () => clearInterval(interval);
-  }, [isAutoPlaying, totalSlides]);
+      // Add new admin
+      const newAdmin = {
+        name: formData.name,
+        email: formData.email,
+        password: formData.password
+      };
+      
+      admins.push(newAdmin);
+      saveAdmins(admins);
+    } else {
+      // Traveller signup
+      const users = getStoredUsers();
+      
+      // Check if user already exists
+      const existingUser = users.find((user: any) => user.email === formData.email);
+      if (existingUser) {
+        toast.error('User with this email already exists');
+        return;
+      }
 
-  const nextSlide = () => {
-    setCurrentSlide((prev) => (prev + 1) % totalSlides);
-    setIsAutoPlaying(false);
+      // Add new user
+      const newUser = {
+        name: formData.name,
+        email: formData.email,
+        password: formData.password
+      };
+
+      users.push(newUser);
+      saveUsers(users);
+    }
+
+    toast.success('Account created successfully! Please login.');
+    setMode('login');
+    setFormData({ name: '', email: '', password: '', confirmPassword: '' });
   };
 
-  const prevSlide = () => {
-    setCurrentSlide((prev) => (prev - 1 + totalSlides) % totalSlides);
-    setIsAutoPlaying(false);
+  const handleLogin = (e: React.FormEvent) => {
+    e.preventDefault();
+    
+    if (!formData.email || !formData.password) {
+      toast.error('Please fill in all fields');
+      return;
+    }
+
+    if (loginType === 'admin') {
+      // Admin login with fixed credentials
+      const adminEmail = 'admin@dremoratours.com';
+      const adminPassword = 'Admin@123';
+      
+      if (formData.email === adminEmail && formData.password === adminPassword) {
+        toast.success('Admin login successful!');
+        localStorage.setItem('currentUser', JSON.stringify({ 
+          type: 'admin', 
+          email: formData.email,
+          name: 'Administrator'
+        }));
+        navigate('/admin');
+      } else {
+        toast.error('Invalid admin credentials');
+      }
+    } else {
+      // Traveller login
+      const users = getStoredUsers();
+      const user = users.find((u: any) => u.email === formData.email && u.password === formData.password);
+      
+      if (user) {
+        toast.success(`Welcome back, ${user.name}!`);
+        localStorage.setItem('currentUser', JSON.stringify({ 
+          type: 'traveller', 
+          ...user 
+        }));
+        navigate('/');
+      } else {
+        toast.error('Invalid email or password');
+      }
+    }
   };
 
-  const goToSlide = (index: number) => {
-    setCurrentSlide(index);
-    setIsAutoPlaying(false);
+  const resetForm = () => {
+    setFormData({ name: '', email: '', password: '', confirmPassword: '' });
   };
 
-  const getCurrentSlideItems = () => {
-    const startIndex = currentSlide * itemsPerSlide;
-    return destinations.slice(startIndex, startIndex + itemsPerSlide);
+  const switchMode = (newMode: 'login' | 'signup') => {
+    setMode(newMode);
+    resetForm();
+  };
+
+  const switchLoginType = (type: 'traveller' | 'admin') => {
+    setLoginType(type);
+    resetForm();
+    setMode('login'); // Always switch to login mode when changing type
   };
 
   return (
-    <section className="py-20 bg-gray-50 relative overflow-hidden">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Section Header */}
+    <div className="min-h-screen bg-gray-50 flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
+      <div className="max-w-md w-full space-y-8">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
+          animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
-          viewport={{ once: true }}
-          className="text-center mb-16"
+          className="text-center"
         >
-          <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
-            Traveler's Favorite Destinations
+          <h2 className="text-3xl font-bold text-gray-900 mb-2">
+            {mode === 'login' ? 'Welcome Back' : 'Create Account'}
           </h2>
-          <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-            Discover the most beloved destinations in Sri Lanka, handpicked by thousands of satisfied travelers
+          <p className="text-gray-600">
+            {mode === 'login' ? 'Sign in to your account' : 'Join us for amazing travel experiences'}
           </p>
         </motion.div>
 
-        {/* Slider Container */}
-        <div className="relative">
-          {/* Navigation Buttons */}
-          <button
-            onClick={prevSlide}
-            className="absolute left-0 top-1/2 transform -translate-y-1/2 -translate-x-4 z-10 bg-white/90 backdrop-blur-sm hover:bg-white text-gray-700 hover:text-orange-600 p-3 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 group"
-          >
-            <ChevronLeftIcon className="h-6 w-6 group-hover:scale-110 transition-transform duration-300" />
-          </button>
-
-          <button
-            onClick={nextSlide}
-            className="absolute right-0 top-1/2 transform -translate-y-1/2 translate-x-4 z-10 bg-white/90 backdrop-blur-sm hover:bg-white text-gray-700 hover:text-orange-600 p-3 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 group"
-          >
-            <ChevronRightIcon className="h-6 w-6 group-hover:scale-110 transition-transform duration-300" />
-          </button>
-
-          {/* Slides */}
-          <div className="overflow-hidden rounded-2xl">
-            <motion.div
-              className="flex transition-transform duration-500 ease-in-out"
-              style={{ transform: `translateX(-${currentSlide * 100}%)` }}
-            >
-              {Array.from({ length: totalSlides }).map((_, slideIndex) => (
-                <div key={slideIndex} className="w-full flex-shrink-0">
-                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                    {destinations
-                      .slice(slideIndex * itemsPerSlide, (slideIndex + 1) * itemsPerSlide)
-                      .map((destination, index) => (
-                        <motion.div
-                          key={destination.id}
-                          initial={{ opacity: 0, y: 30 }}
-                          whileInView={{ opacity: 1, y: 0 }}
-                          transition={{ duration: 0.6, delay: index * 0.1 }}
-                          viewport={{ once: true }}
-                          className="group cursor-pointer"
-                          onMouseEnter={() => setIsAutoPlaying(false)}
-                          onMouseLeave={() => setIsAutoPlaying(true)}
-                        >
-                          <div className="relative overflow-hidden rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2">
-                            {/* Image */}
-                            <div className="relative h-64 overflow-hidden">
-                              <img
-                                src={destination.image}
-                                alt={destination.name}
-                                className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
-                              />
-                              <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>
-                              
-                              {/* Location Badge */}
-                              <div className="absolute top-4 left-4">
-                                <div className="bg-white/90 backdrop-blur-sm rounded-full px-3 py-1 flex items-center space-x-1">
-                                  <MapPinIcon className="h-4 w-4 text-blue-600" />
-                                  <span className="text-sm font-medium text-gray-700">{destination.location}</span>
-                                </div>
-                              </div>
-                            </div>
-
-                            {/* Content */}
-                            <div className="absolute bottom-0 left-0 right-0 p-6 text-white">
-                              <h3 className="text-xl font-bold mb-2 group-hover:text-blue-300 transition-colors duration-300">
-                                {destination.name}
-                              </h3>
-                              <p className="text-sm text-gray-200 opacity-90 group-hover:opacity-100 transition-opacity duration-300">
-                                {destination.description}
-                              </p>
-                            </div>
-
-                            {/* Hover Overlay */}
-                            <div className="absolute inset-0 bg-gradient-to-t from-blue-600/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-                          </div>
-                        </motion.div>
-                      ))}
-                  </div>
-                </div>
-              ))}
-            </motion.div>
-          </div>
-
-          {/* Slide Indicators */}
-          <div className="flex justify-center mt-8 space-x-2">
-            {Array.from({ length: totalSlides }).map((_, index) => (
-              <button
-                key={index}
-                onClick={() => goToSlide(index)}
-                className={`w-3 h-3 rounded-full transition-all duration-300 ${
-                  currentSlide === index
-                    ? 'bg-blue-600 w-8'
-                    : 'bg-gray-300 hover:bg-gray-400'
-                }`}
-              />
-            ))}
-          </div>
-
-          {/* Auto-play Indicator */}
-          <div className="flex justify-center mt-4">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.2 }}
+          className="bg-white rounded-2xl shadow-lg p-6"
+        >
+          {/* Login Type Selector */}
+          <div className="flex space-x-4 mb-6">
             <button
-              onClick={() => setIsAutoPlaying(!isAutoPlaying)}
-              className={`text-sm px-4 py-2 rounded-full transition-all duration-300 ${
-                isAutoPlaying
-                  ? 'bg-blue-100 text-blue-700 hover:bg-blue-200'
+              onClick={() => switchLoginType('traveller')}
+              className={`flex-1 flex items-center justify-center space-x-2 py-3 px-4 rounded-lg transition-all duration-300 ${
+                loginType === 'traveller'
+                  ? 'bg-blue-600 text-white shadow-lg'
                   : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
               }`}
             >
-              {isAutoPlaying ? '⏸️ Auto-play ON' : '▶️ Auto-play OFF'}
+              <UserGroupIcon className="h-5 w-5" />
+              <span className="font-medium">Traveller</span>
+            </button>
+            <button
+              onClick={() => switchLoginType('admin')}
+              className={`flex-1 flex items-center justify-center space-x-2 py-3 px-4 rounded-lg transition-all duration-300 ${
+                loginType === 'admin'
+                  ? 'bg-blue-600 text-white shadow-lg'
+                  : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+              }`}
+            >
+              <ShieldCheckIcon className="h-5 w-5" />
+              <span className="font-medium">Admin</span>
             </button>
           </div>
-        </div>
 
-        {/* Bottom CTA */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.4 }}
-          viewport={{ once: true }}
-          className="text-center mt-16"
-        >
-          <div className="bg-gradient-to-r from-blue-600 to-blue-500 rounded-2xl p-8 text-white">
-            <h3 className="text-2xl md:text-3xl font-bold mb-4">
-              Ready to Explore These Amazing Destinations?
-            </h3>
-            <p className="text-lg mb-6 opacity-90">
-              Let us create a personalized itinerary that includes your favorite destinations
-            </p>
-            <button className="bg-white text-blue-600 hover:bg-gray-100 font-semibold py-3 px-8 rounded-lg transition-all duration-300 transform hover:scale-105 shadow-lg">
-              Plan My Journey
+          {/* Mode Selector for Travellers */}
+          {loginType === 'traveller' && (
+            <div className="flex space-x-4 mb-6">
+              <button
+                onClick={() => switchMode('login')}
+                className={`flex-1 py-2 px-4 rounded-lg font-medium transition-all duration-300 ${
+                  mode === 'login'
+                    ? 'bg-blue-100 text-blue-700'
+                    : 'text-gray-600 hover:text-blue-600'
+                }`}
+              >
+                Login
+              </button>
+              <button
+                onClick={() => switchMode('signup')}
+                className={`flex-1 py-2 px-4 rounded-lg font-medium transition-all duration-300 ${
+                  mode === 'signup'
+                    ? 'bg-blue-100 text-blue-700'
+                    : 'text-gray-600 hover:text-blue-600'
+                }`}
+              >
+                Sign Up
+              </button>
+            </div>
+          )}
+
+          <form onSubmit={mode === 'login' ? handleLogin : handleSignup} className="space-y-6">
+            {/* Name Field (only for signup) */}
+            {mode === 'signup' && loginType === 'traveller' && (
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Full Name
+                </label>
+                <div className="relative">
+                  <UserIcon className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400" />
+                  <input
+                    type="text"
+                    name="name"
+                    value={formData.name}
+                    onChange={handleInputChange}
+                    required
+                    className="w-full pl-10 pr-4 py-3 border-0 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 shadow-sm bg-gray-50 transition-all duration-300"
+                    placeholder="Enter your full name"
+                  />
+                </div>
+              </div>
+            )}
+
+            {/* Email Field */}
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                Email Address
+              </label>
+              <div className="relative">
+                <EnvelopeIcon className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400" />
+                <input
+                  type="email"
+                  name="email"
+                  value={formData.email}
+                  onChange={handleInputChange}
+                  required
+                  className="w-full pl-10 pr-4 py-3 border-0 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 shadow-sm bg-gray-50 transition-all duration-300"
+                  placeholder="your@email.com"
+                />
+              </div>
+            </div>
+
+            {/* Password Field */}
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                Password
+              </label>
+              <div className="relative">
+                <LockClosedIcon className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400" />
+                <input
+                  type={showPassword ? 'text' : 'password'}
+                  name="password"
+                  value={formData.password}
+                  onChange={handleInputChange}
+                  required
+                  className="w-full pl-10 pr-12 py-3 border-0 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 shadow-sm bg-gray-50 transition-all duration-300"
+                  placeholder="Enter your password"
+                />
+                <button
+                  type="button"
+                  onClick={() => setShowPassword(!showPassword)}
+                  className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600"
+                >
+                  {showPassword ? (
+                    <EyeSlashIcon className="h-5 w-5" />
+                  ) : (
+                    <EyeIcon className="h-5 w-5" />
+                  )}
+                </button>
+              </div>
+            </div>
+
+            {/* Confirm Password Field (only for signup) */}
+            {mode === 'signup' && loginType === 'traveller' && (
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Confirm Password
+                </label>
+                <div className="relative">
+                  <LockClosedIcon className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400" />
+                  <input
+                    type={showPassword ? 'text' : 'password'}
+                    name="confirmPassword"
+                    value={formData.confirmPassword}
+                    onChange={handleInputChange}
+                    required
+                    className="w-full pl-10 pr-4 py-3 border-0 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 shadow-sm bg-gray-50 transition-all duration-300"
+                    placeholder="Confirm your password"
+                  />
+                </div>
+              </div>
+            )}
+
+
+            {/* Submit Button */}
+            <button
+              type="submit"
+              className="w-full bg-gradient-to-r from-blue-600 to-blue-500 hover:from-blue-700 hover:to-blue-600 text-white font-semibold py-3 px-6 rounded-xl transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl"
+            >
+              {loginType === 'admin' 
+                ? 'Sign In as Admin'
+                : mode === 'login' 
+                  ? 'Sign In as Traveller'
+                  : 'Create Account'
+              }
             </button>
-          </div>
+          </form>
+
+          {/* Additional Links for Travellers */}
+          {loginType === 'traveller' && (
+            <div className="mt-6 text-center">
+              <p className="text-sm text-gray-600">
+                {mode === 'login' ? "Don't have an account? " : "Already have an account? "}
+                <button 
+                  onClick={() => switchMode(mode === 'login' ? 'signup' : 'login')}
+                  className="text-blue-600 hover:text-blue-700 font-medium"
+                >
+                  {mode === 'login' ? 'Sign up' : 'Sign in'}
+                </button>
+              </p>
+            </div>
+          )}
         </motion.div>
       </div>
-    </section>
+    </div>
   );
 };
 
-export default TravelersDestinations;
+export default Login;
