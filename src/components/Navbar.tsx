@@ -1,155 +1,378 @@
-import React, { useState, useEffect } from 'react';
-import { Link, useLocation } from 'react-router-dom';
-import { Bars3Icon, XMarkIcon, PhoneIcon, EnvelopeIcon } from '@heroicons/react/24/outline';
-import { motion, AnimatePresence } from 'framer-motion';
+import React, { useState } from 'react';
+import { motion } from 'framer-motion';
+import { useNavigate } from 'react-router-dom';
+import {
+  UserIcon,
+  LockClosedIcon,
+  EyeIcon,
+  EyeSlashIcon,
+  UserGroupIcon,
+  ShieldCheckIcon,
+  EnvelopeIcon
+} from '@heroicons/react/24/outline';
+import toast from 'react-hot-toast';
 
-const Navbar = () => {
-  const [isOpen, setIsOpen] = useState(false);
-  const [isScrolled, setIsScrolled] = useState(false);
-  const location = useLocation();
+const Login = () => {
+  const navigate = useNavigate();
+  const [loginType, setLoginType] = useState<'traveller' | 'admin'>('traveller');
+  const [mode, setMode] = useState<'login' | 'signup'>('login');
+  const [showPassword, setShowPassword] = useState(false);
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    password: '',
+    confirmPassword: ''
+  });
 
-  useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 50);
-    };
+  // Get stored users from localStorage
+  const getStoredUsers = () => {
+    const users = localStorage.getItem('registeredUsers');
+    return users ? JSON.parse(users) : [];
+  };
 
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+  // Get stored admins from localStorage
+  const getStoredAdmins = () => {
+    const admins = localStorage.getItem('registeredAdmins');
+    return admins ? JSON.parse(admins) : [];
+  };
+  // Save users to localStorage
+  const saveUsers = (users: any[]) => {
+    localStorage.setItem('registeredUsers', JSON.stringify(users));
+  };
 
-  const navItems = [
-    { name: 'Home', path: '/' },
-    { name: 'Packages', path: '/packages' },
-    { name: 'Destinations', path: '/destinations' },
-    { name: 'About', path: '/about' },
-    { name: 'Contact', path: '/contact' },
-  ];
+  // Save admins to localStorage
+  const saveAdmins = (admins: any[]) => {
+    localStorage.setItem('registeredAdmins', JSON.stringify(admins));
+  };
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({
+      ...prev,
+      [name]: value
+    }));
+  };
+
+  const handleSignup = (e: React.FormEvent) => {
+    e.preventDefault();
+    
+    if (!formData.name || !formData.email || !formData.password || !formData.confirmPassword) {
+      toast.error('Please fill in all fields');
+      return;
+    }
+
+    if (formData.password !== formData.confirmPassword) {
+      toast.error('Passwords do not match');
+      return;
+    }
+
+    if (formData.password.length < 6) {
+      toast.error('Password must be at least 6 characters long');
+      return;
+    }
+
+    if (loginType === 'admin') {
+      // Admin signup
+      const admins = getStoredAdmins();
+      
+      // Check if admin already exists
+      const existingAdmin = admins.find((admin: any) => admin.email === formData.email);
+      if (existingAdmin) {
+        toast.error('Admin with this email already exists');
+        return;
+      }
+
+      // Add new admin
+      const newAdmin = {
+        name: formData.name,
+        email: formData.email,
+        password: formData.password
+      };
+      
+      admins.push(newAdmin);
+      saveAdmins(admins);
+    } else {
+      // Traveller signup
+      const users = getStoredUsers();
+      
+      // Check if user already exists
+      const existingUser = users.find((user: any) => user.email === formData.email);
+      if (existingUser) {
+        toast.error('User with this email already exists');
+        return;
+      }
+
+      // Add new user
+      const newUser = {
+        name: formData.name,
+        email: formData.email,
+        password: formData.password
+      };
+
+      users.push(newUser);
+      saveUsers(users);
+    }
+
+    toast.success('Account created successfully! Please login.');
+    setMode('login');
+    setFormData({ name: '', email: '', password: '', confirmPassword: '' });
+  };
+
+  const handleLogin = (e: React.FormEvent) => {
+    e.preventDefault();
+    
+    if (!formData.email || !formData.password) {
+      toast.error('Please fill in all fields');
+      return;
+    }
+
+    if (loginType === 'admin') {
+      // Admin login
+      const adminCredentials = { email: 'admin@travel.com', password: 'admin123' };
+      if (formData.email === adminCredentials.email && formData.password === adminCredentials.password) {
+        toast.success('Admin login successful!');
+        localStorage.setItem('currentUser', JSON.stringify({ 
+          type: 'admin', 
+          email: formData.email,
+          name: 'Admin'
+        }));
+        navigate('/admin');
+      } else {
+        toast.error('Invalid admin credentials');
+      }
+    } else {
+      // Traveller login
+      const users = getStoredUsers();
+      const user = users.find((u: any) => u.email === formData.email && u.password === formData.password);
+      
+      if (user) {
+        toast.success(`Welcome back, ${user.name}!`);
+        localStorage.setItem('currentUser', JSON.stringify({ 
+          type: 'traveller', 
+          ...user 
+        }));
+        navigate('/');
+      } else {
+        toast.error('Invalid email or password');
+      }
+    }
+  };
+
+  const resetForm = () => {
+    setFormData({ name: '', email: '', password: '', confirmPassword: '' });
+  };
+
+  const switchMode = (newMode: 'login' | 'signup') => {
+    setMode(newMode);
+    resetForm();
+  };
+
+  const switchLoginType = (type: 'traveller' | 'admin') => {
+    setLoginType(type);
+    resetForm();
+    setMode('login'); // Always switch to login mode when changing type
+  };
 
   return (
-    <>
-      {/* Premium Top Bar */}
-      <div className="bg-gradient-to-r from-slate-900 via-slate-800 to-slate-900 text-white py-3 px-4 text-sm border-b border-slate-700">
-        <div className="max-w-7xl mx-auto flex justify-between items-center">
-          <div className="flex items-center space-x-8">
-            <div className="flex items-center space-x-2 text-slate-300 hover:text-white transition-colors duration-300">
-              <PhoneIcon className="h-4 w-4" />
-              <span className="font-light tracking-wide">+94 76 921 4087</span>
-            </div>
-            <div className="hidden md:flex items-center space-x-2 text-slate-300 hover:text-white transition-colors duration-300">
-              <EnvelopeIcon className="h-4 w-4" />
-              <span className="font-light tracking-wide">dremoratours@gmail.com</span>
-            </div>
+    <div className="min-h-screen bg-gray-50 flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
+      <div className="max-w-md w-full space-y-8">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+          className="text-center"
+        >
+          <h2 className="text-3xl font-bold text-gray-900 mb-2">
+            {mode === 'login' ? 'Welcome Back' : 'Create Account'}
+          </h2>
+          <p className="text-gray-600">
+            {mode === 'login' ? 'Sign in to your account' : 'Join us for amazing travel experiences'}
+          </p>
+        </motion.div>
+
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.2 }}
+          className="bg-white rounded-2xl shadow-lg p-6"
+        >
+          {/* Login Type Selector */}
+          <div className="flex space-x-4 mb-6">
+            <button
+              onClick={() => switchLoginType('traveller')}
+              className={`flex-1 flex items-center justify-center space-x-2 py-3 px-4 rounded-lg transition-all duration-300 ${
+                loginType === 'traveller'
+                  ? 'bg-blue-600 text-white shadow-lg'
+                  : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+              }`}
+            >
+              <UserGroupIcon className="h-5 w-5" />
+              <span className="font-medium">Traveller</span>
+            </button>
+            <button
+              onClick={() => switchLoginType('admin')}
+              className={`flex-1 flex items-center justify-center space-x-2 py-3 px-4 rounded-lg transition-all duration-300 ${
+                loginType === 'admin'
+                  ? 'bg-blue-600 text-white shadow-lg'
+                  : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+              }`}
+            >
+              <ShieldCheckIcon className="h-5 w-5" />
+              <span className="font-medium">Admin</span>
+            </button>
           </div>
-          <div className="hidden lg:block">
-            <span className="text-slate-300 font-light tracking-wide">
-              Discover Sri Lanka's Hidden Treasures
-            </span>
-          </div>
-        </div>
-      </div>
 
-      {/* Main Premium Navigation */}
-      <nav className={`w-full transition-all duration-500 ${
-        isScrolled 
-          ? 'bg-white/80 backdrop-blur-lg shadow-xl border-b border-gray-100' 
-          : 'bg-white/90 backdrop-blur-md shadow-lg'
-      }`}>
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center h-20">
-            {/* Premium Logo */}
-            <Link to="/" className="flex items-center space-x-3 group">
-              <img
-                src="src/assets/images/logo/dremoralogo1.png"
-                alt="Dremora Tours"
-                className="h-16 w-auto max-w-none transition-all duration-300 transform group-hover:scale-105"
-              />
-            </Link>
-
-            {/* Desktop Premium Navigation */}
-            <div className="hidden md:flex items-center space-x-12">
-              {navItems.map((item) => (
-                <Link
-                  key={item.name}
-                  to={item.path}
-                  className={`relative font-medium text-base tracking-wide transition-all duration-300 group ${
-                    location.pathname === item.path
-                      ? 'text-blue-600'
-                      : 'text-slate-700 hover:text-blue-600'
-                  }`}
-                >
-                  {item.name}
-                  <span className={`absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-blue-600 to-blue-500 transition-all duration-300 group-hover:w-full ${
-                    location.pathname === item.path ? 'w-full' : ''
-                  }`}></span>
-                </Link>
-              ))}
-              
-              {/* Premium CTA Button */}
-              <Link
-                to="/login"
-                className="relative overflow-hidden bg-gradient-to-r from-blue-600 to-blue-500 hover:from-blue-700 hover:to-blue-600 text-white font-medium text-sm py-3 px-6 rounded-full transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl group"
-              >
-                <span className="relative z-10 tracking-wide">Login</span>
-                <div className="absolute inset-0 bg-gradient-to-r from-blue-500 to-blue-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-              </Link>
-            </div>
-
-            {/* Mobile menu button */}
-            <div className="md:hidden">
+          {/* Mode Selector for Travellers */}
+          {loginType === 'traveller' && (
+            <div className="flex space-x-4 mb-6">
               <button
-                onClick={() => setIsOpen(!isOpen)}
-                className="p-3 rounded-xl text-slate-700 hover:text-orange-600 hover:bg-orange-50 transition-all duration-300"
+                onClick={() => switchMode('login')}
+                className={`flex-1 py-2 px-4 rounded-lg font-medium transition-all duration-300 ${
+                  mode === 'login'
+                    ? 'bg-blue-100 text-blue-700'
+                    : 'text-gray-600 hover:text-blue-600'
+                }`}
               >
-                {isOpen ? (
-                  <XMarkIcon className="h-6 w-6" />
-                ) : (
-                  <Bars3Icon className="h-6 w-6" />
-                )}
+                Login
+              </button>
+              <button
+                onClick={() => switchMode('signup')}
+                className={`flex-1 py-2 px-4 rounded-lg font-medium transition-all duration-300 ${
+                  mode === 'signup'
+                    ? 'bg-blue-100 text-blue-700'
+                    : 'text-gray-600 hover:text-blue-600'
+                }`}
+              >
+                Sign Up
               </button>
             </div>
-          </div>
-        </div>
+          )}
 
-        {/* Premium Mobile Navigation */}
-        <AnimatePresence>
-          {isOpen && (
-            <motion.div
-              initial={{ opacity: 0, height: 0 }}
-              animate={{ opacity: 1, height: 'auto' }}
-              exit={{ opacity: 0, height: 0 }}
-              transition={{ duration: 0.3, ease: 'easeInOut' }}
-              className="md:hidden bg-white/95 backdrop-blur-lg border-t border-gray-100 shadow-xl"
-            >
-              <div className="px-4 pt-4 pb-6 space-y-2">
-                {navItems.map((item) => (
-                  <Link
-                    key={item.name}
-                    to={item.path}
-                    onClick={() => setIsOpen(false)}
-                    className={`block px-6 py-4 rounded-xl text-base font-medium tracking-wide transition-all duration-300 ${
-                      location.pathname === item.path
-                        ? 'text-blue-600 bg-blue-50 border-l-4 border-blue-600'
-                        : 'text-slate-700 hover:text-blue-600 hover:bg-blue-50'
-                    }`}
-                  >
-                    {item.name}
-                  </Link>
-                ))}
-                <div className="px-6 py-4">
-                  <Link
-                    to="/login"
-                    className="block w-full bg-gradient-to-r from-blue-600 to-blue-500 hover:from-blue-700 hover:to-blue-600 text-white font-medium text-sm py-4 px-6 rounded-xl transition-all duration-300 transform hover:scale-105 shadow-lg tracking-wide text-center"
-                  >
-                    Login
-                  </Link>
+          <form onSubmit={mode === 'login' ? handleLogin : handleSignup} className="space-y-6">
+            {/* Name Field (only for signup) */}
+            {mode === 'signup' && loginType === 'traveller' && (
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Full Name
+                </label>
+                <div className="relative">
+                  <UserIcon className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400" />
+                  <input
+                    type="text"
+                    name="name"
+                    value={formData.name}
+                    onChange={handleInputChange}
+                    required
+                    className="w-full pl-10 pr-4 py-3 border-0 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 shadow-sm bg-gray-50 transition-all duration-300"
+                    placeholder="Enter your full name"
+                  />
                 </div>
               </div>
-            </motion.div>
+            )}
+
+            {/* Email Field */}
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                Email Address
+              </label>
+              <div className="relative">
+                <EnvelopeIcon className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400" />
+                <input
+                  type="email"
+                  name="email"
+                  value={formData.email}
+                  onChange={handleInputChange}
+                  required
+                  className="w-full pl-10 pr-4 py-3 border-0 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 shadow-sm bg-gray-50 transition-all duration-300"
+                  placeholder="your@email.com"
+                />
+              </div>
+            </div>
+
+            {/* Password Field */}
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                Password
+              </label>
+              <div className="relative">
+                <LockClosedIcon className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400" />
+                <input
+                  type={showPassword ? 'text' : 'password'}
+                  name="password"
+                  value={formData.password}
+                  onChange={handleInputChange}
+                  required
+                  className="w-full pl-10 pr-12 py-3 border-0 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 shadow-sm bg-gray-50 transition-all duration-300"
+                  placeholder="Enter your password"
+                />
+                <button
+                  type="button"
+                  onClick={() => setShowPassword(!showPassword)}
+                  className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600"
+                >
+                  {showPassword ? (
+                    <EyeSlashIcon className="h-5 w-5" />
+                  ) : (
+                    <EyeIcon className="h-5 w-5" />
+                  )}
+                </button>
+              </div>
+            </div>
+
+            {/* Confirm Password Field (only for signup) */}
+            {mode === 'signup' && loginType === 'traveller' && (
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Confirm Password
+                </label>
+                <div className="relative">
+                  <LockClosedIcon className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400" />
+                  <input
+                    type={showPassword ? 'text' : 'password'}
+                    name="confirmPassword"
+                    value={formData.confirmPassword}
+                    onChange={handleInputChange}
+                    required
+                    className="w-full pl-10 pr-4 py-3 border-0 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 shadow-sm bg-gray-50 transition-all duration-300"
+                    placeholder="Confirm your password"
+                  />
+                </div>
+              </div>
+            )}
+
+
+            {/* Submit Button */}
+            <button
+              type="submit"
+              className="w-full bg-gradient-to-r from-blue-600 to-blue-500 hover:from-blue-700 hover:to-blue-600 text-white font-semibold py-3 px-6 rounded-xl transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl"
+            >
+              {loginType === 'admin' 
+                ? 'Sign In as Admin'
+                : mode === 'login' 
+                  ? 'Sign In as Traveller'
+                  : 'Create Account'
+              }
+            </button>
+          </form>
+
+          {/* Additional Links for Travellers */}
+          {loginType === 'traveller' && (
+            <div className="mt-6 text-center">
+              <p className="text-sm text-gray-600">
+                {mode === 'login' ? "Don't have an account? " : "Already have an account? "}
+                <button 
+                  onClick={() => switchMode(mode === 'login' ? 'signup' : 'login')}
+                  className="text-blue-600 hover:text-blue-700 font-medium"
+                >
+                  {mode === 'login' ? 'Sign up' : 'Sign in'}
+                </button>
+              </p>
+            </div>
           )}
-        </AnimatePresence>
-      </nav>
-    </>
+        </motion.div>
+      </div>
+    </div>
   );
 };
 
-export default Navbar;
+export default Login;

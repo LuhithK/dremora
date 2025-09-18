@@ -1,377 +1,540 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import {
-  UserIcon,
-  LockClosedIcon,
-  EyeIcon,
-  EyeSlashIcon,
   UserGroupIcon,
-  ShieldCheckIcon,
-  EnvelopeIcon
+  DocumentTextIcon,
+  CurrencyDollarIcon,
+  ChartBarIcon,
+  EyeIcon,
+  TrashIcon,
+  ArrowRightOnRectangleIcon,
+  UserIcon,
+  KeyIcon,
+  PhotoIcon,
+  CheckCircleIcon,
+  ClockIcon,
+  MagnifyingGlassIcon
 } from '@heroicons/react/24/outline';
 import toast from 'react-hot-toast';
 
-const Login = () => {
+const AdminDashboard = () => {
   const navigate = useNavigate();
-  const [loginType, setLoginType] = useState<'traveller' | 'admin'>('traveller');
-  const [mode, setMode] = useState<'login' | 'signup'>('login');
-  const [showPassword, setShowPassword] = useState(false);
-  const [formData, setFormData] = useState({
-    name: '',
-    email: '',
+  const [activeTab, setActiveTab] = useState('overview');
+  const [quotes, setQuotes] = useState([]);
+  const [users, setUsers] = useState([]);
+  const [searchTerm, setSearchTerm] = useState('');
+  const [showProfileModal, setShowProfileModal] = useState(false);
+  const [profileData, setProfileData] = useState({
+    name: 'Administrator',
+    email: 'admin@dremoratours.com',
     password: '',
-    confirmPassword: ''
+    newPassword: '',
+    confirmPassword: '',
+    profilePicture: null
   });
 
-  // Get stored users from localStorage
-  const getStoredUsers = () => {
-    const users = localStorage.getItem('registeredUsers');
-    return users ? JSON.parse(users) : [];
+  // Check if user is admin
+  useEffect(() => {
+    const currentUser = JSON.parse(localStorage.getItem('currentUser') || '{}');
+    if (currentUser.type !== 'admin') {
+      navigate('/login');
+      return;
+    }
+
+    // Load data
+    loadQuotes();
+    loadUsers();
+  }, [navigate]);
+
+  const loadQuotes = () => {
+    const storedQuotes = JSON.parse(localStorage.getItem('quotes') || '[]');
+    setQuotes(storedQuotes);
   };
 
-  // Get stored admins from localStorage
-  const getStoredAdmins = () => {
-    const admins = localStorage.getItem('registeredAdmins');
-    return admins ? JSON.parse(admins) : [];
-  };
-  // Save users to localStorage
-  const saveUsers = (users: any[]) => {
-    localStorage.setItem('registeredUsers', JSON.stringify(users));
+  const loadUsers = () => {
+    const storedUsers = JSON.parse(localStorage.getItem('registeredUsers') || '[]');
+    setUsers(storedUsers);
   };
 
-  // Save admins to localStorage
-  const saveAdmins = (admins: any[]) => {
-    localStorage.setItem('registeredAdmins', JSON.stringify(admins));
+  const handleLogout = () => {
+    localStorage.removeItem('currentUser');
+    toast.success('Logged out successfully');
+    navigate('/login');
   };
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setFormData(prev => ({
-      ...prev,
-      [name]: value
-    }));
+  const updateQuoteStatus = (quoteId, newStatus) => {
+    const updatedQuotes = quotes.map(quote =>
+      quote.id === quoteId ? { ...quote, status: newStatus } : quote
+    );
+    setQuotes(updatedQuotes);
+    localStorage.setItem('quotes', JSON.stringify(updatedQuotes));
+    toast.success(`Quote status updated to ${newStatus}`);
   };
 
-  const handleSignup = (e: React.FormEvent) => {
+  const deleteQuote = (quoteId) => {
+    if (window.confirm('Are you sure you want to delete this quote?')) {
+      const updatedQuotes = quotes.filter(quote => quote.id !== quoteId);
+      setQuotes(updatedQuotes);
+      localStorage.setItem('quotes', JSON.stringify(updatedQuotes));
+      toast.success('Quote deleted successfully');
+    }
+  };
+
+  const handleProfileUpdate = (e) => {
     e.preventDefault();
     
-    if (!formData.name || !formData.email || !formData.password || !formData.confirmPassword) {
-      toast.error('Please fill in all fields');
+    if (profileData.newPassword && profileData.newPassword !== profileData.confirmPassword) {
+      toast.error('New passwords do not match');
       return;
     }
 
-    if (formData.password !== formData.confirmPassword) {
-      toast.error('Passwords do not match');
-      return;
-    }
-
-    if (formData.password.length < 6) {
+    if (profileData.newPassword && profileData.newPassword.length < 6) {
       toast.error('Password must be at least 6 characters long');
       return;
     }
 
-    if (loginType === 'admin') {
-      // Admin signup
-      const admins = getStoredAdmins();
-      
-      // Check if admin already exists
-      const existingAdmin = admins.find((admin: any) => admin.email === formData.email);
-      if (existingAdmin) {
-        toast.error('Admin with this email already exists');
-        return;
-      }
+    // Update admin profile (in a real app, this would be saved to a database)
+    const updatedProfile = {
+      name: profileData.name,
+      email: profileData.email,
+      ...(profileData.newPassword && { password: profileData.newPassword })
+    };
 
-      // Add new admin
-      const newAdmin = {
-        name: formData.name,
-        email: formData.email,
-        password: formData.password
+    // Update current user session
+    const currentUser = JSON.parse(localStorage.getItem('currentUser') || '{}');
+    currentUser.name = profileData.name;
+    localStorage.setItem('currentUser', JSON.stringify(currentUser));
+
+    toast.success('Profile updated successfully');
+    setShowProfileModal(false);
+    setProfileData(prev => ({ ...prev, password: '', newPassword: '', confirmPassword: '' }));
+  };
+
+  const handleProfilePictureChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        setProfileData(prev => ({ ...prev, profilePicture: e.target.result }));
       };
-      
-      admins.push(newAdmin);
-      saveAdmins(admins);
-    } else {
-      // Traveller signup
-      const users = getStoredUsers();
-      
-      // Check if user already exists
-      const existingUser = users.find((user: any) => user.email === formData.email);
-      if (existingUser) {
-        toast.error('User with this email already exists');
-        return;
-      }
-
-      // Add new user
-      const newUser = {
-        name: formData.name,
-        email: formData.email,
-        password: formData.password
-      };
-
-      users.push(newUser);
-      saveUsers(users);
-    }
-
-    toast.success('Account created successfully! Please login.');
-    setMode('login');
-    setFormData({ name: '', email: '', password: '', confirmPassword: '' });
-  };
-
-  const handleLogin = (e: React.FormEvent) => {
-    e.preventDefault();
-    
-    if (!formData.email || !formData.password) {
-      toast.error('Please fill in all fields');
-      return;
-    }
-
-    if (loginType === 'admin') {
-      // Admin login
-      const adminCredentials = { email: 'admin@travel.com', password: 'admin123' };
-      if (formData.email === adminCredentials.email && formData.password === adminCredentials.password) {
-        toast.success('Admin login successful!');
-        localStorage.setItem('currentUser', JSON.stringify({ 
-          type: 'admin', 
-          email: formData.email 
-        }));
-        navigate('/admin');
-      } else {
-        toast.error('Invalid admin credentials');
-      }
-    } else {
-      // Traveller login
-      const users = getStoredUsers();
-      const user = users.find((u: any) => u.email === formData.email && u.password === formData.password);
-      
-      if (user) {
-        toast.success(`Welcome back, ${user.name}!`);
-        localStorage.setItem('currentUser', JSON.stringify({ 
-          type: 'traveller', 
-          ...user 
-        }));
-        navigate('/');
-      } else {
-        toast.error('Invalid email or password');
-      }
+      reader.readAsDataURL(file);
     }
   };
 
-  const resetForm = () => {
-    setFormData({ name: '', email: '', password: '', confirmPassword: '' });
+  // Filter quotes based on search term
+  const filteredQuotes = quotes.filter(quote =>
+    quote.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    quote.email.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    quote.destination.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
+  // Calculate stats
+  const stats = {
+    totalQuotes: quotes.length,
+    pendingQuotes: quotes.filter(q => q.status === 'Pending').length,
+    respondedQuotes: quotes.filter(q => q.status === 'Responded').length,
+    totalUsers: users.length
   };
 
-  const switchMode = (newMode: 'login' | 'signup') => {
-    setMode(newMode);
-    resetForm();
-  };
-
-  const switchLoginType = (type: 'traveller' | 'admin') => {
-    setLoginType(type);
-    resetForm();
-    setMode('login'); // Always switch to login mode when changing type
-  };
+  const tabs = [
+    { id: 'overview', name: 'Overview', icon: ChartBarIcon },
+    { id: 'quotes', name: 'Quote Requests', icon: DocumentTextIcon },
+    { id: 'users', name: 'Users', icon: UserGroupIcon }
+  ];
 
   return (
-    <div className="min-h-screen bg-gray-50 flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-md w-full space-y-8">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          className="text-center"
-        >
-          <h2 className="text-3xl font-bold text-gray-900 mb-2">
-            {mode === 'login' ? 'Welcome Back' : 'Create Account'}
-          </h2>
-          <p className="text-gray-600">
-            {mode === 'login' ? 'Sign in to your account' : 'Join us for amazing travel experiences'}
-          </p>
-        </motion.div>
-
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.2 }}
-          className="bg-white rounded-2xl shadow-lg p-6"
-        >
-          {/* Login Type Selector */}
-          <div className="flex space-x-4 mb-6">
-            <button
-              onClick={() => switchLoginType('traveller')}
-              className={`flex-1 flex items-center justify-center space-x-2 py-3 px-4 rounded-lg transition-all duration-300 ${
-                loginType === 'traveller'
-                  ? 'bg-blue-600 text-white shadow-lg'
-                  : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
-              }`}
-            >
-              <UserGroupIcon className="h-5 w-5" />
-              <span className="font-medium">Traveller</span>
-            </button>
-            <button
-              onClick={() => switchLoginType('admin')}
-              className={`flex-1 flex items-center justify-center space-x-2 py-3 px-4 rounded-lg transition-all duration-300 ${
-                loginType === 'admin'
-                  ? 'bg-blue-600 text-white shadow-lg'
-                  : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
-              }`}
-            >
-              <ShieldCheckIcon className="h-5 w-5" />
-              <span className="font-medium">Admin</span>
-            </button>
-          </div>
-
-          {/* Mode Selector for Travellers */}
-          {loginType === 'traveller' && (
-            <div className="flex space-x-4 mb-6">
+    <div className="min-h-screen bg-gray-50">
+      {/* Header */}
+      <header className="bg-white shadow-sm border-b border-gray-200">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex justify-between items-center h-16">
+            <div>
+              <h1 className="text-2xl font-bold text-gray-900">Admin Dashboard</h1>
+            </div>
+            <div className="flex items-center space-x-4">
               <button
-                onClick={() => switchMode('login')}
-                className={`flex-1 py-2 px-4 rounded-lg font-medium transition-all duration-300 ${
-                  mode === 'login'
-                    ? 'bg-blue-100 text-blue-700'
-                    : 'text-gray-600 hover:text-blue-600'
-                }`}
+                onClick={() => setShowProfileModal(true)}
+                className="flex items-center space-x-2 text-gray-700 hover:text-blue-600 transition-colors duration-200"
               >
-                Login
+                <div className="w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center">
+                  {profileData.profilePicture ? (
+                    <img src={profileData.profilePicture} alt="Profile" className="w-8 h-8 rounded-full object-cover" />
+                  ) : (
+                    <UserIcon className="h-5 w-5 text-white" />
+                  )}
+                </div>
+                <span className="font-medium">{profileData.name}</span>
               </button>
               <button
-                onClick={() => switchMode('signup')}
-                className={`flex-1 py-2 px-4 rounded-lg font-medium transition-all duration-300 ${
-                  mode === 'signup'
-                    ? 'bg-blue-100 text-blue-700'
-                    : 'text-gray-600 hover:text-blue-600'
-                }`}
+                onClick={handleLogout}
+                className="flex items-center space-x-2 bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg transition-colors duration-200"
               >
-                Sign Up
+                <ArrowRightOnRectangleIcon className="h-4 w-4" />
+                <span>Logout</span>
               </button>
             </div>
-          )}
+          </div>
+        </div>
+      </header>
 
-          <form onSubmit={mode === 'login' ? handleLogin : handleSignup} className="space-y-6">
-            {/* Name Field (only for signup) */}
-            {mode === 'signup' && loginType === 'traveller' && (
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Full Name
-                </label>
-                <div className="relative">
-                  <UserIcon className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400" />
-                  <input
-                    type="text"
-                    name="name"
-                    value={formData.name}
-                    onChange={handleInputChange}
-                    required
-                    className="w-full pl-10 pr-4 py-3 border-0 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 shadow-sm bg-gray-50 transition-all duration-300"
-                    placeholder="Enter your full name"
-                  />
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        {/* Tabs */}
+        <div className="border-b border-gray-200 mb-8">
+          <nav className="flex space-x-8">
+            {tabs.map((tab) => (
+              <button
+                key={tab.id}
+                onClick={() => setActiveTab(tab.id)}
+                className={`flex items-center space-x-2 py-4 px-1 border-b-2 font-medium text-sm transition-colors duration-200 ${
+                  activeTab === tab.id
+                    ? 'border-blue-500 text-blue-600'
+                    : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
+                }`}
+              >
+                <tab.icon className="h-5 w-5" />
+                <span>{tab.name}</span>
+              </button>
+            ))}
+          </nav>
+        </div>
+
+        {/* Overview Tab */}
+        {activeTab === 'overview' && (
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+          >
+            {/* Stats Cards */}
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+              <div className="bg-white rounded-lg shadow-sm p-6 border border-gray-200">
+                <div className="flex items-center">
+                  <div className="p-2 bg-blue-100 rounded-lg">
+                    <DocumentTextIcon className="h-6 w-6 text-blue-600" />
+                  </div>
+                  <div className="ml-4">
+                    <p className="text-sm font-medium text-gray-600">Total Quotes</p>
+                    <p className="text-2xl font-bold text-gray-900">{stats.totalQuotes}</p>
+                  </div>
                 </div>
               </div>
-            )}
 
-            {/* Email Field */}
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
-                Email Address
-              </label>
+              <div className="bg-white rounded-lg shadow-sm p-6 border border-gray-200">
+                <div className="flex items-center">
+                  <div className="p-2 bg-yellow-100 rounded-lg">
+                    <ClockIcon className="h-6 w-6 text-yellow-600" />
+                  </div>
+                  <div className="ml-4">
+                    <p className="text-sm font-medium text-gray-600">Pending</p>
+                    <p className="text-2xl font-bold text-gray-900">{stats.pendingQuotes}</p>
+                  </div>
+                </div>
+              </div>
+
+              <div className="bg-white rounded-lg shadow-sm p-6 border border-gray-200">
+                <div className="flex items-center">
+                  <div className="p-2 bg-green-100 rounded-lg">
+                    <CheckCircleIcon className="h-6 w-6 text-green-600" />
+                  </div>
+                  <div className="ml-4">
+                    <p className="text-sm font-medium text-gray-600">Responded</p>
+                    <p className="text-2xl font-bold text-gray-900">{stats.respondedQuotes}</p>
+                  </div>
+                </div>
+              </div>
+
+              <div className="bg-white rounded-lg shadow-sm p-6 border border-gray-200">
+                <div className="flex items-center">
+                  <div className="p-2 bg-purple-100 rounded-lg">
+                    <UserGroupIcon className="h-6 w-6 text-purple-600" />
+                  </div>
+                  <div className="ml-4">
+                    <p className="text-sm font-medium text-gray-600">Total Users</p>
+                    <p className="text-2xl font-bold text-gray-900">{stats.totalUsers}</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Recent Quotes */}
+            <div className="bg-white rounded-lg shadow-sm border border-gray-200">
+              <div className="px-6 py-4 border-b border-gray-200">
+                <h3 className="text-lg font-medium text-gray-900">Recent Quote Requests</h3>
+              </div>
+              <div className="p-6">
+                {quotes.length === 0 ? (
+                  <p className="text-gray-500 text-center py-8">No quote requests yet.</p>
+                ) : (
+                  <div className="space-y-4">
+                    {quotes.slice(0, 5).map((quote) => (
+                      <div key={quote.id} className="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
+                        <div>
+                          <p className="font-medium text-gray-900">{quote.name}</p>
+                          <p className="text-sm text-gray-600">{quote.destination} • {quote.travelers} travelers</p>
+                        </div>
+                        <div className="flex items-center space-x-3">
+                          <span className={`px-2 py-1 rounded-full text-xs font-medium ${
+                            quote.status === 'Pending' 
+                              ? 'bg-yellow-100 text-yellow-800' 
+                              : 'bg-green-100 text-green-800'
+                          }`}>
+                            {quote.status}
+                          </span>
+                          <span className="text-sm text-gray-500">{quote.date}</span>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </div>
+            </div>
+          </motion.div>
+        )}
+
+        {/* Quotes Tab */}
+        {activeTab === 'quotes' && (
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+          >
+            {/* Search */}
+            <div className="mb-6">
               <div className="relative">
-                <EnvelopeIcon className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400" />
+                <MagnifyingGlassIcon className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400" />
+                <input
+                  type="text"
+                  placeholder="Search quotes..."
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                  className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                />
+              </div>
+            </div>
+
+            {/* Quotes Table */}
+            <div className="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden">
+              <div className="px-6 py-4 border-b border-gray-200">
+                <h3 className="text-lg font-medium text-gray-900">Quote Requests ({filteredQuotes.length})</h3>
+              </div>
+              <div className="overflow-x-auto">
+                {filteredQuotes.length === 0 ? (
+                  <p className="text-gray-500 text-center py-8">No quotes found.</p>
+                ) : (
+                  <table className="min-w-full divide-y divide-gray-200">
+                    <thead className="bg-gray-50">
+                      <tr>
+                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Customer</th>
+                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Destination</th>
+                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Details</th>
+                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
+                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Date</th>
+                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+                      </tr>
+                    </thead>
+                    <tbody className="bg-white divide-y divide-gray-200">
+                      {filteredQuotes.map((quote) => (
+                        <tr key={quote.id} className="hover:bg-gray-50">
+                          <td className="px-6 py-4 whitespace-nowrap">
+                            <div>
+                              <div className="text-sm font-medium text-gray-900">{quote.name}</div>
+                              <div className="text-sm text-gray-500">{quote.email}</div>
+                              <div className="text-sm text-gray-500">{quote.phone}</div>
+                            </div>
+                          </td>
+                          <td className="px-6 py-4 whitespace-nowrap">
+                            <div className="text-sm text-gray-900">{quote.destination}</div>
+                          </td>
+                          <td className="px-6 py-4 whitespace-nowrap">
+                            <div className="text-sm text-gray-900">{quote.travelers} travelers</div>
+                            <div className="text-sm text-gray-500">{quote.duration}</div>
+                            <div className="text-sm text-gray-500">{quote.budget}</div>
+                          </td>
+                          <td className="px-6 py-4 whitespace-nowrap">
+                            <select
+                              value={quote.status}
+                              onChange={(e) => updateQuoteStatus(quote.id, e.target.value)}
+                              className={`px-2 py-1 rounded-full text-xs font-medium border-0 focus:outline-none focus:ring-2 focus:ring-blue-500 ${
+                                quote.status === 'Pending' 
+                                  ? 'bg-yellow-100 text-yellow-800' 
+                                  : 'bg-green-100 text-green-800'
+                              }`}
+                            >
+                              <option value="Pending">Pending</option>
+                              <option value="Responded">Responded</option>
+                            </select>
+                          </td>
+                          <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                            <div>{quote.date}</div>
+                            <div>{quote.time}</div>
+                          </td>
+                          <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                            <div className="flex space-x-2">
+                              <button
+                                onClick={() => deleteQuote(quote.id)}
+                                className="text-red-600 hover:text-red-900 transition-colors duration-200"
+                              >
+                                <TrashIcon className="h-4 w-4" />
+                              </button>
+                            </div>
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                )}
+              </div>
+            </div>
+          </motion.div>
+        )}
+
+        {/* Users Tab */}
+        {activeTab === 'users' && (
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+          >
+            <div className="bg-white rounded-lg shadow-sm border border-gray-200">
+              <div className="px-6 py-4 border-b border-gray-200">
+                <h3 className="text-lg font-medium text-gray-900">Registered Users ({users.length})</h3>
+              </div>
+              <div className="p-6">
+                {users.length === 0 ? (
+                  <p className="text-gray-500 text-center py-8">No registered users yet.</p>
+                ) : (
+                  <div className="space-y-4">
+                    {users.map((user) => (
+                      <div key={user.email} className="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
+                        <div>
+                          <p className="font-medium text-gray-900">{user.name}</p>
+                          <p className="text-sm text-gray-600">{user.email}</p>
+                        </div>
+                        <div className="text-sm text-gray-500">
+                          Joined: {new Date(user.joinDate || Date.now()).toLocaleDateString()}
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </div>
+            </div>
+          </motion.div>
+        )}
+      </div>
+
+      {/* Profile Modal */}
+      {showProfileModal && (
+        <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4">
+          <motion.div
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.3 }}
+            className="bg-white rounded-2xl max-w-md w-full p-6"
+          >
+            <div className="flex items-center justify-between mb-6">
+              <h3 className="text-xl font-bold text-gray-900">Admin Profile</h3>
+              <button
+                onClick={() => setShowProfileModal(false)}
+                className="text-gray-400 hover:text-gray-600"
+              >
+                <svg className="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              </button>
+            </div>
+
+            <form onSubmit={handleProfileUpdate} className="space-y-4">
+              {/* Profile Picture */}
+              <div className="text-center">
+                <div className="w-20 h-20 bg-blue-600 rounded-full flex items-center justify-center mx-auto mb-4">
+                  {profileData.profilePicture ? (
+                    <img src={profileData.profilePicture} alt="Profile" className="w-20 h-20 rounded-full object-cover" />
+                  ) : (
+                    <UserIcon className="h-10 w-10 text-white" />
+                  )}
+                </div>
+                <label className="cursor-pointer bg-blue-100 hover:bg-blue-200 text-blue-700 px-4 py-2 rounded-lg text-sm font-medium transition-colors duration-200">
+                  <PhotoIcon className="h-4 w-4 inline mr-2" />
+                  Change Picture
+                  <input
+                    type="file"
+                    accept="image/*"
+                    onChange={handleProfilePictureChange}
+                    className="hidden"
+                  />
+                </label>
+              </div>
+
+              {/* Name */}
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">Name</label>
+                <input
+                  type="text"
+                  value={profileData.name}
+                  onChange={(e) => setProfileData(prev => ({ ...prev, name: e.target.value }))}
+                  className="w-full py-2 px-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                />
+              </div>
+
+              {/* Email */}
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">Email</label>
                 <input
                   type="email"
-                  name="email"
-                  value={formData.email}
-                  onChange={handleInputChange}
-                  required
-                  className="w-full pl-10 pr-4 py-3 border-0 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 shadow-sm bg-gray-50 transition-all duration-300"
-                  placeholder="your@email.com"
+                  value={profileData.email}
+                  onChange={(e) => setProfileData(prev => ({ ...prev, email: e.target.value }))}
+                  className="w-full py-2 px-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                 />
               </div>
-            </div>
 
-            {/* Password Field */}
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
-                Password
-              </label>
-              <div className="relative">
-                <LockClosedIcon className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400" />
-                <input
-                  type={showPassword ? 'text' : 'password'}
-                  name="password"
-                  value={formData.password}
-                  onChange={handleInputChange}
-                  required
-                  className="w-full pl-10 pr-12 py-3 border-0 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 shadow-sm bg-gray-50 transition-all duration-300"
-                  placeholder="Enter your password"
-                />
-                <button
-                  type="button"
-                  onClick={() => setShowPassword(!showPassword)}
-                  className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600"
-                >
-                  {showPassword ? (
-                    <EyeSlashIcon className="h-5 w-5" />
-                  ) : (
-                    <EyeIcon className="h-5 w-5" />
-                  )}
-                </button>
-              </div>
-            </div>
-
-            {/* Confirm Password Field (only for signup) */}
-            {mode === 'signup' && loginType === 'traveller' && (
+              {/* New Password */}
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Confirm Password
-                </label>
-                <div className="relative">
-                  <LockClosedIcon className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400" />
+                <label className="block text-sm font-medium text-gray-700 mb-2">New Password (optional)</label>
+                <input
+                  type="password"
+                  value={profileData.newPassword}
+                  onChange={(e) => setProfileData(prev => ({ ...prev, newPassword: e.target.value }))}
+                  className="w-full py-2 px-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  placeholder="Leave blank to keep current password"
+                />
+              </div>
+
+              {/* Confirm Password */}
+              {profileData.newPassword && (
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">Confirm New Password</label>
                   <input
-                    type={showPassword ? 'text' : 'password'}
-                    name="confirmPassword"
-                    value={formData.confirmPassword}
-                    onChange={handleInputChange}
-                    required
-                    className="w-full pl-10 pr-4 py-3 border-0 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 shadow-sm bg-gray-50 transition-all duration-300"
-                    placeholder="Confirm your password"
+                    type="password"
+                    value={profileData.confirmPassword}
+                    onChange={(e) => setProfileData(prev => ({ ...prev, confirmPassword: e.target.value }))}
+                    className="w-full py-2 px-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                   />
                 </div>
-              </div>
-            )}
+              )}
 
-
-            {/* Submit Button */}
-            <button
-              type="submit"
-              className="w-full bg-gradient-to-r from-blue-600 to-blue-500 hover:from-blue-700 hover:to-blue-600 text-white font-semibold py-3 px-6 rounded-xl transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl"
-            >
-              {loginType === 'admin' 
-                ? 'Sign In as Admin'
-                : mode === 'login' 
-                  ? 'Sign In as Traveller'
-                  : 'Create Account'
-              }
-            </button>
-          </form>
-
-          {/* Additional Links for Travellers */}
-          {loginType === 'traveller' && (
-            <div className="mt-6 text-center">
-              <p className="text-sm text-gray-600">
-                {mode === 'login' ? "Don't have an account? " : "Already have an account? "}
-                <button 
-                  onClick={() => switchMode(mode === 'login' ? 'signup' : 'login')}
-                  className="text-blue-600 hover:text-blue-700 font-medium"
+              <div className="flex space-x-4 pt-4">
+                <button
+                  type="button"
+                  onClick={() => setShowProfileModal(false)}
+                  className="flex-1 bg-gray-200 hover:bg-gray-300 text-gray-800 font-medium py-2 px-4 rounded-lg transition-colors duration-200"
                 >
-                  {mode === 'login' ? 'Sign up' : 'Sign in'}
+                  Cancel
                 </button>
-              </p>
-            </div>
-          )}
-        </motion.div>
-      </div>
+                <button
+                  type="submit"
+                  className="flex-1 bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-lg transition-colors duration-200"
+                >
+                  Update Profile
+                </button>
+              </div>
+            </form>
+          </motion.div>
+        </div>
+      )}
     </div>
   );
 };
 
-export default Login;
+export default AdminDashboard;

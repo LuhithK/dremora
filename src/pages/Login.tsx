@@ -127,13 +127,16 @@ const Login = () => {
     }
 
     if (loginType === 'admin') {
-      // Admin login
-      const adminCredentials = { email: 'admin@travel.com', password: 'admin123' };
-      if (formData.email === adminCredentials.email && formData.password === adminCredentials.password) {
+      // Admin login with fixed credentials
+      const adminEmail = 'admin@dremoratours.com';
+      const adminPassword = 'Admin@123';
+      
+      if (formData.email === adminEmail && formData.password === adminPassword) {
         toast.success('Admin login successful!');
         localStorage.setItem('currentUser', JSON.stringify({ 
           type: 'admin', 
-          email: formData.email 
+          email: formData.email,
+          name: 'Administrator'
         }));
         navigate('/admin');
       } else {
