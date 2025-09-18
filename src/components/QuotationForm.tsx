@@ -1,52 +1,51 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
+import { useNavigate } from 'react-router-dom';
 import {
   UserIcon,
-  EnvelopeIcon,
-  PhoneIcon,
-  MapPinIcon,
-  PaperAirplaneIcon
+  LockClosedIcon,
+  EyeIcon,
+  EyeSlashIcon,
+  UserGroupIcon,
+  ShieldCheckIcon,
+  EnvelopeIcon
 } from '@heroicons/react/24/outline';
 import toast from 'react-hot-toast';
 
-const QuotationForm = () => {
+const Login = () => {
+  const navigate = useNavigate();
+  const [loginType, setLoginType] = useState<'traveller' | 'admin'>('traveller');
+  const [mode, setMode] = useState<'login' | 'signup'>('login');
+  const [showPassword, setShowPassword] = useState(false);
   const [formData, setFormData] = useState({
-    fullName: '',
+    name: '',
     email: '',
-    package: '',
-    phoneNumber: '',
-    countryCode: '+94'
+    password: '',
+    confirmPassword: ''
   });
 
-  const [isSubmitting, setIsSubmitting] = useState(false);
+  // Get stored users from localStorage
+  const getStoredUsers = () => {
+    const users = localStorage.getItem('registeredUsers');
+    return users ? JSON.parse(users) : [];
+  };
 
-  const packages = [
-    'Select a Package',
-    'Sri Lanka Holiday Package 3 Days',
-    'Sri Lanka Holiday Package 4 Days',
-    'Sri Lanka Holiday Package 5 Days',
-    'Sri Lanka Holiday Package 6 Days',
-    'Sri Lanka Holiday Package 7 Days',
-    'Sri Lanka Holiday Package 8 Days',
-    'Sri Lanka Holiday Package 10 Days',
-    'Sri Lanka Holiday Package 12 Days',
-    'Sri Lanka Holiday Package 14 Days',
-    'Sri Lanka Holiday Package 15 Days',
-    'Custom Tour Package'
-  ];
+  // Get stored admins from localStorage
+  const getStoredAdmins = () => {
+    const admins = localStorage.getItem('registeredAdmins');
+    return admins ? JSON.parse(admins) : [];
+  };
+  // Save users to localStorage
+  const saveUsers = (users: any[]) => {
+    localStorage.setItem('registeredUsers', JSON.stringify(users));
+  };
 
-  const countryCodes = [
-    { code: '+94', country: 'LK', flag: '🇱🇰' },
-    { code: '+1', country: 'US', flag: '🇺🇸' },
-    { code: '+44', country: 'UK', flag: '🇬🇧' },
-    { code: '+61', country: 'AU', flag: '🇦🇺' },
-    { code: '+91', country: 'IN', flag: '🇮🇳' },
-    { code: '+49', country: 'DE', flag: '🇩🇪' },
-    { code: '+33', country: 'FR', flag: '🇫🇷' },
-    { code: '+81', country: 'JP', flag: '🇯🇵' }
-  ];
+  // Save admins to localStorage
+  const saveAdmins = (admins: any[]) => {
+    localStorage.setItem('registeredAdmins', JSON.stringify(admins));
+  };
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setFormData(prev => ({
       ...prev,
@@ -54,290 +53,353 @@ const QuotationForm = () => {
     }));
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSignup = (e: React.FormEvent) => {
     e.preventDefault();
     
-    if (!formData.fullName || !formData.email || !formData.package || formData.package === 'Select a Package') {
-      toast.error('Please fill in all required fields');
+    if (!formData.name || !formData.email || !formData.password || !formData.confirmPassword) {
+      toast.error('Please fill in all fields');
       return;
     }
 
-    setIsSubmitting(true);
+    if (formData.password !== formData.confirmPassword) {
+      toast.error('Passwords do not match');
+      return;
+    }
 
-    try {
-      // Save quote to localStorage for admin dashboard
-      const existingQuotes = JSON.parse(localStorage.getItem('quotationRequests') || '[]');
-      const newQuote = {
+    if (formData.password.length < 6) {
+      toast.error('Password must be at least 6 characters long');
+      return;
+    }
+
+    if (loginType === 'admin') {
+      // Admin signup
+      const admins = getStoredAdmins();
+      
+      // Check if admin already exists
+      const existingAdmin = admins.find((admin: any) => admin.email === formData.email);
+      if (existingAdmin) {
+        toast.error('Admin with this email already exists');
+        return;
+      }
+
+      // Add new admin
+      const newAdmin = {
         id: Date.now(),
-        name: formData.fullName,
+        name: formData.name,
         email: formData.email,
-        phone: formData.countryCode + ' ' + formData.phoneNumber,
-        package: formData.package,
-        date: new Date().toISOString().split('T')[0],
-        status: 'pending'
+        password: formData.password
       };
-      existingQuotes.push(newQuote);
-      localStorage.setItem('quotationRequests', JSON.stringify(existingQuotes));
-
-      // Create mailto link with form data
-      const subject = encodeURIComponent('Quotation Request - Dremora Tours');
-      const body = encodeURIComponent(`
-Dear Dremora Tours Team,
-
-I would like to request a quotation for a Sri Lankan tour package.
-
-Details:
-- Full Name: ${formData.fullName}
-- Email: ${formData.email}
-- Phone: ${formData.countryCode} ${formData.phoneNumber}
-- Package: ${formData.package}
-
-Please provide me with a personalized quote and itinerary for this package.
-
-Thank you for your assistance.
-
-Best regards,
-${formData.fullName}
-      `);
-
-      const mailtoLink = `mailto:dremoratravels@gmail.com?subject=${subject}&body=${body}`;
       
-      // Open email client
-      window.location.href = mailtoLink;
+      admins.push(newAdmin);
+      saveAdmins(admins);
+    } else {
+      // Traveller signup
+      const users = getStoredUsers();
       
-      // Show success message
-      toast.success('Email client opened! Please send the email to complete your quotation request.');
-      
-      // Reset form
-      setFormData({
-        fullName: '',
-        email: '',
-        package: '',
-        phoneNumber: '',
-        countryCode: '+94'
-      });
+      // Check if user already exists
+      const existingUser = users.find((user: any) => user.email === formData.email);
+      if (existingUser) {
+        toast.error('User with this email already exists');
+        return;
+      }
 
-    } catch (error) {
-      toast.error('Something went wrong. Please try again.');
-    } finally {
-      setIsSubmitting(false);
+      // Add new user
+      const newUser = {
+        id: Date.now(),
+        name: formData.name,
+        email: formData.email,
+        password: formData.password
+      };
+
+      users.push(newUser);
+      saveUsers(users);
+    }
+
+    toast.success('Account created successfully! Please login.');
+    setMode('login');
+    setFormData({ name: '', email: '', password: '', confirmPassword: '' });
+  };
+
+  const handleLogin = (e: React.FormEvent) => {
+    e.preventDefault();
+    
+    if (!formData.email || !formData.password) {
+      toast.error('Please fill in all fields');
+      return;
+    }
+
+    if (loginType === 'admin') {
+      // Admin login
+      const admins = getStoredAdmins();
+      const admin = admins.find((a: any) => a.email === formData.email && a.password === formData.password);
+      
+      if (admin) {
+        toast.success(`Welcome back, ${admin.name}!`);
+        localStorage.setItem('currentUser', JSON.stringify({ 
+          type: 'admin', 
+          ...admin 
+        }));
+        navigate('/admin');
+      } else {
+        toast.error('Invalid admin credentials');
+      }
+    } else {
+      // Traveller login
+      const users = getStoredUsers();
+      const user = users.find((u: any) => u.email === formData.email && u.password === formData.password);
+      
+      if (user) {
+        toast.success(`Welcome back, ${user.name}!`);
+        localStorage.setItem('currentUser', JSON.stringify({ 
+          type: 'traveller', 
+          ...user 
+        }));
+        navigate('/');
+      } else {
+        toast.error('Invalid email or password');
+      }
     }
   };
 
+  const resetForm = () => {
+    setFormData({ name: '', email: '', password: '', confirmPassword: '' });
+  };
+
+  const switchMode = (newMode: 'login' | 'signup') => {
+    setMode(newMode);
+    resetForm();
+  };
+
+  const switchLoginType = (type: 'traveller' | 'admin') => {
+    setLoginType(type);
+    resetForm();
+    setMode('login'); // Always switch to login mode when changing type
+  };
+
   return (
-    <section 
-      id="quote-section"
-      className="py-20 relative overflow-hidden"
-      style={{
-        backgroundImage: `url("https://media1.thrillophilia.com/filestore/zpxe5aul83j9euqc020bjj8dwvcl_1579095457_7.png")`,
-        backgroundSize: 'cover',
-        backgroundPosition: 'center',
-        backgroundRepeat: 'no-repeat'
-      }}
-    >
-      {/* Background Overlay */}
-      <div className="absolute inset-0 bg-white/85 backdrop-blur-sm"></div>
+    <div className="min-h-screen bg-gray-50 flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
+      <div className="max-w-md w-full space-y-8">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+          className="text-center"
+        >
+          <h2 className="text-3xl font-bold text-gray-900 mb-2">
+            {mode === 'login' ? 'Welcome Back' : 'Create Account'}
+          </h2>
+          <p className="text-gray-600">
+            {mode === 'login' ? 'Sign in to your account' : 'Join us for amazing travel experiences'}
+          </p>
+        </motion.div>
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-          {/* Left Side - Content */}
-          <motion.div
-            initial={{ opacity: 0, x: -30 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.8 }}
-            viewport={{ once: true }}
-            className="space-y-6"
-          >
-            <div>
-              <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
-                Get a <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-blue-500">Quote</span>
-              </h2>
-              <p className="text-lg text-gray-600 leading-relaxed">
-                Get 24/7 support from our dedicated local experts—always here when you need us.
-              </p>
-            </div>
-
-            {/* Quote Highlight */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.3 }}
-              viewport={{ once: true }}
-              className="bg-white/80 backdrop-blur-sm rounded-2xl p-6 shadow-lg border border-white/20"
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.2 }}
+          className="bg-white rounded-2xl shadow-lg p-6"
+        >
+          {/* Login Type Selector */}
+          <div className="flex space-x-4 mb-6">
+            <button
+              onClick={() => switchLoginType('traveller')}
+              className={`flex-1 flex items-center justify-center space-x-2 py-3 px-4 rounded-lg transition-all duration-300 ${
+                loginType === 'traveller'
+                  ? 'bg-blue-600 text-white shadow-lg'
+                  : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+              }`}
             >
-              <div className="flex items-start space-x-4">
-                <div className="text-6xl text-gray-200 font-bold leading-none">"</div>
-                <div>
-                  <h3 className="text-xl font-bold text-gray-900 mb-2">
-                    Get a personalised quote in 24 hours.
-                  </h3>
-                  <p className="text-gray-600 text-sm">
-                    Fast, reliable, and tailored to your travel dreams
-                  </p>
-                </div>
-              </div>
-            </motion.div>
-
-            {/* Privacy Notice */}
-            <motion.p
-              initial={{ opacity: 0 }}
-              whileInView={{ opacity: 1 }}
-              transition={{ duration: 0.6, delay: 0.5 }}
-              viewport={{ once: true }}
-              className="text-sm text-gray-500 flex items-center space-x-2"
+              <UserGroupIcon className="h-5 w-5" />
+              <span className="font-medium">Traveller</span>
+            </button>
+            <button
+              onClick={() => switchLoginType('admin')}
+              className={`flex-1 flex items-center justify-center space-x-2 py-3 px-4 rounded-lg transition-all duration-300 ${
+                loginType === 'admin'
+                  ? 'bg-blue-600 text-white shadow-lg'
+                  : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+              }`}
             >
-              <svg className="h-4 w-4 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-              </svg>
-              <span>We respect your privacy and keep your details strictly confidential</span>
-            </motion.p>
-          </motion.div>
+              <ShieldCheckIcon className="h-5 w-5" />
+              <span className="font-medium">Admin</span>
+            </button>
+          </div>
 
-          {/* Right Side - Form */}
-          <motion.div
-            initial={{ opacity: 0, x: 30 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.8 }}
-            viewport={{ once: true }}
-            className="bg-white rounded-3xl shadow-2xl p-8 border border-gray-100"
-          >
-            <form onSubmit={handleSubmit} className="space-y-6">
-              {/* Full Name and Email */}
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Full Name *
-                  </label>
-                  <div className="relative">
-                    <UserIcon className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400" />
-                    <input
-                      type="text"
-                      name="fullName"
-                      value={formData.fullName}
-                      onChange={handleInputChange}
-                      required
-                      className="w-full pl-10 pr-4 py-3 border-0 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 shadow-sm bg-gray-50 transition-all duration-300"
-                      placeholder="John Jackson"
-                    />
-                  </div>
-                </div>
-
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Email Address *
-                  </label>
-                  <div className="relative">
-                    <EnvelopeIcon className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400" />
-                    <input
-                      type="email"
-                      name="email"
-                      value={formData.email}
-                      onChange={handleInputChange}
-                      required
-                      className="w-full pl-10 pr-4 py-3 border-0 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 shadow-sm bg-gray-50 transition-all duration-300"
-                      placeholder="Hello@outlook.com"
-                    />
-                  </div>
-                </div>
-              </div>
-
-              {/* Destination */}
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Select Package *
-                </label>
-                <div className="relative">
-                  <MapPinIcon className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400" />
-                  <select
-                    name="package"
-                    value={formData.package}
-                    onChange={handleInputChange}
-                    required
-                    className="w-full pl-10 pr-4 py-3 border-0 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 shadow-sm bg-gray-50 transition-all duration-300 appearance-none cursor-pointer"
-                  >
-                    {packages.map((pkg, index) => (
-                      <option key={index} value={pkg} disabled={index === 0}>
-                        {pkg}
-                      </option>
-                    ))}
-                  </select>
-                  <div className="absolute right-3 top-1/2 transform -translate-y-1/2 pointer-events-none">
-                    <svg className="h-5 w-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                    </svg>
-                  </div>
-                </div>
-              </div>
-
-              {/* Phone Number */}
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Phone Number
-                </label>
-                <div className="flex space-x-3">
-                  <div className="relative">
-                    <select
-                      name="countryCode"
-                      value={formData.countryCode}
-                      onChange={handleInputChange}
-                      className="w-20 py-3 px-3 border-0 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 shadow-sm bg-gray-50 transition-all duration-300 appearance-none cursor-pointer text-center"
-                    >
-                      {countryCodes.map((country) => (
-                        <option key={country.code} value={country.code}>
-                          {country.code}
-                        </option>
-                      ))}
-                    </select>
-                  </div>
-                  <div className="relative flex-1">
-                    <PhoneIcon className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400" />
-                    <input
-                      type="tel"
-                      name="phoneNumber"
-                      value={formData.phoneNumber}
-                      onChange={handleInputChange}
-                      className="w-full pl-10 pr-4 py-3 border-0 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 shadow-sm bg-gray-50 transition-all duration-300"
-                      placeholder="77 123 4567"
-                    />
-                  </div>
-                </div>
-              </div>
-
-              {/* Submit Button */}
-              <motion.button
-                type="submit"
-                disabled={isSubmitting}
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
-                className={`w-full bg-gradient-to-r from-blue-600 to-blue-500 hover:from-blue-700 hover:to-blue-600 text-white font-semibold py-4 px-6 rounded-xl transition-all duration-300 shadow-lg hover:shadow-xl flex items-center justify-center space-x-2 ${
-                  isSubmitting ? 'opacity-70 cursor-not-allowed' : ''
+          {/* Mode Selector for Travellers */}
+          {loginType === 'traveller' && (
+            <div className="flex space-x-4 mb-6">
+              <button
+                onClick={() => switchMode('login')}
+                className={`flex-1 py-2 px-4 rounded-lg font-medium transition-all duration-300 ${
+                  mode === 'login'
+                    ? 'bg-blue-100 text-blue-700'
+                    : 'text-gray-600 hover:text-blue-600'
                 }`}
               >
-                {isSubmitting ? (
-                  <>
-                    <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white"></div>
-                    <span>Processing...</span>
-                  </>
-                ) : (
-                  <>
-                    <PaperAirplaneIcon className="h-5 w-5" />
-                    <span>Submit</span>
-                  </>
-                )}
-              </motion.button>
+                Login
+              </button>
+              <button
+                onClick={() => switchMode('signup')}
+                className={`flex-1 py-2 px-4 rounded-lg font-medium transition-all duration-300 ${
+                  mode === 'signup'
+                    ? 'bg-blue-100 text-blue-700'
+                    : 'text-gray-600 hover:text-blue-600'
+                }`}
+              >
+                Sign Up
+              </button>
+            </div>
+          )}
 
-              {/* Additional Info */}
-              <div className="text-center">
-                <p className="text-sm text-gray-500 mb-2">
-                  Have a coupon? <a href="#" className="text-blue-600 hover:text-blue-700 underline">Apply here</a>
-                </p>
+          {/* Mode Selector for Admins */}
+          {loginType === 'admin' && (
+            <div className="flex space-x-4 mb-6">
+              <button
+                onClick={() => switchMode('login')}
+                className={`flex-1 py-2 px-4 rounded-lg font-medium transition-all duration-300 ${
+                  mode === 'login'
+                    ? 'bg-blue-100 text-blue-700'
+                    : 'text-gray-600 hover:text-blue-600'
+                }`}
+              >
+                Login
+              </button>
+              <button
+                onClick={() => switchMode('signup')}
+                className={`flex-1 py-2 px-4 rounded-lg font-medium transition-all duration-300 ${
+                  mode === 'signup'
+                    ? 'bg-blue-100 text-blue-700'
+                    : 'text-gray-600 hover:text-blue-600'
+                }`}
+              >
+                Sign Up
+              </button>
+            </div>
+          )}
+
+          <form onSubmit={mode === 'login' ? handleLogin : handleSignup} className="space-y-6">
+            {/* Name Field (only for signup) */}
+            {mode === 'signup' && (
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Full Name
+                </label>
+                <div className="relative">
+                  <UserIcon className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400" />
+                  <input
+                    type="text"
+                    name="name"
+                    value={formData.name}
+                    onChange={handleInputChange}
+                    required
+                    className="w-full pl-10 pr-4 py-3 border-0 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 shadow-sm bg-gray-50 transition-all duration-300"
+                    placeholder="Enter your full name"
+                  />
+                </div>
               </div>
-            </form>
-          </motion.div>
-        </div>
+            )}
+
+            {/* Email Field */}
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                Email Address
+              </label>
+              <div className="relative">
+                <EnvelopeIcon className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400" />
+                <input
+                  type="email"
+                  name="email"
+                  value={formData.email}
+                  onChange={handleInputChange}
+                  required
+                  className="w-full pl-10 pr-4 py-3 border-0 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 shadow-sm bg-gray-50 transition-all duration-300"
+                  placeholder="your@email.com"
+                />
+              </div>
+            </div>
+
+            {/* Password Field */}
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                Password
+              </label>
+              <div className="relative">
+                <LockClosedIcon className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400" />
+                <input
+                  type={showPassword ? 'text' : 'password'}
+                  name="password"
+                  value={formData.password}
+                  onChange={handleInputChange}
+                  required
+                  className="w-full pl-10 pr-12 py-3 border-0 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 shadow-sm bg-gray-50 transition-all duration-300"
+                  placeholder="Enter your password"
+                />
+                <button
+                  type="button"
+                  onClick={() => setShowPassword(!showPassword)}
+                  className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600"
+                >
+                  {showPassword ? (
+                    <EyeSlashIcon className="h-5 w-5" />
+                  ) : (
+                    <EyeIcon className="h-5 w-5" />
+                  )}
+                </button>
+              </div>
+            </div>
+
+            {/* Confirm Password Field (only for signup) */}
+            {mode === 'signup' && (
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Confirm Password
+                </label>
+                <div className="relative">
+                  <LockClosedIcon className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400" />
+                  <input
+                    type={showPassword ? 'text' : 'password'}
+                    name="confirmPassword"
+                    value={formData.confirmPassword}
+                    onChange={handleInputChange}
+                    required
+                    className="w-full pl-10 pr-4 py-3 border-0 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 shadow-sm bg-gray-50 transition-all duration-300"
+                    placeholder="Confirm your password"
+                  />
+                </div>
+              </div>
+            )}
+
+
+            {/* Submit Button */}
+            <button
+              type="submit"
+              className="w-full bg-gradient-to-r from-blue-600 to-blue-500 hover:from-blue-700 hover:to-blue-600 text-white font-semibold py-3 px-6 rounded-xl transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl"
+            >
+              {loginType === 'admin' 
+                ? mode === 'login' ? 'Sign In as Admin' : 'Create Admin Account'
+                : mode === 'login' 
+                  ? 'Sign In as Traveller'
+                  : 'Create Account'
+              }
+            </button>
+          </form>
+
+          {/* Additional Links */}
+          <div className="mt-6 text-center">
+            <p className="text-sm text-gray-600">
+              {mode === 'login' ? "Don't have an account? " : "Already have an account? "}
+              <button 
+                onClick={() => switchMode(mode === 'login' ? 'signup' : 'login')}
+                className="text-blue-600 hover:text-blue-700 font-medium"
+              >
+                {mode === 'login' ? 'Sign up' : 'Sign in'}
+              </button>
+            </p>
+          </div>
+        </motion.div>
       </div>
-    </section>
+    </div>
   );
 };
 
-export default QuotationForm;
+export default Login;

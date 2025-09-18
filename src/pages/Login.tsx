@@ -30,15 +30,19 @@ const Login = () => {
     return users ? JSON.parse(users) : [];
   };
 
+  // Get stored admins from localStorage
+  const getStoredAdmins = () => {
+    const admins = localStorage.getItem('registeredAdmins');
+    return admins ? JSON.parse(admins) : [];
+  };
   // Save users to localStorage
   const saveUsers = (users: any[]) => {
     localStorage.setItem('registeredUsers', JSON.stringify(users));
   };
 
-  // Admin credentials (hardcoded for demo)
-  const adminCredentials = {
-    email: 'admin@dremoratours.com',
-    password: 'admin123'
+  // Save admins to localStorage
+  const saveAdmins = (admins: any[]) => {
+    localStorage.setItem('registeredAdmins', JSON.stringify(admins));
   };
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -67,24 +71,18 @@ const Login = () => {
       return;
     }
 
-    const users = getStoredUsers();
-    
-    // Check if user already exists
-    const existingUser = users.find((user: any) => user.email === formData.email);
-    if (existingUser) {
-      toast.error('User with this email already exists');
-      return;
-    }
+    if (loginType === 'admin') {
+      // Admin signup
+      const admins = getStoredAdmins();
+      
+      // Check if admin already exists
+      const existingAdmin = admins.find((admin: any) => admin.email === formData.email);
+      if (existingAdmin) {
+        toast.error('Admin with this email already exists');
+        return;
+      }
 
-    // Add new user
-    const newUser = {
-      id: Date.now(),
-      name: formData.name,
-      email: formData.email,
-      password: formData.password,
-      joinDate: new Date().toISOString().split('T')[0],
-      totalBookings: 0
-    };
+      // Add new admin
 
     users.push(newUser);
     saveUsers(users);
@@ -224,7 +222,7 @@ const Login = () => {
 
           <form onSubmit={mode === 'login' ? handleLogin : handleSignup} className="space-y-6">
             {/* Name Field (only for signup) */}
-            {mode === 'signup' && (
+            {mode === 'signup' && loginType === 'traveller' && (
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">
                   Full Name
@@ -258,7 +256,7 @@ const Login = () => {
                   onChange={handleInputChange}
                   required
                   className="w-full pl-10 pr-4 py-3 border-0 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 shadow-sm bg-gray-50 transition-all duration-300"
-                  placeholder={loginType === 'admin' ? 'admin@dremoratours.com' : 'your@email.com'}
+                  placeholder="your@email.com"
                 />
               </div>
             </div>
@@ -277,7 +275,7 @@ const Login = () => {
                   onChange={handleInputChange}
                   required
                   className="w-full pl-10 pr-12 py-3 border-0 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 shadow-sm bg-gray-50 transition-all duration-300"
-                  placeholder={loginType === 'admin' ? 'admin123' : 'Enter your password'}
+                  placeholder="Enter your password"
                 />
                 <button
                   type="button"
@@ -294,7 +292,7 @@ const Login = () => {
             </div>
 
             {/* Confirm Password Field (only for signup) */}
-            {mode === 'signup' && (
+            {mode === 'signup' && loginType === 'traveller' && (
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">
                   Confirm Password
@@ -314,23 +312,17 @@ const Login = () => {
               </div>
             )}
 
-            {/* Demo Credentials for Admin */}
-            {loginType === 'admin' && mode === 'login' && (
-              <div className="bg-blue-50 border border-blue-200 rounded-lg p-3">
-                <p className="text-sm text-blue-800 font-medium mb-1">Demo Admin Credentials:</p>
-                <p className="text-xs text-blue-600">Email: admin@dremoratours.com</p>
-                <p className="text-xs text-blue-600">Password: admin123</p>
-              </div>
-            )}
 
             {/* Submit Button */}
             <button
               type="submit"
               className="w-full bg-gradient-to-r from-blue-600 to-blue-500 hover:from-blue-700 hover:to-blue-600 text-white font-semibold py-3 px-6 rounded-xl transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl"
             >
-              {mode === 'login' 
-                ? `Sign In as ${loginType === 'admin' ? 'Admin' : 'Traveller'}`
-                : 'Create Account'
+              {loginType === 'admin' 
+                ? 'Sign In as Admin'
+                : mode === 'login' 
+                  ? 'Sign In as Traveller'
+                  : 'Create Account'
               }
             </button>
           </form>
