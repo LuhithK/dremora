@@ -35,15 +35,11 @@ const Login = () => {
     const admins = localStorage.getItem('registeredAdmins');
     return admins ? JSON.parse(admins) : [];
   };
-  // Get stored admins from localStorage
-  const getStoredAdmins2 = () => {
-    const admins = localStorage.getItem('registeredAdmins');
-    return admins ? JSON.parse(admins) : [];
-  };
   // Save users to localStorage
   const saveUsers = (users: any[]) => {
     localStorage.setItem('registeredUsers', JSON.stringify(users));
   };
+
   // Save admins to localStorage
   const saveAdmins = (admins: any[]) => {
     localStorage.setItem('registeredAdmins', JSON.stringify(admins));
@@ -92,7 +88,7 @@ const Login = () => {
         email: formData.email,
         password: formData.password
       };
-
+      
       admins.push(newAdmin);
       saveAdmins(admins);
     } else {
@@ -342,6 +338,7 @@ const Login = () => {
                 </div>
               </div>
             )}
+
 
             {/* Submit Button */}
             <button
