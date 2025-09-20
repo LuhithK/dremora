@@ -25,7 +25,7 @@ const FeaturedPackages = () => {
       rating: 4.8,
       reviews: 124,
       maxGuests: 8,
-      image: "https://images.pexels.com/photos/2166559/pexels-photo-2166559.jpeg?auto=compress&cs=tinysrgb&w=600",
+      image: "/src/assets/images/packages/cultural-triangle.jpg",
       highlights: ["Colombo City Tour", "Temple of Tooth", "Botanical Gardens"]
     },
     {
@@ -39,7 +39,7 @@ const FeaturedPackages = () => {
       rating: 4.7,
       reviews: 112,
       maxGuests: 8,
-      image: "https://images.pexels.com/photos/1450353/pexels-photo-1450353.jpeg?auto=compress&cs=tinysrgb&w=600",
+      image: "/src/assets/images/packages/hill-country.jpg",
       highlights: ["Sigiriya Rock", "Temple of Tooth", "Cave Temples"]
     },
     {
@@ -53,7 +53,7 @@ const FeaturedPackages = () => {
       rating: 4.9,
       reviews: 89,
       maxGuests: 6,
-      image: "https://images.pexels.com/photos/2166559/pexels-photo-2166559.jpeg?auto=compress&cs=tinysrgb&w=600",
+      image: "/src/assets/images/packages/cultural-triangle.jpg",
       highlights: ["Sigiriya Rock", "Ancient Polonnaruwa", "Dambulla Caves"]
     },
     {
@@ -67,7 +67,7 @@ const FeaturedPackages = () => {
       rating: 4.8,
       reviews: 134,
       maxGuests: 10,
-      image: "https://images.pexels.com/photos/1450361/pexels-photo-1450361.jpeg?auto=compress&cs=tinysrgb&w=600",
+      image: "/src/assets/images/packages/southern-coast.jpg",
       highlights: ["Cultural Sites", "Galle Fort", "Beach Time"]
     },
     {
@@ -81,7 +81,7 @@ const FeaturedPackages = () => {
       rating: 4.7,
       reviews: 156,
       maxGuests: 10,
-      image: "https://images.pexels.com/photos/1450353/pexels-photo-1450353.jpeg?auto=compress&cs=tinysrgb&w=600",
+      image: "/src/assets/images/packages/hill-country.jpg",
       highlights: ["Tea Plantations", "Nine Arch Bridge", "Train Journey"]
     },
     {
@@ -95,7 +95,7 @@ const FeaturedPackages = () => {
       rating: 4.6,
       reviews: 87,
       maxGuests: 6,
-      image: "https://images.pexels.com/photos/1170986/pexels-photo-1170986.jpeg?auto=compress&cs=tinysrgb&w=600",
+      image: "/src/assets/images/packages/wildlife-safari.jpg",
       highlights: ["Yala Safari", "Adventure Sports", "Scenic Railways"]
     }
   ];

@@ -121,14 +121,14 @@ const AdminDashboard = () => {
   const displayCustomers = customers.length > 0 ? customers : mockCustomers;
 
   const filteredQuotes = displayQuotes.filter(quote =>
-    quote.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    quote.email.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    quote.name?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    quote.email?.toLowerCase().includes(searchTerm.toLowerCase()) ||
     (quote.package && quote.package.toLowerCase().includes(searchTerm.toLowerCase()))
   );
 
   const filteredCustomers = displayCustomers.filter(customer =>
-    customer.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    customer.email.toLowerCase().includes(searchTerm.toLowerCase())
+    customer.name?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    customer.email?.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
   const stats = [

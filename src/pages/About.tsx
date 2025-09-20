@@ -122,7 +122,7 @@ const About = () => {
               className="relative"
             >
               <img
-                src="https://images.pexels.com/photos/1450360/pexels-photo-1450360.jpeg?auto=compress&cs=tinysrgb&w=800"
+                src="/src/assets/images/about/company-story.jpg"
                 alt="Sri Lanka landscape"
                 className="rounded-2xl shadow-2xl"
               />
@@ -265,7 +265,7 @@ const About = () => {
               viewport={{ once: true }}
             >
               <img
-                src="https://images.pexels.com/photos/1450353/pexels-photo-1450353.jpeg?auto=compress&cs=tinysrgb&w=800"
+                src="/src/assets/images/about/tea-plantation.jpg"
                 alt="Sri Lanka tea plantation"
                 className="rounded-2xl shadow-2xl"
               />

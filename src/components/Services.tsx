@@ -106,7 +106,7 @@ const Services = () => {
               variants={itemVariants}
               className="group relative bg-white rounded-xl p-6 shadow-sm hover:shadow-xl transition-all duration-500 transform hover:-translate-y-1 border border-gray-100 hover:border-orange-200"
               className="group relative bg-white rounded-xl p-6 shadow-sm hover:shadow-xl transition-all duration-500 transform hover:-translate-y-1 border border-gray-100 hover:border-blue-200"
-            >
+              <div className="bg-white rounded-xl p-6 shadow-md hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2 border border-gray-100 h-full text-center group-hover:bg-gradient-to-r group-hover:from-blue-50 group-hover:to-blue-100">
               {/* Elegant Icon */}
               <div className="flex items-center space-x-4 mb-3">
                 <div className="w-12 h-12 bg-gradient-to-r from-blue-600 to-blue-500 rounded-lg flex items-center justify-center group-hover:scale-110 transition-transform duration-300 shadow-md">
@@ -114,9 +114,6 @@ const Services = () => {
                 </div>
                 <div>
                   <h3 className="text-lg font-bold text-gray-900 group-hover:text-blue-600 transition-colors duration-300">
-                    {service.title}
-                  </h3>
-                </div>
               </div>
 
               {/* Description */}
