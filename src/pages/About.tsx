@@ -34,30 +34,30 @@ const About = () => {
 
   const team = [
     {
-      name: "Samantha Fernando",
+      name: "Luhith kariyawasam",
       role: "Founder & CEO",
-      image: "https://images.pexels.com/photos/1222271/pexels-photo-1222271.jpeg?auto=compress&cs=tinysrgb&w=300&h=300&fit=crop&crop=face",
-      description: "With over 12 years in the tourism industry, Samantha founded Dremora Tours to showcase the authentic beauty of Sri Lanka to the world."
+      image: "src/assets/images/team/ceo.jpg",
+      description: "With over 5 years in the tourism industry, Luhith founded Dremora Tours to showcase the authentic beauty of Sri Lanka to the world."
     },
     {
-      name: "Arjun Silva",
+      name: "Thisara Tharani",
       role: "Head of Operations",
-      image: "https://images.pexels.com/photos/1043471/pexels-photo-1043471.jpeg?auto=compress&cs=tinysrgb&w=300&h=300&fit=crop&crop=face",
-      description: "Arjun ensures every tour runs smoothly with his exceptional organizational skills and passion for customer satisfaction."
+      image: "src/assets/images/team/operations-head.jpg",
+      description: "Thisara ensures every tour runs smoothly with his exceptional organizational skills and passion for customer satisfaction."
     },
     {
-      name: "Nisha Perera",
+      name: "Ishini Kariyawasam",
       role: "Senior Tour Guide",
-      image: "https://images.pexels.com/photos/774909/pexels-photo-774909.jpeg?auto=compress&cs=tinysrgb&w=300&h=300&fit=crop&crop=face",
-      description: "Nisha's extensive knowledge of Sri Lankan history, culture, and wildlife makes every tour an unforgettable educational journey."
+      image: "src/assets/images/team/tour-guide.jpg",
+      description: "Ishini's extensive knowledge of Sri Lankan history, culture, and wildlife makes every tour an unforgettable educational journey."
     }
   ];
 
   const achievements = [
-    { number: "1000+", label: "Happy Customers" },
-    { number: "75+", label: "Tour Packages" },
+    { number: "50+", label: "Happy Customers" },
+    { number: "15+", label: "Tour Packages" },
     { number: "25+", label: "Destinations" },
-    { number: "8+", label: "Years Experience" }
+    { number: "5+", label: "Years Experience" }
   ];
 
   return (
@@ -97,20 +97,13 @@ const About = () => {
               </h2>
               <div className="space-y-4 text-gray-600 leading-relaxed">
                 <p>
-                  Founded in 2016, Dremora Tours began as a dream to share the incredible 
-                  beauty and rich culture of Sri Lanka with travelers from around the world. 
-                  What started as a small family business has grown into one of the most 
-                  trusted travel companies in Sri Lanka.
+                  Established in 2020, Dremora Tours set out with the mission of sharing Sri Lanka’s breathtaking landscapes and timeless heritage with explorers across the globe. What first began as a small family-run initiative has steadily grown into a well-recognized and dependable name in the local travel industry.
                 </p>
                 <p>
-                  Our founder, Samantha Fernando, grew up exploring every corner of this beautiful 
-                  island nation. His passion for travel and deep love for Sri Lankan culture 
-                  inspired him to create authentic experiences that go beyond typical tourist attractions.
+                  Our team is built on passionate individuals who share a love for exploration and cultural discovery. Together, they bring creativity, dedication, and expertise to craft journeys that are not only enjoyable but also meaningful and memorable for every traveler we serve.
                 </p>
                 <p>
-                  Today, we pride ourselves on offering personalized service, expert local knowledge, 
-                  and unforgettable experiences that showcase the true essence of Sri Lanka - 
-                  from ancient temples and pristine beaches to lush tea plantations and vibrant wildlife.
+                  Today, Dremora Tours is celebrated for delivering tailor-made itineraries, genuine hospitality, and immersive experiences that highlight the island’s essence – from historic ruins and golden coastlines to emerald tea gardens and flourishing wildlife sanctuaries.
                 </p>
               </div>
             </motion.div>

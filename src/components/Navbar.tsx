@@ -22,7 +22,7 @@ const Navbar = () => {
     { name: 'Packages', path: '/packages' },
     { name: 'Destinations', path: '/destinations' },
     { name: 'About', path: '/about' },
-    { name: 'Contact', path: '/contact' },
+    //{ name: 'Contact', path: '/contact' },
   ];
 
   return (
@@ -86,10 +86,10 @@ const Navbar = () => {
               
               {/* Premium CTA Button */}
               <Link
-                to="/login"
+                to="/contact"
                 className="relative overflow-hidden bg-gradient-to-r from-blue-600 to-blue-500 hover:from-blue-700 hover:to-blue-600 text-white font-medium text-sm py-3 px-6 rounded-full transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl group"
               >
-                <span className="relative z-10 tracking-wide">Login</span>
+                <span className="relative z-10 tracking-wide">Contact Us</span>
                 <div className="absolute inset-0 bg-gradient-to-r from-blue-500 to-blue-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
               </Link>
             </div>

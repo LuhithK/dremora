@@ -37,7 +37,7 @@ const PackageDetails = () => {
       rating: 4.8,
       reviews: 124,
       maxGuests: 8,
-      image: "https://images.pexels.com/photos/2166559/pexels-photo-2166559.jpeg?auto=compress&cs=tinysrgb&w=1200",
+      image: "src/assets/images/destinations/mirissa.jpg",
       gallery: [
         "https://images.pexels.com/photos/2166559/pexels-photo-2166559.jpeg?auto=compress&cs=tinysrgb&w=800",
         "https://images.pexels.com/photos/1450353/pexels-photo-1450353.jpeg?auto=compress&cs=tinysrgb&w=800",
@@ -128,7 +128,7 @@ const PackageDetails = () => {
       rating: 4.7,
       reviews: 112,
       maxGuests: 8,
-      image: "https://images.pexels.com/photos/1450353/pexels-photo-1450353.jpeg?auto=compress&cs=tinysrgb&w=1200",
+      image: "src/assets/images/destinations/mirissa.jpg",
       gallery: [
         "https://images.pexels.com/photos/1450353/pexels-photo-1450353.jpeg?auto=compress&cs=tinysrgb&w=800",
         "https://images.pexels.com/photos/2166559/pexels-photo-2166559.jpeg?auto=compress&cs=tinysrgb&w=800",

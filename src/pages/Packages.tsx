@@ -30,7 +30,7 @@ const Packages = () => {
       id: 1,
       title: "Sri Lanka Holiday Package 3 Days",
       description: "Perfect short getaway covering Colombo city tour, Kandy Temple of Tooth, and scenic Peradeniya Botanical Gardens.",
-      image: "https://images.pexels.com/photos/2166559/pexels-photo-2166559.jpeg?auto=compress&cs=tinysrgb&w=800",
+      image: "/src/assets/images/destinations/sigiriya.jpg",
       duration: "3 Days",
       nights: "2 Nights",
       location: "Colombo, Kandy",

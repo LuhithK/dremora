@@ -51,19 +51,19 @@ const Contact = () => {
     {
       icon: MapPinIcon,
       title: "Visit Our Office",
-      details: ["No. 45, Galle Road, Colombo 04", "Sri Lanka"],
+      details: ["No:103/7, Court Road, Homagama", "Sri Lanka"],
       color: "text-blue-600"
     },
     {
       icon: PhoneIcon,
       title: "Call Us",
-      details: ["+94 11 234 5678", "+94 77 987 6543"],
+      details: ["+94 76 921 4087", "+94 77 027 5012"],
       color: "text-green-600"
     },
     {
       icon: EnvelopeIcon,
       title: "Email Us",
-      details: ["info@dremoratours.com", "tours@dremoratours.com"],
+      details: ["dremoratours@gmail.com"],
       color: "text-purple-600"
     },
     {
@@ -77,8 +77,8 @@ const Contact = () => {
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Hero Section */}
-      <section className="relative py-20 bg-gradient-to-r from-blue-600 to-purple-600 text-white">
-      <section className="relative py-20 bg-gradient-to-r from-blue-600 to-blue-500 text-white">
+      
+      <section className="relative py-20 bg-gradient-to-r from-purple-600 to-blue-500 text-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
@@ -96,7 +96,7 @@ const Contact = () => {
           </motion.div>
         </div>
       </section>
-      </section>
+      
 
       {/* Contact Info Cards */}
       <section className="py-20 bg-white">
@@ -300,7 +300,7 @@ const Contact = () => {
                 </p>
                 <div className="flex items-center space-x-2 text-lg font-semibold">
                   <PhoneIcon className="h-6 w-6" />
-                  <span>+94 77 999 8888</span>
+                  <span>+94 76 921 4087</span>
                 </div>
               </div>
 

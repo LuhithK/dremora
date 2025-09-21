@@ -38,7 +38,7 @@ const Login = () => {
   // Admin credentials (hardcoded for demo)
   const adminCredentials = {
     email: 'admin@dremoratours.com',
-    password: 'admin123'
+    password: 'luhith123'
   };
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -258,7 +258,7 @@ const Login = () => {
                   onChange={handleInputChange}
                   required
                   className="w-full pl-10 pr-4 py-3 border-0 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 shadow-sm bg-gray-50 transition-all duration-300"
-                  placeholder={loginType === 'admin' ? 'admin@dremoratours.com' : 'your@email.com'}
+                  placeholder={loginType === 'admin' ? 'login_name' : 'your@email.com'}
                 />
               </div>
             </div>
@@ -277,7 +277,7 @@ const Login = () => {
                   onChange={handleInputChange}
                   required
                   className="w-full pl-10 pr-12 py-3 border-0 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 shadow-sm bg-gray-50 transition-all duration-300"
-                  placeholder={loginType === 'admin' ? 'admin123' : 'Enter your password'}
+                  placeholder={loginType === 'admin' ? 'password' : 'Enter your password'}
                 />
                 <button
                   type="button"
@@ -314,14 +314,14 @@ const Login = () => {
               </div>
             )}
 
-            {/* Demo Credentials for Admin */}
+            {/* Demo Credentials for Admin
             {loginType === 'admin' && mode === 'login' && (
-              <div className="bg-blue-50 border border-blue-200 rounded-lg p-3">
-                <p className="text-sm text-blue-800 font-medium mb-1">Demo Admin Credentials:</p>
-                <p className="text-xs text-blue-600">Email: admin@dremoratours.com</p>
-                <p className="text-xs text-blue-600">Password: admin123</p>
-              </div>
-            )}
+              // <div className="bg-blue-50 border border-blue-200 rounded-lg p-3">
+              //   <p className="text-sm text-blue-800 font-medium mb-1">Demo Admin Credentials:</p>
+              //   <p className="text-xs text-blue-600">Email: admin@dremoratours.com</p>
+              //   <p className="text-xs text-blue-600">Password: admin123</p>
+              // </div>
+            )} */}
 
             {/* Submit Button */}
             <button

@@ -15,10 +15,9 @@ const Footer = () => {
           {/* Company Info */}
           <div className="space-y-4">
             <div className="flex items-center space-x-2">
-              <div className="w-10 h-10 bg-gradient-to-r from-primary-600 to-secondary-600 rounded-lg flex items-center justify-center">
-                <span className="text-white font-bold text-xl">D</span>
-              </div>
-              <span className="font-bold text-xl">Dremora Tours</span>
+              <span>
+                <img src="src/assets/images/logo/dlogo.png" alt="" />
+              </span>
             </div>
             <p className="text-gray-300 text-sm leading-relaxed">
               Discover the pearl of the Indian Ocean with Dremora Tours. 
@@ -77,18 +76,18 @@ const Footer = () => {
                 <MapPinIcon className="h-5 w-5 text-primary-400 mt-1 flex-shrink-0" />
                 <div>
                   <p className="text-gray-300 text-sm">
-                    No. 45, Galle Road, Colombo 04,<br />
+                    No:103/7, Court road, Homagama<br />
                     Sri Lanka
                   </p>
                 </div>
               </div>
               <div className="flex items-center space-x-3">
                 <PhoneIcon className="h-5 w-5 text-primary-400 flex-shrink-0" />
-                <p className="text-gray-300 text-sm">+94 11 234 5678</p>
+                <p className="text-gray-300 text-sm">+94 76 921 4087</p>
               </div>
               <div className="flex items-center space-x-3">
                 <EnvelopeIcon className="h-5 w-5 text-primary-400 flex-shrink-0" />
-                <p className="text-gray-300 text-sm">info@dremoratours.com</p>
+                <p className="text-gray-300 text-sm">dremoratours@gmail.com</p>
               </div>
               <div className="flex items-center space-x-3">
                 <ClockIcon className="h-5 w-5 text-primary-400 flex-shrink-0" />
