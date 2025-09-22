@@ -11,11 +11,34 @@ import {
 } from '@heroicons/react/24/outline';
 import toast from 'react-hot-toast';
 
-const BookingForm = () => {
-  const { packageId } = useParams();
+type BookingData = {
+  checkIn: string;
+  checkOut: string;
+  guests: number;
+  specialRequests: string;
+  firstName: string;
+  lastName: string;
+  email: string;
+  phone: string;
+  country: string;
+  cardNumber: string;
+  expiryDate: string;
+  cvv: string;
+  cardName: string;
+};
+
+type PackageInfo = {
+  title: string;
+  price: number;
+  duration: string;
+  image: string;
+};
+
+const BookingForm: React.FC = () => {
+  const { packageId } = useParams<{ packageId: string }>();
   const navigate = useNavigate();
   const [currentStep, setCurrentStep] = useState(1);
-  const [bookingData, setBookingData] = useState({
+  const [bookingData, setBookingData] = useState<BookingData>({
     checkIn: '',
     checkOut: '',
     guests: 2,
@@ -31,28 +54,28 @@ const BookingForm = () => {
     cardName: ''
   });
 
-  const packageData = {
-    1: {
+  const packageData: Record<string, PackageInfo> = {
+    "1": {
       title: "Cultural Triangle Adventure",
       price: 950,
       duration: "7 Days",
-      image: "https://images.pexels.com/photos/2166559/pexels-photo-2166559.jpeg?auto=compress&cs=tinysrgb&w=400"
+      image: "src/assets/images/about/company-story.jpg"
     },
-    2: {
+    "2": {
       title: "Hill Country Escape",
       price: 750,
       duration: "5 Days",
-      image: "https://images.pexels.com/photos/1450353/pexels-photo-1450353.jpeg?auto=compress&cs=tinysrgb&w=400"
+      image: "src/assets/images/about/company-story.jpg"
     },
-    3: {
+    "3": {
       title: "Coastal Paradise",
       price: 550,
       duration: "6 Days",
-      image: "https://images.pexels.com/photos/1450361/pexels-photo-1450361.jpeg?auto=compress&cs=tinysrgb&w=400"
+      image: "src/assets/images/about/company-story.jpg"
     }
   };
 
-  const selectedPackage = packageData[packageId as keyof typeof packageData];
+  const selectedPackage = packageData[packageId || ""];
 
   if (!selectedPackage) {
     return (
@@ -74,7 +97,9 @@ const BookingForm = () => {
   const taxes = Math.round(totalPrice * 0.1);
   const finalTotal = totalPrice + taxes;
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+  const handleInputChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
+  ) => {
     const { name, value } = e.target;
     setBookingData(prev => ({
       ...prev,
@@ -161,11 +186,13 @@ const BookingForm = () => {
               <div className="flex items-center justify-between">
                 {steps.map((step, index) => (
                   <div key={step.number} className="flex items-center">
-                    <div className={`flex items-center justify-center w-12 h-12 rounded-full border-2 ${
-                      currentStep >= step.number
-                        ? 'bg-blue-600 border-blue-600 text-white'
-                        : 'border-gray-300 text-gray-400'
-                    }`}>
+                    <div
+                      className={`flex items-center justify-center w-12 h-12 rounded-full border-2 ${
+                        currentStep >= step.number
+                          ? 'bg-blue-600 border-blue-600 text-white'
+                          : 'border-gray-300 text-gray-400'
+                      }`}
+                    >
                       {currentStep > step.number ? (
                         <CheckCircleIcon className="h-6 w-6" />
                       ) : (
@@ -173,15 +200,27 @@ const BookingForm = () => {
                       )}
                     </div>
                     <div className="ml-3">
-                      <p className={`text-sm font-medium ${currentStep >= step.number ? 'text-blue-600' : 'text-gray-400'}`}>
+                      <p
+                        className={`text-sm font-medium ${
+                          currentStep >= step.number ? 'text-blue-600' : 'text-gray-400'
+                        }`}
+                      >
                         Step {step.number}
                       </p>
-                      <p className={`text-sm ${currentStep >= step.number ? 'text-gray-900' : 'text-gray-400'}`}>
+                      <p
+                        className={`text-sm ${
+                          currentStep >= step.number ? 'text-gray-900' : 'text-gray-400'
+                        }`}
+                      >
                         {step.title}
                       </p>
                     </div>
                     {index < steps.length - 1 && (
-                      <div className={`w-16 h-0.5 mx-4 ${currentStep > step.number ? 'bg-blue-600' : 'bg-gray-300'}`} />
+                      <div
+                        className={`w-16 h-0.5 mx-4 ${
+                          currentStep > step.number ? 'bg-blue-600' : 'bg-gray-300'
+                        }`}
+                      />
                     )}
                   </div>
                 ))}
@@ -197,8 +236,7 @@ const BookingForm = () => {
               className="bg-white rounded-2xl shadow-lg p-8"
             >
               <form onSubmit={handleSubmit}>
-                {/* Steps: Travel Details / Personal Info / Payment */}
-                {/* [Your input fields here — same as original code] */}
+                {/* Your input fields go here */}
 
                 {/* Navigation Buttons */}
                 <div className="flex justify-between mt-8">

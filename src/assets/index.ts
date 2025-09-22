@@ -1,3 +1,5 @@
+
+
 // Asset imports for easy management
 // Hero Images
 export { default as HeroBg1 } from './images/hero/hero-bg-1.jpg';
