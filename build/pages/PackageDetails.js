@@ -208,7 +208,13 @@ const PackageDetails = () => {
         }
         // Add more package details as needed
     };
-    const selectedPackage = packageData[packageId];
+    // Get packageId from URL params, typed as string | undefined
+    // Convert to number for indexing
+    const numericPackageId = packageId ? Number(packageId) : undefined;
+    // Get the selected package safely
+    const selectedPackage = numericPackageId && numericPackageId in packageData
+        ? packageData[numericPackageId]
+        : null;
     if (!selectedPackage) {
         return (_jsx("div", { className: "min-h-screen bg-gray-50 pt-24 flex items-center justify-center", children: _jsxs("div", { className: "text-center", children: [_jsx("h1", { className: "text-2xl font-bold text-gray-900 mb-4", children: "Package not found" }), _jsx("button", { onClick: () => navigate('/packages'), className: "bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded transition-colors duration-200", children: "Back to Packages" })] }) }));
     }

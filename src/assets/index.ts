@@ -18,6 +18,10 @@ export { default as Kandy } from './images/destinations/kandy.jpg';
 export { default as Galle } from './images/destinations/galle.jpg';
 export { default as Ella } from './images/destinations/ella.jpg';
 export { default as Sigiriya } from './images/destinations/sigiriya.jpg';
+export { default as NuwaraEliya } from './images/destinations/nuwara-eliya.jpg';
+export { default as YalaNationalPark } from './images/destinations/yala-national-park.jpg';
+export { default as Mirissa } from './images/destinations/mirissa.jpg';
+export { default as AdamPeak } from './images/destinations/adam-peak.jpg';
 
 // Team Images
 export { default as CEO } from './images/team/ceo.jpg';

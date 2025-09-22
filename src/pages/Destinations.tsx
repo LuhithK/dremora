@@ -2,9 +2,23 @@ import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { MapPinIcon, CameraIcon, ClockIcon, StarIcon } from '@heroicons/react/24/outline';
 
+type Destination = {
+  id: number;
+  name: string;
+  category: string;
+  location: string;
+  image: string;
+  description: string;
+  highlights: string[];
+  bestTime: string;
+  duration: string;
+};
+
+
 const Destinations = () => {
   const [selectedCategory, setSelectedCategory] = useState('all');
-  const [selectedDestination, setSelectedDestination] = useState(null);
+  const [selectedDestination, setSelectedDestination] = useState<Destination | null>(null);
+
 
   const categories = [
     { id: 'all', name: 'All Attractions' },

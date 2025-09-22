@@ -14,6 +14,22 @@ import {
   PhoneIcon
 } from '@heroicons/react/24/outline';
 
+// Types for Admin Dashboard
+type Quote = {
+  id: number;
+  status?: string;
+  [key: string]: any; // temporary, until you know all fields
+};
+
+type Customer = {
+  id: number;
+  name: string;
+  email?: string;
+  [key: string]: any; // temporary
+};
+
+
+
 const AdminDashboard = () => {
   const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState('quotes');
@@ -120,36 +136,37 @@ const AdminDashboard = () => {
   const displayQuotes = quotes.length > 0 ? quotes : mockQuotes;
   const displayCustomers = customers.length > 0 ? customers : mockCustomers;
 
-  const filteredQuotes = displayQuotes.filter(quote =>
-    quote.name?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    quote.email?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    (quote.package && quote.package.toLowerCase().includes(searchTerm.toLowerCase()))
-  );
+  const filteredQuotes = displayQuotes.filter((quote: Quote) =>
+  quote.name?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+  quote.email?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+  quote.package?.toLowerCase().includes(searchTerm.toLowerCase())
+);
 
-  const filteredCustomers = displayCustomers.filter(customer =>
-    customer.name?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    customer.email?.toLowerCase().includes(searchTerm.toLowerCase())
-  );
+const filteredCustomers = displayCustomers.filter((customer: Customer) =>
+  customer.name?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+  customer.email?.toLowerCase().includes(searchTerm.toLowerCase())
+);
 
-  const stats = [
-    {
-      title: 'Total Quotes',
-      value: displayQuotes.length,
-      icon: ChatBubbleLeftRightIcon,
-      color: 'bg-blue-500'
-    },
-    {
-      title: 'Pending Quotes',
-      value: displayQuotes.filter(q => q.status === 'pending' || !q.status).length,
-      icon: ChartBarIcon,
-      color: 'bg-orange-500'
-    },
-    {
-      title: 'Registered Customers',
-      value: displayCustomers.length,
-      icon: UserGroupIcon,
-      color: 'bg-green-500'
-    }
+
+ const stats = [
+  {
+    title: 'Total Quotes',
+    value: displayQuotes.length,
+    icon: ChatBubbleLeftRightIcon,
+    color: 'bg-blue-500',
+  },
+  {
+    title: 'Pending Quotes',
+    value: displayQuotes.filter((q: Quote) => q.status === 'pending' || !q.status).length,
+    icon: ChartBarIcon,
+    color: 'bg-orange-500',
+  },
+  {
+    title: 'Registered Customers',
+    value: displayCustomers.length,
+    icon: UserGroupIcon,
+    color: 'bg-green-500',
+  },
   ];
 
   return (
@@ -251,7 +268,7 @@ const AdminDashboard = () => {
                     <p className="text-gray-500">No quotes found</p>
                   </div>
                 ) : (
-                  filteredQuotes.map((quote) => (
+                  filteredQuotes.map((quote: Quote) => (
                     <div key={quote.id} className="border border-gray-200 rounded-lg p-4 hover:shadow-md transition-shadow duration-200">
                       <div className="flex items-center justify-between">
                         <div className="flex-1">
@@ -306,7 +323,7 @@ const AdminDashboard = () => {
                     <p className="text-gray-500">No customers found</p>
                   </div>
                 ) : (
-                  filteredCustomers.map((customer) => (
+                  filteredCustomers.map((customer: Customer) => (
                     <div key={customer.id} className="border border-gray-200 rounded-lg p-4 hover:shadow-md transition-shadow duration-200">
                       <div className="flex items-center justify-between">
                         <div className="flex-1">

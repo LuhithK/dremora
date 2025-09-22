@@ -19,7 +19,7 @@ import {
 import { StarIcon as StarSolidIcon } from '@heroicons/react/24/solid';
 
 const PackageDetails = () => {
-  const { packageId } = useParams();
+  const { packageId } = useParams<{ packageId: string }>();
   const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState('overview');
   const [showGallery, setShowGallery] = useState(false);
@@ -224,7 +224,18 @@ const PackageDetails = () => {
     // Add more package details as needed
   };
 
-  const selectedPackage = packageData[packageId as keyof typeof packageData];
+// Get packageId from URL params, typed as string | undefined
+
+// Convert to number for indexing
+const numericPackageId = packageId ? Number(packageId) : undefined;
+
+// Get the selected package safely
+const selectedPackage =
+  numericPackageId && numericPackageId in packageData
+    ? packageData[numericPackageId as keyof typeof packageData]
+    : null;
+
+
 
   if (!selectedPackage) {
     return (

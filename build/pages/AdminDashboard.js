@@ -101,30 +101,30 @@ const AdminDashboard = () => {
     // Use real data if available, otherwise use mock data
     const displayQuotes = quotes.length > 0 ? quotes : mockQuotes;
     const displayCustomers = customers.length > 0 ? customers : mockCustomers;
-    const filteredQuotes = displayQuotes.filter(quote => quote.name?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    const filteredQuotes = displayQuotes.filter((quote) => quote.name?.toLowerCase().includes(searchTerm.toLowerCase()) ||
         quote.email?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        (quote.package && quote.package.toLowerCase().includes(searchTerm.toLowerCase())));
-    const filteredCustomers = displayCustomers.filter(customer => customer.name?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        quote.package?.toLowerCase().includes(searchTerm.toLowerCase()));
+    const filteredCustomers = displayCustomers.filter((customer) => customer.name?.toLowerCase().includes(searchTerm.toLowerCase()) ||
         customer.email?.toLowerCase().includes(searchTerm.toLowerCase()));
     const stats = [
         {
             title: 'Total Quotes',
             value: displayQuotes.length,
             icon: ChatBubbleLeftRightIcon,
-            color: 'bg-blue-500'
+            color: 'bg-blue-500',
         },
         {
             title: 'Pending Quotes',
-            value: displayQuotes.filter(q => q.status === 'pending' || !q.status).length,
+            value: displayQuotes.filter((q) => q.status === 'pending' || !q.status).length,
             icon: ChartBarIcon,
-            color: 'bg-orange-500'
+            color: 'bg-orange-500',
         },
         {
             title: 'Registered Customers',
             value: displayCustomers.length,
             icon: UserGroupIcon,
-            color: 'bg-green-500'
-        }
+            color: 'bg-green-500',
+        },
     ];
     return (_jsxs("div", { className: "min-h-screen bg-gray-50", children: [_jsx("div", { className: "bg-white shadow-sm border-b border-gray-200", children: _jsx("div", { className: "max-w-7xl mx-auto px-4 sm:px-6 lg:px-8", children: _jsxs("div", { className: "flex justify-between items-center h-16", children: [_jsx("div", { className: "flex items-center space-x-4", children: _jsx("h1", { className: "text-2xl font-bold text-gray-900", children: "Admin Dashboard" }) }), _jsxs("button", { onClick: handleLogout, className: "flex items-center space-x-2 text-gray-600 hover:text-gray-900 transition-colors duration-200", children: [_jsx(ArrowRightOnRectangleIcon, { className: "h-5 w-5" }), _jsx("span", { children: "Logout" })] })] }) }) }), _jsxs("div", { className: "max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8", children: [_jsx(motion.div, { initial: { opacity: 0, y: 20 }, animate: { opacity: 1, y: 0 }, transition: { duration: 0.6 }, className: "grid grid-cols-1 md:grid-cols-3 gap-6 mb-8", children: stats.map((stat, index) => (_jsx("div", { className: "bg-white rounded-lg shadow-sm border border-gray-200 p-6", children: _jsxs("div", { className: "flex items-center", children: [_jsx("div", { className: `${stat.color} p-3 rounded-lg`, children: _jsx(stat.icon, { className: "h-6 w-6 text-white" }) }), _jsxs("div", { className: "ml-4", children: [_jsx("p", { className: "text-sm font-medium text-gray-600", children: stat.title }), _jsx("p", { className: "text-2xl font-bold text-gray-900", children: stat.value })] })] }) }, index))) }), _jsxs(motion.div, { initial: { opacity: 0, y: 20 }, animate: { opacity: 1, y: 0 }, transition: { duration: 0.6, delay: 0.2 }, className: "bg-white rounded-lg shadow-sm border border-gray-200 mb-6", children: [_jsx("div", { className: "border-b border-gray-200", children: _jsxs("nav", { className: "flex space-x-8 px-6", children: [_jsxs("button", { onClick: () => setActiveTab('quotes'), className: `py-4 px-1 border-b-2 font-medium text-sm transition-colors duration-200 ${activeTab === 'quotes'
                                                 ? 'border-blue-500 text-blue-600'
