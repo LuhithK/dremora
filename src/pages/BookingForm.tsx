@@ -59,19 +59,19 @@ const BookingForm: React.FC = () => {
       title: "Cultural Triangle Adventure",
       price: 950,
       duration: "7 Days",
-      image: "src/assets/images/about/company-story.jpg"
+      image: "/images/about/company-story.jpg"
     },
     "2": {
       title: "Hill Country Escape",
       price: 750,
       duration: "5 Days",
-      image: "src/assets/images/about/company-story.jpg"
+      image: "/images/about/company-story.jpg"
     },
     "3": {
       title: "Coastal Paradise",
       price: 550,
       duration: "6 Days",
-      image: "src/assets/images/about/company-story.jpg"
+      image: "/images/about/company-story.jpg"
     }
   };
 

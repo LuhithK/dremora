@@ -37,12 +37,12 @@ const PackageDetails = () => {
       rating: 4.8,
       reviews: 124,
       maxGuests: 8,
-      image: "src/assets/images/destinations/mirissa.jpg",
+      image: "/images/destinations/mirissa.jpg",
       gallery: [
-        "https://images.pexels.com/photos/2166559/pexels-photo-2166559.jpeg?auto=compress&cs=tinysrgb&w=800",
-        "https://images.pexels.com/photos/1450353/pexels-photo-1450353.jpeg?auto=compress&cs=tinysrgb&w=800",
-        "https://images.pexels.com/photos/1450361/pexels-photo-1450361.jpeg?auto=compress&cs=tinysrgb&w=800",
-        "https://images.pexels.com/photos/1170986/pexels-photo-1170986.jpeg?auto=compress&cs=tinysrgb&w=800"
+        "/images/gallery/gallery-1.jpg",
+        "/images/gallery/gallery-2.jpg",
+        "/images/gallery/gallery-3.jpg",
+        "/images/gallery/gallery-4.jpg"
       ],
       overview: "Perfect short getaway covering Colombo city tour, Kandy Temple of Tooth, and scenic Peradeniya Botanical Gardens. This package is ideal for travelers with limited time who want to experience the cultural highlights of Sri Lanka.",
       highlights: [
@@ -128,12 +128,12 @@ const PackageDetails = () => {
       rating: 4.7,
       reviews: 112,
       maxGuests: 8,
-      image: "src/assets/images/destinations/mirissa.jpg",
+      image: "/images/destinations/mirissa.jpg",
       gallery: [
-        "https://images.pexels.com/photos/1450353/pexels-photo-1450353.jpeg?auto=compress&cs=tinysrgb&w=800",
-        "https://images.pexels.com/photos/2166559/pexels-photo-2166559.jpeg?auto=compress&cs=tinysrgb&w=800",
-        "https://images.pexels.com/photos/1170986/pexels-photo-1170986.jpeg?auto=compress&cs=tinysrgb&w=800",
-        "https://images.pexels.com/photos/1450361/pexels-photo-1450361.jpeg?auto=compress&cs=tinysrgb&w=800"
+        "/images/gallery/gallery-1.jpg",
+        "/images/gallery/gallery-2.jpg",
+        "/images/gallery/gallery-3.jpg",
+        "/images/gallery/gallery-4.jpg"
       ],
       overview: "Quick cultural and nature tour covering Kandy, Sigiriya, and Dambulla with comfortable accommodations. Experience the best of Sri Lanka's cultural triangle in just 4 days.",
       highlights: [

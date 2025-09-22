@@ -36,19 +36,19 @@ const About = () => {
     {
       name: "Luhith kariyawasam",
       role: "Founder & CEO",
-      image: "src/assets/images/team/ceo.jpg",
+      image: "/images/team/ceo.jpg",
       description: "With over 5 years in the tourism industry, Luhith founded Dremora Tours to showcase the authentic beauty of Sri Lanka to the world."
     },
     {
       name: "Thisara Tharani",
       role: "Head of Operations",
-      image: "src/assets/images/team/operations-head.jpg",
+      image: "/images/team/operations-head.jpg",
       description: "Thisara ensures every tour runs smoothly with his exceptional organizational skills and passion for customer satisfaction."
     },
     {
       name: "Ishini Kariyawasam",
       role: "Senior Tour Guide",
-      image: "src/assets/images/team/tour-guide.jpg",
+      image: "/images/team/tour-guide.jpg",
       description: "Ishini's extensive knowledge of Sri Lankan history, culture, and wildlife makes every tour an unforgettable educational journey."
     }
   ];
@@ -115,7 +115,7 @@ const About = () => {
               className="relative"
             >
               <img
-                src="/src/assets/images/about/company-story.jpg"
+                src="/images/about/company-story.jpg"
                 alt="Sri Lanka landscape"
                 className="rounded-2xl shadow-2xl"
               />
@@ -258,7 +258,7 @@ const About = () => {
               viewport={{ once: true }}
             >
               <img
-                src="/src/assets/images/about/tea-plantation.jpg"
+                src="/images/about/tea-plantation.jpg"
                 alt="Sri Lanka tea plantation"
                 className="rounded-2xl shadow-2xl"
               />

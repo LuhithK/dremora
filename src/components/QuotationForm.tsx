@@ -129,7 +129,7 @@ ${formData.fullName}
       id="quote-section"
       className="py-20 relative overflow-hidden"
       style={{
-        backgroundImage: `url("/src/assets/images/hero/hero-bg-2.jpg")`,
+        backgroundImage: `url("/images/hero/hero-bg-2.jpg")`,
         backgroundSize: 'cover',
         backgroundPosition: 'center',
         backgroundRepeat: 'no-repeat'

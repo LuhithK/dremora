@@ -2,6 +2,7 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 
+
 const Hero = () => {
   return (
     <div className="relative h-screen flex items-center justify-center overflow-hidden">
@@ -9,7 +10,7 @@ const Hero = () => {
       <div 
         className="absolute inset-0 bg-cover bg-center bg-no-repeat"
         style={{
-          backgroundImage: `url("/src/assets/images/hero/hero-bg-1.jpg")`
+          backgroundImage: `url("images/hero/hero-bg-1.jpg")`
         }}
       >
         <div className="absolute inset-0 bg-gradient-to-r from-black/50 via-black/30 to-black/50"></div>

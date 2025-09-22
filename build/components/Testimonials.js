@@ -9,7 +9,7 @@ const Testimonials = () => {
             location: "London, UK",
             rating: 5,
             text: "Dremora Tours provided an absolutely magical experience! The ancient kingdoms tour was perfectly organized, and our guide's knowledge of Sri Lankan history was exceptional.",
-            image: "/src/assets/images/testimonials/customer-1.jpg"
+            image: "/images/testimonials/customer-1.jpg"
         },
         {
             id: 2,
@@ -17,7 +17,7 @@ const Testimonials = () => {
             location: "Toronto, Canada",
             rating: 5,
             text: "The hill country tour was breathtaking! Every detail was perfectly planned, from the scenic train rides to the tea plantation visits. Highly recommend Dremora Tours!",
-            image: "/src/assets/images/testimonials/customer-2.jpg"
+            image: "/images/testimonials/customer-2.jpg"
         },
         {
             id: 3,
@@ -25,7 +25,7 @@ const Testimonials = () => {
             location: "Melbourne, Australia",
             rating: 5,
             text: "Our coastal adventure was absolutely perfect! The whale watching in Mirissa and exploring Galle Fort were unforgettable. Professional service throughout!",
-            image: "/src/assets/images/testimonials/customer-3.jpg"
+            image: "/images/testimonials/customer-3.jpg"
         },
         {
             id: 4,
@@ -33,7 +33,7 @@ const Testimonials = () => {
             location: "New York, USA",
             rating: 5,
             text: "Exceptional service and attention to detail! The wildlife safari exceeded all expectations. We spotted leopards, elephants, and countless exotic birds. Amazing!",
-            image: "/src/assets/images/testimonials/customer-4.jpg"
+            image: "/images/testimonials/customer-4.jpg"
         }
     ];
     const containerVariants = {
