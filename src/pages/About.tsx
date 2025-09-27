@@ -34,22 +34,22 @@ const About = () => {
 
   const team = [
     {
-      name: "Luhith kariyawasam",
+      name: "john wick",
       role: "Founder & CEO",
       image: "/images/team/ceo.jpg",
-      description: "With over 5 years in the tourism industry, Luhith founded Dremora Tours to showcase the authentic beauty of Sri Lanka to the world."
+      description: "With over 5 years in the tourism industry, john wick founded Dremora Tours to showcase the authentic beauty of Sri Lanka to the world."
     },
     {
-      name: "Thisara Tharani",
+      name: "Jane Doe",
       role: "Head of Operations",
       image: "/images/team/operations-head.jpg",
-      description: "Thisara ensures every tour runs smoothly with his exceptional organizational skills and passion for customer satisfaction."
+      description: "jane ensures every tour runs smoothly with her exceptional organizational skills and passion for customer satisfaction."
     },
     {
-      name: "Ishini Kariyawasam",
+      name: "michelle smith",
       role: "Senior Tour Guide",
       image: "/images/team/tour-guide.jpg",
-      description: "Ishini's extensive knowledge of Sri Lankan history, culture, and wildlife makes every tour an unforgettable educational journey."
+      description: "michelle's extensive knowledge of Sri Lankan history, culture, and wildlife makes every tour an unforgettable educational journey."
     }
   ];
 
